@@ -11,16 +11,23 @@
 <body> 
     <div style="width: 100%; display: table;">
         <div class = "name">
-            <h2>Dan Salazar&nbsp;&nbsp;</h2></div>
-        <div style=" table-cell;"><h2 style="font-size: 17px;">  Data Scientist
-            
-             _ Prototypeing _ UX Researcher </h2></div>
+            <h2>Dan Salazar&nbsp;&nbsp;</h2>
+        </div>
+        
+        <div style="position: absolute; display: table-cell;" >
+            <h2 style="font-size: 17px;">  Data Scient _ Prototypeing _ UX Research </h2>
+        </div>
     </div>
     
 <div  class='liner'></div>
+    
     <div class= "action_call"> 
-        hello
+        <div class= "action_call_text">
+            Data & Design
+            </div>
+        
     </div>
+        
 <div class = "container">
     <figure>
         <a href = "http://notes.dansalazar.org/" target="_blank">
@@ -61,9 +68,10 @@
     </figure>
 </div>
 <style>
-body {
+body, html {
     background-color: #FFFFFF;
     font-family: Arial, Helvetica, sans-serif;
+        height:100%
 }
     
 .pic {
@@ -75,34 +83,43 @@ h2  {
         font-family: Monaco;    
 }
 
-.container{
-    text-align:center;
-    margin-top: 30%;
-}
-    
-figure {
-    display:inline-block;
-    }
-    
-.liner{
-    color: #eee;
-    background:#681A00;
-    padding: 5px;
-    
-}
 
+    
     .name{
-        width: 30%;
         display: table-cell; 
     }
     
+    
+    .liner{
+        color: #eee;
+        background:#681A00;
+        padding: 5px;
+    }
+
+
     .action_call{
-        position: absolute;
-        margin: auto;
-        width: 50%;
-        font-size: 20px;
+        height:45%;
+        background: url('images/sun.jpg') no-repeat;
+        background-position: bottom;
+        
         
     }
+    
+    .action_call_text{
+        font-size: 90px;
+        text-align: center; 
+        padding-top: 10%
+    }
+    
+    .container{
+        text-align:center;
+        margin-bottom: 30%;
+    }
+    
+    figure {
+        display:inline-block;
+    }
+    
 </style>
 
 </body>

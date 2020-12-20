@@ -1,0 +1,5 @@
+1593281860294	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "-marionette" "-foreground" "-no-remote" "-profile" "/var/folders/yz/0ffqwmxj1p35h1q6ktw66mkw0000gn/T/rust_mozprofile0kUf8B"
+1593281866210	Marionette	INFO	Listening on port 64256
+1593281866297	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource://gre/modules/URIFixup.jsm, line 203: NS_ERROR_FAILURE: Should pass a non-null uri
+1593283935022	Marionette	INFO	Stopped listening on port 64256

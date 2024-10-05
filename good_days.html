@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day Streak Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            width: 80%;
+            max-width: 600px;
+        }
+        h1, h2 {
+            color: #333;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        #days {
+            font-size: 4rem;
+            margin: 1rem 0;
+            color: #4CAF50;
+        }
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        button {
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+        }
+        button:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .bad-day { background-color: #FF4136; }
+        .good-day { background-color: #2ECC40; }
+        #visualization {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            max-width: 800px;
+            justify-content: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .day {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+        .day:hover {
+            transform: scale(1.2);
+        }
+        .day .actions {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            z-index: 10;
+        }
+        .day:hover .actions {
+            display: flex;
+            flex-direction: column;
+        }
+        .day .actions button {
+            font-size: 0.8rem;
+            padding: 5px 10px;
+            margin: 2px;
+            border-radius: 4px;
+        }
+        .day .actions button.change-to-good { background-color: #2ECC40; }
+        .day .actions button.change-to-bad { background-color: #FF4136; }
+        .day .actions button.delete { background-color: #FF851B; }
+        #day-info {
+            position: absolute;
+            background-color: #333;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        #analytics {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin-top: 20px;
+            width: 80%;
+            max-width: 600px;
+        }
+        #analytics ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        #analytics li {
+            margin-bottom: 10px;
+        }
+        #chart-container {
+            width: 80%;
+            max-width: 600px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="streak-title">Days on Good Streak</h1>
+        <div id="days">0</div>
+        <div class="button-container">
+            <button class="bad-day" onclick="toggleDay('bad')">Bad day</button>
+            <button class="good-day" onclick="toggleDay('good')">Good day</button>
+        </div>
+    </div>
+    <div id="visualization"></div>
+    <div id="day-info"></div>
+    <div id="analytics">
+        <h2>Analytics</h2>
+        <ul>
+            <li>Total Good Days: <span id="good-days-count">0</span></li>
+            <li>Total Bad Days: <span id="bad-days-count">0</span></li>
+            <li>Longest Good Streak: <span id="longest-good-streak">0</span></li>
+            <li>Longest Bad Streak: <span id="longest-bad-streak">0</span></li>
+        </ul>
+    </div>
+    <div id="chart-container">
+        <canvas id="analyticsChart"></canvas>
+    </div>
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyCOGsJMsgjvHmXJ7j17hzrsHDCjKmwaGQA",
+          authDomain: "good-days-5515e.firebaseapp.com",
+          databaseURL: "https://good-days-5515e-default-rtdb.firebaseio.com",
+          projectId: "good-days-5515e",
+          storageBucket: "good-days-5515e.appspot.com",
+          messagingSenderId: "50443495976",
+          appId: "1:50443495976:web:c98f7989cb34da6e83631d",
+          measurementId: "G-EL08E9D8TX"
+        };
+
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        const daysRef = database.ref('days');
+
+        let days = {};
+        let lastDayType = 'good';
+        let chart;
+
+        // Listen for data changes
+        daysRef.on('value', (snapshot) => {
+            days = snapshot.val() || {};
+            updateDays();
+            updateVisualization();
+            updateAnalytics();
+            updateChart();
+        });
+
+        function updateDays() {
+            const dayEntries = Object.entries(days);
+            let streakCount = 0;
+            let streakType = lastDayType;
+
+            if (dayEntries.length > 0) {
+                streakType = dayEntries[dayEntries.length - 1][1];
+                for (let i = dayEntries.length - 1; i >= 0; i--) {
+                    if (dayEntries[i][1] === streakType) {
+                        streakCount++;
+                    } else {
+                        break;
+                    }
+                }
+            }
+
+            const streakTitle = document.getElementById('streak-title');
+            const daysElement = document.getElementById('days');
+
+            if (streakType === 'good') {
+                streakTitle.textContent = 'Days on Good Streak';
+                daysElement.style.color = '#2ECC40';
+            } else {
+                streakTitle.textContent = 'Days Since Good Day';
+                daysElement.style.color = '#FF4136';
+            }
+
+            daysElement.textContent = streakCount;
+        }
+
+        function toggleDay(type) {
+            const now = Date.now();
+            daysRef.update({
+                [now]: type
+            });
+            lastDayType = type;
+        }
+
+        function updateVisualization() {
+            const visualization = document.getElementById('visualization');
+            visualization.innerHTML = '';
+            Object.entries(days).forEach(([timestamp, type]) => {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'day';
+                dayElement.style.backgroundColor = getDayColor(type);
+                dayElement.dataset.timestamp = timestamp;
+                dayElement.dataset.type = type;
+                dayElement.addEventListener('mouseover', showDayInfo);
+                dayElement.addEventListener('mouseout', hideDayInfo);
+
+                const actionsDiv = document.createElement('div');
+                actionsDiv.className = 'actions';
+                
+                const changeButtons = ['good', 'bad'].filter(t => t !== type);
+                changeButtons.forEach(newType => {
+                    const button = document.createElement('button');
+                    button.textContent = `Change to ${capitalizeFirstLetter(newType)}`;
+                    button.className = `change-to-${newType}`;
+                    button.onclick = () => changeDay(timestamp, newType);
+                    actionsDiv.appendChild(button);
+                });
+
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Delete';
+                deleteButton.className = 'delete';
+                deleteButton.onclick = () => deleteDay(timestamp);
+                actionsDiv.appendChild(deleteButton);
+
+                dayElement.appendChild(actionsDiv);
+                visualization.appendChild(dayElement);
+            });
+        }
+
+        function changeDay(timestamp, newType) {
+            daysRef.update({
+                [timestamp]: newType
+            });
+        }
+
+        function deleteDay(timestamp) {
+            daysRef.child(timestamp).remove();
+        }
+
+        function showDayInfo(event) {
+            const dayInfo = document.getElementById('day-info');
+            const date = new Date(parseInt(event.target.dataset.timestamp));
+            const type = event.target.dataset.type;
+            dayInfo.textContent = `${capitalizeFirstLetter(type)} day on ${date.toLocaleDateString()}`;
+            dayInfo.style.left = `${event.pageX + 10}px`;
+            dayInfo.style.top = `${event.pageY + 10}px`;
+            dayInfo.style.opacity = 1;
+        }
+
+        function hideDayInfo() {
+            const dayInfo = document.getElementById('day-info');
+            dayInfo.style.opacity = 0;
+        }
+
+        function updateAnalytics() {
+            const dayEntries = Object.values(days);
+            const goodDaysCount = dayEntries.filter(day => day === 'good').length;
+            const badDaysCount = dayEntries.filter(day => day === 'bad').length;
+
+            let currentGoodStreak = 0;
+            let longestGoodStreak = 0;
+            let currentBadStreak = 0;
+            let longestBadStreak = 0;
+
+            dayEntries.forEach(day => {
+                if (day === 'good') {
+                    currentGoodStreak++;
+                    currentBadStreak = 0;
+                    longestGoodStreak = Math.max(longestGoodStreak, currentGoodStreak);
+                } else {
+                    currentBadStreak++;
+                    currentGoodStreak = 0;
+                    longestBadStreak = Math.max(longestBadStreak, currentBadStreak);
+                }
+            });
+
+            document.getElementById('good-days-count').textContent = goodDaysCount;
+            document.getElementById('bad-days-count').textContent = badDaysCount;
+            document.getElementById('longest-good-streak').textContent = longestGoodStreak;
+            document.getElementById('longest-bad-streak').textContent = longestBadStreak;
+        }
+
+        function getDayColor(type) {
+            switch(type) {
+                case 'good': return '#2ECC40';
+                case 'bad': return '#FF4136';
+                default: return '#999';
+            }
+        }
+
+        function capitalizeFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+
+        function updateChart() {
+            const dayEntries = Object.entries(days).sort((a, b) => parseInt(a[0]) - parseInt(b[0]));
+            const labels = dayEntries.map(([timestamp, _]) => new Date(parseInt(timestamp)).toLocaleDateString());
+            const data = dayEntries.map(([_, type]) => type === 'good' ? 1 : 0);
+
+            if (chart) {
+                chart.data.labels = labels;
+                chart.data.datasets[0].data = data;
+                chart.update();
+            } else {
+                const ctx = document.getElementById('analyticsChart').getContext('2d');
+                chart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Day Quality',
+                            data: data,
+                            borderColor: '#2ECC40',
+                            backgroundColor: '#2ECC40',
+                            tension: 0.1,
+                            stepped: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 1,
+                                ticks: {
+                                    stepSize: 1,
+                                    callback: function(value, index, values) {
+                                        return ['Bad', 'Good'][value];
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>

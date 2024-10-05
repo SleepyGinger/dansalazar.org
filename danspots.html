@@ -1,0 +1,2318 @@
+<!DOCTYPE html><html class=" supports-js supports-no-touch supports-csstransforms supports-csstransforms3d supports-fontface supports-pointerevents" lang="en" data-scrapbook-source="https://dans-pots.myshopify.com/?_ab=0&amp;_fd=0&amp;_sc=1" data-scrapbook-create="20240924041022342" data-scrapbook-title="danspots"><head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <meta name="theme-color" content="#ffffff">
+
+  
+
+  <link rel="canonical" href="https://dans-pots.myshopify.com/">
+
+  <title>
+  danspots
+  </title>
+
+  
+    <meta name="description" content="Handmade pots by Dan in San Francisco">
+  
+
+  <!-- /snippets/social-meta-tags.liquid -->
+
+
+
+
+<meta property="og:site_name" content="danspots">
+<meta property="og:url" content="https://dans-pots.myshopify.com/">
+<meta property="og:title" content="danspots">
+<meta property="og:type" content="website">
+<meta property="og:description" content="Handmade pots by Dan in San Francisco">
+
+<meta property="og:image" content="http://dans-pots.myshopify.com/cdn/shop/files/logo_2ce59bcc-8275-4e55-90ee-edf8f5dc5db4_1200x1200.jpg?v=1603257947">
+<meta property="og:image:secure_url" content="https://dans-pots.myshopify.com/cdn/shop/files/logo_2ce59bcc-8275-4e55-90ee-edf8f5dc5db4_1200x1200.jpg?v=1603257947">
+
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="danspots">
+<meta name="twitter:description" content="Handmade pots by Dan in San Francisco">
+
+
+  <link href="theme.scss.css" rel="stylesheet" type="text/css" media="all">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <meta id="shopify-digital-wallet" name="shopify-digital-wallet" content="/44798345371/digital_wallets/dialog">
+<meta name="shopify-checkout-api-token" content="7636f6f3c40f0475906f4be7ec740bf6">
+<meta id="in-context-paypal-metadata" data-shop-id="44798345371" data-venmo-supported="true" data-environment="production" data-locale="en_US" data-paypal-v4="true" data-currency="USD">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style id="shopify-accelerated-checkout-cart-grid">#dynamic-checkout-cart {
+  container-type: inline-size;
+  container-name: dcc;
+  width: 100%;
+}
+
+.wallet-cart-grid {
+  --wallet-button-height-horizontal: clamp(
+    25px,
+    var(
+      --shopify-accelerated-checkout-button-inline-size,
+      42px
+    ),
+    55px
+  );
+  --wallet-button-height-vertical: clamp(
+    25px,
+    var(
+      --shopify-accelerated-checkout-button-block-size,
+      54px
+    ),
+    55px
+  );
+  --wallet-button-width-horizontal: 150px;
+  --wallet-button-width-vertical: 100%;
+  --wallet-button-border-radius: var(
+    --shopify-accelerated-checkout-button-border-radius,
+    4px
+  );
+  --wallet-grid-margin-horizontal: 0 -5px -5px -5px;
+  --wallet-button-container-margin-horizontal: 0 5px 5px;
+  --wallet-button-container-margin-vertical: var(--shopify-accelerated-checkout-row-gap, 8px) 0 0;
+}
+
+@keyframes acceleratedCheckoutLoadingSkeleton {
+  50% {opacity: var(--shopify-accelerated-checkout-skeleton-animation-opacity-start, 1);}
+  75% {opacity: var(--shopify-accelerated-checkout-skeleton-animation-opacity-end, 0.5);}
+  100% {opacity: var(--shopify-accelerated-checkout-skeleton-animation-opacity-start, 1);}
+}
+
+.wallet-cart-button__skeleton {
+  animation: acceleratedCheckoutLoadingSkeleton var(--shopify-accelerated-checkout-skeleton-animation-duration, 4s) var(--shopify-accelerated-checkout-skeleton-animation-timing-function, ease) infinite;
+  animation-delay: -0.168s;
+  background-color: var(--shopify-accelerated-checkout-skeleton-background-color, #dedede);
+  box-sizing: border-box;
+  text-decoration: none !important;
+}
+
+.wallet-cart-grid {
+  margin: var(--wallet-grid-margin-horizontal);
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: var(--shopify-accelerated-checkout-inline-alignment, start);
+  gap: 0 !important;
+}
+
+.wallet-cart-button-container {
+  position: relative;
+  margin: var(--wallet-button-container-margin-horizontal);
+}
+
+.wallet-cart-button-container,
+.wallet-cart-button {
+  width: var(--wallet-button-width-horizontal);
+  height: var(--wallet-button-height-horizontal);
+  border-radius: var(--wallet-button-border-radius);
+  list-style-type: none !important;
+  text-align: center;
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+
+.additional-checkout-buttons--vertical .wallet-cart-grid {
+  justify-content: start;
+  flex-direction: column;
+  margin: 0;
+}
+.additional-checkout-buttons--vertical .wallet-cart-grid .wallet-cart-button-container {
+  width: var(--wallet-button-width-vertical);
+  height: var(--wallet-button-height-vertical);
+  margin: var(--wallet-button-container-margin-vertical);
+}
+.additional-checkout-buttons--vertical .wallet-cart-grid .wallet-cart-button-container:first-child {
+  margin-top: 0;
+}
+.additional-checkout-buttons--vertical .wallet-cart-grid .wallet-cart-button {
+  width: var(--wallet-button-width-vertical);
+  height: var(--wallet-button-height-vertical);
+}
+
+.additional-checkout-buttons--horizontal .wallet-cart-grid .wallet-cart-button-container,
+.additional-checkout-buttons--horizontal .wallet-cart-grid .wallet-cart-button {
+  width: var(--wallet-button-width-horizontal) !important;
+  height: var(--wallet-button-height-horizontal) !important;
+  border-radius: var(--wallet-button-border-radius) !important;
+}
+
+@container dcc (width >= 150px) and (width <= 500px) {
+  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(1)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(2))) {
+    justify-content: start;
+    flex-direction: column;
+    margin: 0;
+  }
+  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(1)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(2))) .wallet-cart-button-container {
+    width: var(--wallet-button-width-vertical);
+    height: var(--wallet-button-height-vertical);
+    margin: var(--wallet-button-container-margin-vertical);
+  }
+  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(1)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(2))) .wallet-cart-button-container:first-child {
+    margin-top: 0;
+  }
+  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(1)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(2))) .wallet-cart-button {
+    width: var(--wallet-button-width-vertical);
+    height: var(--wallet-button-height-vertical);
+  }
+}
+
+@container dcc (width <= 310px) {
+  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(2)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(3))) {
+    justify-content: start;
+    flex-direction: column;
+    margin: 0;
+  }
+  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(2)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(3))) .wallet-cart-button-container {
+    width: var(--wallet-button-width-vertical);
+    height: var(--wallet-button-height-vertical);
+    margin: var(--wallet-button-container-margin-vertical);
+  }
+  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(2)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(3))) .wallet-cart-button-container:first-child {
+    margin-top: 0;
+  }
+  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(2)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(3))) .wallet-cart-button {
+    width: var(--wallet-button-width-vertical);
+    height: var(--wallet-button-height-vertical);
+  }
+}
+
+@container dcc (width <= 470px) {
+  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(3)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(4))) {
+    justify-content: start;
+    flex-direction: column;
+    margin: 0;
+  }
+  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(3)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(4))) .wallet-cart-button-container {
+    width: var(--wallet-button-width-vertical);
+    height: var(--wallet-button-height-vertical);
+    margin: var(--wallet-button-container-margin-vertical);
+  }
+  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(3)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(4))) .wallet-cart-button-container:first-child {
+    margin-top: 0;
+  }
+  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(3)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(4))) .wallet-cart-button {
+    width: var(--wallet-button-width-vertical);
+    height: var(--wallet-button-height-vertical);
+  }
+}
+
+@container dcc (width <= 630px) {
+  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(4)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(5))) {
+    justify-content: start;
+    flex-direction: column;
+    margin: 0;
+  }
+  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(4)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(5))) .wallet-cart-button-container {
+    width: var(--wallet-button-width-vertical);
+    height: var(--wallet-button-height-vertical);
+    margin: var(--wallet-button-container-margin-vertical);
+  }
+  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(4)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(5))) .wallet-cart-button-container:first-child {
+    margin-top: 0;
+  }
+  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(4)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(5))) .wallet-cart-button {
+    width: var(--wallet-button-width-vertical);
+    height: var(--wallet-button-height-vertical);
+  }
+}
+
+@container dcc (width <= 790px) {
+  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(5)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(6))) {
+    justify-content: start;
+    flex-direction: column;
+    margin: 0;
+  }
+  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(5)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(6))) .wallet-cart-button-container {
+    width: var(--wallet-button-width-vertical);
+    height: var(--wallet-button-height-vertical);
+    margin: var(--wallet-button-container-margin-vertical);
+  }
+  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(5)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(6))) .wallet-cart-button-container:first-child {
+    margin-top: 0;
+  }
+  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(5)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(6))) .wallet-cart-button {
+    width: var(--wallet-button-width-vertical);
+    height: var(--wallet-button-height-vertical);
+  }
+}
+
+.wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(6)) {
+  justify-content: start;
+  flex-direction: column;
+  margin: 0;
+}
+.wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(6)) .wallet-cart-button-container {
+  width: var(--wallet-button-width-vertical);
+  height: var(--wallet-button-height-vertical);
+  margin: var(--wallet-button-container-margin-vertical);
+}
+.wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(6)) .wallet-cart-button-container:first-child {
+  margin-top: 0;
+}
+.wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(6)) .wallet-cart-button {
+  width: var(--wallet-button-width-vertical);
+  height: var(--wallet-button-height-vertical);
+}
+
+@media screen and (max-width: 750px) {
+  .wallet-cart-grid {
+    justify-content: start;
+    flex-direction: column;
+    max-width: none;
+    margin: 0;
+  }
+  .wallet-cart-grid .wallet-cart-button-container {
+    max-width: none;
+    width: var(--wallet-button-width-vertical);
+    height: var(--wallet-button-height-vertical);
+    margin: var(--wallet-button-container-margin-vertical);
+  }
+  .wallet-cart-grid .wallet-cart-button-container:first-child {
+    margin-top: 0;
+  }
+  .wallet-cart-grid .wallet-cart-button {
+    width: var(--wallet-button-width-vertical);
+    height: var(--wallet-button-height-vertical);
+  }
+}
+
+@supports (not (container-type: inline-size)) or (not (selector(:has(*)))) {
+  .wallet-cart-grid {
+    justify-content: start;
+    flex-direction: column;
+    margin: 0;
+  }
+  .wallet-cart-button-container {
+    width: var(--wallet-button-width-vertical);
+    height: var(--wallet-button-height-vertical);
+    margin: var(--wallet-button-container-margin-vertical);
+  }
+  .wallet-cart-button-container:first-child {
+    margin-top: 0;
+  }
+  .wallet-cart-grid .wallet-cart-button {
+    width: var(--wallet-button-width-vertical);
+    height: var(--wallet-button-height-vertical);
+  }
+}
+</style>
+
+<style id="shopify-accelerated-checkout-cart-grid-with-margin-top">.additional-checkout-buttons--vertical .wallet-cart-grid .wallet-cart-button-container:first-child {
+  margin-top: 8px;
+}
+
+
+@container dcc (width >= 150px) and (width <= 500px) {
+  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(1)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(2))) .wallet-cart-button-container:first-child {
+    margin-top: 8px;
+  }
+}
+
+@container dcc (width <= 310px) {
+  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(2)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(3))) .wallet-cart-button-container:first-child {
+    margin-top: 8px;
+  }
+}
+
+@container dcc (width <= 470px) {
+  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(3)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(4))) .wallet-cart-button-container:first-child {
+    margin-top: 8px;
+  }
+}
+
+@container dcc (width <= 630px) {
+  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(4)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(5))) .wallet-cart-button-container:first-child {
+    margin-top: 8px;
+  }
+}
+
+@container dcc (width <= 790px) {
+  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(5)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(6))) .wallet-cart-button-container:first-child {
+    margin-top: 8px;
+  }
+}
+
+.wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(6)) .wallet-cart-button-container:first-child {
+  margin-top: 8px;
+}
+
+@media screen and (max-width: 750px) {
+  .wallet-cart-grid .wallet-cart-button-container:first-child {
+    margin-top: 8px;
+  }
+}
+
+@supports (not (container-type: inline-size)) or (not (selector(:has(*)))) {
+  .wallet-cart-button-container:first-child {
+    margin-top: 8px;
+  }
+}
+</style>
+
+
+
+
+  
+
+
+
+
+<style>
+            .flipX video::-webkit-media-text-track-display {
+                transform: matrix(-1, 0, 0, 1, 0, 0) !important;
+            }
+            .flipXY video::-webkit-media-text-track-display {
+                transform: matrix(-1, 0, 0, -1, 0, 0) !important;
+            }
+            .flipXYX video::-webkit-media-text-track-display {
+                transform: matrix(1, 0, 0, -1, 0, 0) !important;
+            }</style><style>
+            @keyframes blinkWarning {
+                0% { color: red; }
+                100% { color: white; }
+            }
+            @-webkit-keyframes blinkWarning {
+                0% { color: red; }
+                100% { color: white; }
+            }
+            .blinkWarning {
+                -webkit-animation: blinkWarning 1s linear infinite;
+                -moz-animation: blinkWarning 1s linear infinite;
+                animation: blinkWarning 1s linear infinite;
+            }</style></head>
+
+<body id="danspots" class="template-index vsc-initialized">
+  <div tabindex="-1" aria-hidden="true" id="web-pixels-manager-sandbox-container" data-shopify-privacy="exclude" style="height: 0px !important; width: 0px !important; position: fixed !important; visibility: hidden !important; overflow: hidden !important; z-index: -100 !important; margin: 0px !important; padding: 0px !important; border: 0px !important;"><iframe tabindex="-1" aria-hidden="true" name="web-pixel-sandbox-CUSTOM-shopify-custom-pixel-LAX-381019efwb122f449p04c12928m4f4a5df6" src="index_1.html" id="web-pixel-sandbox-CUSTOM-shopify-custom-pixel-LAX-381019efwb122f449p04c12928m4f4a5df6" sandbox="allow-scripts allow-forms" style="height: 0px !important; width: 0px !important; visibility: hidden !important;"></iframe></div><div id="SearchDrawer" class="search-bar drawer drawer--top">
+    <div class="search-bar__table">
+      <form action="https://dans-pots.myshopify.com/search" method="get" class="search-bar__table-cell search-bar__form" role="search">
+        <div class="search-bar__table">
+          <div class="search-bar__table-cell search-bar__icon-cell">
+            <button type="submit" class="search-bar__icon-button search-bar__submit">
+              <span class="icon icon-search" aria-hidden="true"></span>
+              <span class="icon__fallback-text">Search</span>
+            </button>
+          </div>
+          <div class="search-bar__table-cell">
+            <input type="search" id="SearchInput" name="q" value="" placeholder="Search our store" aria-label="Search our store" class="search-bar__input">
+          </div>
+        </div>
+      </form>
+      <div class="search-bar__table-cell text-right">
+        <button type="button" class="search-bar__icon-button search-bar__close js-drawer-close">
+          <span class="icon icon-x" aria-hidden="true"></span>
+          <span class="icon__fallback-text">close (esc)</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div id="NavDrawer" class="drawer drawer--left">
+  <div id="shopify-section-sidebar-menu" class="shopify-section sidebar-menu-section"><div class="drawer__header" data-section-id="sidebar-menu" data-section-type="sidebar-menu-section">
+  <div class="drawer__close">
+    <button type="button" class="drawer__close-button js-drawer-close">
+      <span class="icon icon-x" aria-hidden="true"></span>
+      <span class="icon__fallback-text">Close menu</span>
+    </button>
+  </div>
+</div>
+<div class="drawer__inner">
+  <ul class="drawer-nav">
+    
+      
+      
+        <li class="drawer-nav__item">
+          <a href="https://dans-pots.myshopify.com/collections/all" class="drawer-nav__link h2">store</a>
+        </li>
+      
+    
+      
+      
+        <li class="drawer-nav__item">
+          <a href="https://dans-pots.myshopify.com/pages/about-dan" class="drawer-nav__link h2">about</a>
+        </li>
+      
+    
+
+    <li class="drawer-nav__spacer"></li>
+
+    
+    
+      <li class="drawer-nav__item drawer-nav__item--secondary"><a href="https://dans-pots.myshopify.com/pages/shipping-terms-conditions">shipping · returns</a></li>
+    
+      <li class="drawer-nav__item drawer-nav__item--secondary"><a href="mailto:Daniel@danspots.com">daniel@danspots.com</a></li>
+    
+  </ul>
+
+  <ul class="list--inline social-icons social-icons--drawer">
+    
+    
+    
+    
+    
+      <li>
+        <a href="https://www.instagram.com/danspots/" title="danspots on Instagram">
+          <span class="icon icon-instagram" aria-hidden="true"></span>
+          <span class="visually-hidden">Instagram</span>
+        </a>
+      </li>
+    
+    
+    
+    
+    
+    
+  </ul>
+</div>
+
+
+
+
+</div>
+  </div>
+  <div id="CartDrawer" class="drawer drawer--right drawer--has-fixed-footer">
+    <div class="drawer__header">
+      <div class="drawer__close">
+        <button type="button" class="drawer__close-button js-drawer-close">
+          <span class="icon icon-x" aria-hidden="true"></span>
+          <span class="icon__fallback-text">Close cart</span>
+        </button>
+      </div>
+    </div>
+    <div class="drawer__inner">
+      <div id="CartContainer">
+      </div>
+    </div>
+  </div>
+
+  <div id="PageContainer" class="drawer-page-content">
+    <div id="shopify-section-announcement-bar" class="shopify-section">
+  
+    <style>
+      .announcement-bar {
+        background-color: #ffffff;
+      }
+
+      .announcement-bar--link:hover {
+        
+
+        
+          
+          background-color: #ebebeb;
+        
+      }
+
+      .announcement-bar__message {
+        color: #1a1a1a;
+      }
+    </style>
+
+    
+      <div class="announcement-bar" style="transform: translate3d(0px, 0px, 0px);">
+    
+
+      <p class="announcement-bar__message"></p>
+
+    
+      </div>
+    
+
+  
+
+
+
+
+
+</div>
+
+    <div class="site-header-wrapper">
+      <div class="site-header-container">
+        <div id="shopify-section-header" class="shopify-section header-section"><style>
+  .site-header__logo img {
+    max-width: 170px;
+  }
+  @media screen and (max-width: 749px) {
+    .site-header__logo img {
+      max-width: 100%;
+    }
+  }
+</style>
+
+<header class="site-header" role="banner" data-section-id="header" data-section-type="header-section">
+  <div class="grid grid--no-gutters grid--table site-header__inner">
+    <div class="grid__item one-third medium-up--one-sixth">
+      <button type="button" class="site-header__link text-link site-header__toggle-nav js-drawer-open-left" aria-controls="NavDrawer" aria-expanded="false">
+        <span class="icon icon-hamburger" aria-hidden="true"></span>
+        <span class="icon__fallback-text">Menu</span>
+      </button>
+    </div>
+    <div class="grid__item one-third medium-up--two-thirds">
+      <div class="site-header__logo h1" itemscope="" itemtype="http://schema.org/Organization"><a href="https://dans-pots.myshopify.com/" itemprop="url" class="site-header__logo-link">
+              
+              <img class="site-header__logo-image" src="New_Project_2_170x_2x_1_170x.png" srcset="New_Project_2_170x_2x_1_170x.png 1x, New_Project_2_170x_2x_1_170x@2x.png 2x" alt="danspots" itemprop="logo">
+            </a></div>
+    </div>
+
+    <div class="grid__item one-third medium-up--one-sixth text-right">
+      <a href="https://dans-pots.myshopify.com/search" class="site-header__link site-header__search js-drawer-open-top" aria-controls="SearchDrawer" aria-expanded="false">
+        <span class="icon icon-search" aria-hidden="true"></span>
+        <span class="icon__fallback-text">Search</span>
+      </a>
+      <a href="https://dans-pots.myshopify.com/cart" class="site-header__link site-header__cart cart-link js-drawer-open-right" aria-controls="CartDrawer" aria-expanded="false">
+        <span class="icon icon-cart" aria-hidden="true"></span>
+        <span class="icon__fallback-text">Cart</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+
+
+<style>
+  .icon-search{
+    display: none !important;
+  }
+</style>
+</div>
+
+        <div class="action-area"></div>
+      </div>
+    </div>
+
+    <main class="main-content" role="main">
+      <!-- /templates/index.liquid -->
+
+
+
+
+  <div id="shopify-section-slideshow" class="shopify-section"><style data-shopify="">.hero {
+      height:60.91131998365345vw !important;
+      overflow: hidden;
+    }
+    .hero .slick-track,
+    .hero .hero__slide:before {
+      height:60.91131998365345vw;
+    }</style><style data-shopify="">.site-header__link,
+  .site-header__logo-link {
+    color: #ffffff !important;
+  }
+
+  .hero__text-title {
+    color: #ffffff;
+  }
+
+  .hero__slide:after {
+    background-color: #000000;
+    opacity: 0.0;
+  }
+
+  .hero__button-circle {
+    background: rgba(0, 0, 0, 0.3);
+  }
+
+  .slick-prev .icon:before,
+  .slick-next .icon:before,
+  .hero__pause .icon:before {
+    color: #ffffff;
+  }
+
+  .slick-dots {
+    background: rgba(0, 0, 0, 0.3);
+  }
+
+  .hero__dots:before {
+    background-color: #ffffff;
+    border-color: #ffffff;
+  }
+
+  .slick-active .hero__dots:before {
+    background-color: transparent;
+    border: 2px solid #ffffff;
+  }</style><div data-section-id="slideshow" data-section-type="slideshow-section" class="hero--adapt">
+  <div class="hero slideshow-slideshow slick-initialized slick-slider" id="Hero" role="region" aria-label="slideshow" aria-describedby="slideshow-info" tabindex="-1" data-autoplay="false" data-autoplayspeed="3000" data-adapt="true" data-slide-nav-a11y="Load slide [slide_number]" data-slide-nav-active-a11y="Slide [slide_number], current"><div class="slick-list"><div class="slick-track" style="opacity: 1; width: 1680px;"><div id="SlickSlide1" aria-hidden="true" class="hero__slide hero__slide--7bb0bd55-63fa-4418-8f18-0d69407b3257 slick-slide slick-active" index="0" style="width: 1680px; position: relative; left: 0px; top: 0px; z-index: 900; opacity: 1;">
+            <img class="hero__image hero__image--7bb0bd55-63fa-4418-8f18-0d69407b3257 lazyautosizes ls-is-cached lazyloaded image-loaded" src="DSC_4371_3_300x.jpg" data-widths="[540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048, 4472]" data-aspectratio="1.6417309627641732" data-sizes="auto" data-parent-fit="cover" alt="" style="object-position: center bottom; transform: translate3d(0px, 0px, 0px);" data-srcset="//dans-pots.myshopify.com/cdn/shop/files/DSC_4371_3_540x.jpg?v=1614373374 540w, //dans-pots.myshopify.com/cdn/shop/files/DSC_4371_3_720x.jpg?v=1614373374 720w, //dans-pots.myshopify.com/cdn/shop/files/DSC_4371_3_900x.jpg?v=1614373374 900w, //dans-pots.myshopify.com/cdn/shop/files/DSC_4371_3_1080x.jpg?v=1614373374 1080w, //dans-pots.myshopify.com/cdn/shop/files/DSC_4371_3_1296x.jpg?v=1614373374 1296w, //dans-pots.myshopify.com/cdn/shop/files/DSC_4371_3_1512x.jpg?v=1614373374 1512w, //dans-pots.myshopify.com/cdn/shop/files/DSC_4371_3_1728x.jpg?v=1614373374 1728w, //dans-pots.myshopify.com/cdn/shop/files/DSC_4371_3_1944x.jpg?v=1614373374 1944w, //dans-pots.myshopify.com/cdn/shop/files/DSC_4371_3_2048x.jpg?v=1614373374 2048w, //dans-pots.myshopify.com/cdn/shop/files/DSC_4371_3_4472x.jpg?v=1614373374 4472w" sizes="1680px" srcset="DSC_4371_3_540x.jpg 540w, DSC_4371_3_720x.jpg 720w, DSC_4371_3_900x.jpg 900w, DSC_4371_3_1080x.jpg 1080w, DSC_4371_3_1296x.jpg 1296w, DSC_4371_3_1512x.jpg 1512w, DSC_4371_3_1728x.jpg 1728w, DSC_4371_3_1944x.jpg 1944w, DSC_4371_3_2048x.jpg 2048w, DSC_4371_3_4472x.jpg 4472w"><noscript>
+                <div class="hero__image-no-js hero__image--7bb0bd55-63fa-4418-8f18-0d69407b3257" data-image="7bb0bd55-63fa-4418-8f18-0d69407b3257" style="background-image: url(&quot;DSC_4371_3_2048x2048.jpg&quot;);"></div>
+              </noscript><div class="hero__content-wrapper hero-initialized">
+            <div class="hero__content">
+              <div class="hero__content-centered"></div>
+            </div>
+          </div>
+        </div></div></div></div><div class="hero__content-wrapper-mobile"></div></div>
+<p id="slideshow-info" class="visually-hidden" aria-hidden="true">Use left/right arrows to navigate the slideshow or swipe left/right if using a mobile device</p>
+
+
+</div>
+
+  <div class="hero__header hero__header--adapt">
+   <div class="action-area">
+     <!-- action bar section -->
+<div id="shopify-section-action-bar" class="shopify-section action-bar-section"><!-- snippets/action-bar.liquid -->
+
+
+
+
+
+
+  
+  <div class="action-bar-wrapper  action-bar--hero" data-section-id="action-bar" data-section-type="action-bar-section">
+
+
+    <nav class="action-bar action-bar--has-menu" role="presentation">
+      <ul class="action-bar__menu--main action-bar__menu list--inline  action-bar--show" id="SiteNav" role="navigation">
+        
+        
+          
+          
+            <li class="action-bar__menu-item ">
+              <a href="https://dans-pots.myshopify.com/collections/oak/bowl" class="action-bar__link">bowl</a>
+            </li>
+          
+        
+          
+          
+            <li class="action-bar__menu-item ">
+              <a href="https://dans-pots.myshopify.com/collections/oak/vase" class="action-bar__link">vase</a>
+            </li>
+          
+        
+          
+          
+            <li class="action-bar__menu-item ">
+              <a href="https://dans-pots.myshopify.com/collections/oak/planter" class="action-bar__link">planter</a>
+            </li>
+          
+        
+          
+          
+            <li class="action-bar__menu-item ">
+              <a href="https://dans-pots.myshopify.com/collections/oak/cup" class="action-bar__link">cup</a>
+            </li>
+          
+        
+      </ul>
+
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+    </nav>
+  </div>
+
+
+
+
+</div>
+   </div>
+ </div>
+</main></div>
+<!-- BEGIN content_for_index --><div id="shopify-section-160304215659009307" class="shopify-section index-section featured-collection-section"><div class="featured-collection" data-section-id="160304215659009307" data-section-type="featured-collection-section">
+  
+  
+
+  
+  <h2 class="visually-hidden">oak</h2>
+
+  <div class="grid grid--no-gutters grid--uniform collection-grid">
+    
+    
+
+
+
+    
+      
+        
+        <div class="product-item grid__item small--one-half medium--one-third large-up--one-quarter">
+  <div class="product-item__link-wrapper">
+    <a class="product-item__link" href="https://dans-pots.myshopify.com/products/scarlet-bowls">
+      <span class="image-wrapper">
+        
+        <noscript>
+          <img class="product-item__image-no-js" src="DSC_4442_1024x.jpg" alt="scarlet bowls">
+        </noscript>
+        <div class="product-item__image-container" style="max-width: 600px;" data-image-with-placeholder-wrapper="">
+          <div class="product-item__image-wrapper" style="padding-top:100.0%">
+            
+            <img class="product-item__image lazyautosizes ls-is-cached lazyloaded" alt="scarlet bowls" data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048, 4472]" data-aspectratio="1.0" data-sizes="auto" data-image="" data-srcset="//dans-pots.myshopify.com/cdn/shop/products/DSC_4442_360x.jpg?v=1603139782 360w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4442_540x.jpg?v=1603139782 540w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4442_720x.jpg?v=1603139782 720w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4442_900x.jpg?v=1603139782 900w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4442_1080x.jpg?v=1603139782 1080w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4442_1296x.jpg?v=1603139782 1296w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4442_1512x.jpg?v=1603139782 1512w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4442_1728x.jpg?v=1603139782 1728w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4442_1944x.jpg?v=1603139782 1944w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4442_2048x.jpg?v=1603139782 2048w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4442_4472x.jpg?v=1603139782 4472w" sizes="420px" srcset="DSC_4442_360x.jpg 360w, DSC_4442_540x.jpg 540w, DSC_4442_720x.jpg 720w, DSC_4442_900x.jpg 900w, DSC_4442_1080x.jpg 1080w, DSC_4442_1296x.jpg 1296w, DSC_4442_1512x.jpg 1512w, DSC_4442_1728x.jpg 1728w, DSC_4442_1944x.jpg 1944w, DSC_4442_2048x.jpg 2048w, DSC_4442_4472x.jpg 4472w">
+          </div>
+          <div class="placeholder-background placeholder-background--animation" data-image-placeholder="" style="display: none;"></div>
+        </div>
+      
+
+        
+        <span class="product-item__meta">
+          <span class="product-item__meta__inner">
+
+            
+            <p class="product-item__title">scarlet bowls</p>
+            <p class="product-item__price-wrapper">
+              
+              
+                
+                  
+                    <span class="visually-hidden">Regular price</span>
+                  
+                  $64
+
+              
+            </p>
+
+            
+            
+              <p class="product-item__sold-out">Sold out</p>
+            
+          </span>
+        </span>
+
+        
+        
+      </span>
+    </a>
+  </div>
+</div>
+
+      
+        
+        <div class="product-item grid__item small--one-half medium--one-third large-up--one-quarter">
+  <div class="product-item__link-wrapper">
+    <a class="product-item__link" href="https://dans-pots.myshopify.com/products/chinkapin-bowls">
+      <span class="image-wrapper">
+        
+        <noscript>
+          <img class="product-item__image-no-js" src="DSC_4328_1_1024x.jpg" alt="chinkapin bowls">
+        </noscript>
+        <div class="product-item__image-container" style="max-width: 600px;" data-image-with-placeholder-wrapper="">
+          <div class="product-item__image-wrapper" style="padding-top:100.0%">
+            
+            <img class="product-item__image lazyautosizes ls-is-cached lazyloaded" alt="chinkapin bowls" data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048, 4472]" data-aspectratio="1.0" data-sizes="auto" data-image="" data-srcset="//dans-pots.myshopify.com/cdn/shop/products/DSC_4328_1_360x.jpg?v=1603072572 360w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4328_1_540x.jpg?v=1603072572 540w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4328_1_720x.jpg?v=1603072572 720w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4328_1_900x.jpg?v=1603072572 900w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4328_1_1080x.jpg?v=1603072572 1080w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4328_1_1296x.jpg?v=1603072572 1296w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4328_1_1512x.jpg?v=1603072572 1512w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4328_1_1728x.jpg?v=1603072572 1728w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4328_1_1944x.jpg?v=1603072572 1944w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4328_1_2048x.jpg?v=1603072572 2048w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4328_1_4472x.jpg?v=1603072572 4472w" sizes="420px" srcset="DSC_4328_1_360x.jpg 360w, DSC_4328_1_540x.jpg 540w, DSC_4328_1_720x.jpg 720w, DSC_4328_1_900x.jpg 900w, DSC_4328_1_1080x.jpg 1080w, DSC_4328_1_1296x.jpg 1296w, DSC_4328_1_1512x.jpg 1512w, DSC_4328_1_1728x.jpg 1728w, DSC_4328_1_1944x.jpg 1944w, DSC_4328_1_2048x.jpg 2048w, DSC_4328_1_4472x.jpg 4472w">
+          </div>
+          <div class="placeholder-background placeholder-background--animation" data-image-placeholder="" style="display: none;"></div>
+        </div>
+      
+
+        
+        <span class="product-item__meta">
+          <span class="product-item__meta__inner">
+
+            
+            <p class="product-item__title">chinkapin bowls</p>
+            <p class="product-item__price-wrapper">
+              
+              
+                
+                  
+                    <span class="visually-hidden">Regular price</span>
+                  
+                  $60
+
+              
+            </p>
+
+            
+            
+              <p class="product-item__sold-out">Sold out</p>
+            
+          </span>
+        </span>
+
+        
+        
+      </span>
+    </a>
+  </div>
+</div>
+
+      
+        
+        <div class="product-item grid__item small--one-half medium--one-third large-up--one-quarter">
+  <div class="product-item__link-wrapper">
+    <a class="product-item__link" href="https://dans-pots.myshopify.com/products/washoe-vase">
+      <span class="image-wrapper">
+        
+        <noscript>
+          <img class="product-item__image-no-js" src="DSC_5185_1024x.jpg" alt="washoe vase">
+        </noscript>
+        <div class="product-item__image-container" style="max-width: 600px;" data-image-with-placeholder-wrapper="">
+          <div class="product-item__image-wrapper" style="padding-top:100.0%">
+            
+            <img class="product-item__image lazyautosizes ls-is-cached lazyloaded" alt="washoe vase" data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048, 4472]" data-aspectratio="1.0" data-sizes="auto" data-image="" data-srcset="//dans-pots.myshopify.com/cdn/shop/products/DSC_5185_360x.jpg?v=1605217131 360w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5185_540x.jpg?v=1605217131 540w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5185_720x.jpg?v=1605217131 720w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5185_900x.jpg?v=1605217131 900w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5185_1080x.jpg?v=1605217131 1080w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5185_1296x.jpg?v=1605217131 1296w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5185_1512x.jpg?v=1605217131 1512w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5185_1728x.jpg?v=1605217131 1728w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5185_1944x.jpg?v=1605217131 1944w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5185_2048x.jpg?v=1605217131 2048w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5185_4472x.jpg?v=1605217131 4472w" sizes="420px" srcset="DSC_5185_360x.jpg 360w, DSC_5185_540x.jpg 540w, DSC_5185_720x.jpg 720w, DSC_5185_900x.jpg 900w, DSC_5185_1080x.jpg 1080w, DSC_5185_1296x.jpg 1296w, DSC_5185_1512x.jpg 1512w, DSC_5185_1728x.jpg 1728w, DSC_5185_1944x.jpg 1944w, DSC_5185_2048x.jpg 2048w, DSC_5185_4472x.jpg 4472w">
+          </div>
+          <div class="placeholder-background placeholder-background--animation" data-image-placeholder="" style="display: none;"></div>
+        </div>
+      
+
+        
+        <span class="product-item__meta">
+          <span class="product-item__meta__inner">
+
+            
+            <p class="product-item__title">washoe vase</p>
+            <p class="product-item__price-wrapper">
+              
+              
+                
+                  
+                    <span class="visually-hidden">Regular price</span>
+                  
+                  $80
+
+              
+            </p>
+
+            
+            
+          </span>
+        </span>
+
+        
+        
+      </span>
+    </a>
+  </div>
+</div>
+
+      
+        
+        <div class="product-item grid__item small--one-half medium--one-third large-up--one-quarter">
+  <div class="product-item__link-wrapper">
+    <a class="product-item__link" href="https://dans-pots.myshopify.com/products/ponderosa-vase">
+      <span class="image-wrapper">
+        
+        <noscript>
+          <img class="product-item__image-no-js" src="DSC_5191_1024x.jpg" alt="ponderosa vase">
+        </noscript>
+        <div class="product-item__image-container" style="max-width: 600px;" data-image-with-placeholder-wrapper="">
+          <div class="product-item__image-wrapper" style="padding-top:100.0%">
+            
+            <img class="product-item__image lazyautosizes ls-is-cached lazyloaded" alt="ponderosa vase" data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048, 4472]" data-aspectratio="1.0" data-sizes="auto" data-image="" data-srcset="//dans-pots.myshopify.com/cdn/shop/products/DSC_5191_360x.jpg?v=1605217002 360w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5191_540x.jpg?v=1605217002 540w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5191_720x.jpg?v=1605217002 720w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5191_900x.jpg?v=1605217002 900w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5191_1080x.jpg?v=1605217002 1080w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5191_1296x.jpg?v=1605217002 1296w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5191_1512x.jpg?v=1605217002 1512w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5191_1728x.jpg?v=1605217002 1728w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5191_1944x.jpg?v=1605217002 1944w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5191_2048x.jpg?v=1605217002 2048w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5191_4472x.jpg?v=1605217002 4472w" sizes="420px" srcset="DSC_5191_360x.jpg 360w, DSC_5191_540x.jpg 540w, DSC_5191_720x.jpg 720w, DSC_5191_900x.jpg 900w, DSC_5191_1080x.jpg 1080w, DSC_5191_1296x.jpg 1296w, DSC_5191_1512x.jpg 1512w, DSC_5191_1728x.jpg 1728w, DSC_5191_1944x.jpg 1944w, DSC_5191_2048x.jpg 2048w, DSC_5191_4472x.jpg 4472w">
+          </div>
+          <div class="placeholder-background placeholder-background--animation" data-image-placeholder="" style="display: none;"></div>
+        </div>
+      
+
+        
+        <span class="product-item__meta">
+          <span class="product-item__meta__inner">
+
+            
+            <p class="product-item__title">ponderosa vase</p>
+            <p class="product-item__price-wrapper">
+              
+              
+                
+                  
+                    <span class="visually-hidden">Regular price</span>
+                  
+                  $60
+
+              
+            </p>
+
+            
+            
+          </span>
+        </span>
+
+        
+        
+      </span>
+    </a>
+  </div>
+</div>
+
+      
+        
+        <div class="product-item grid__item small--one-half medium--one-third large-up--one-quarter">
+  <div class="product-item__link-wrapper">
+    <a class="product-item__link" href="https://dans-pots.myshopify.com/products/large-maritime-vase">
+      <span class="image-wrapper">
+        
+        <noscript>
+          <img class="product-item__image-no-js" src="DSC_5183_1024x.jpg" alt="large maritime vase">
+        </noscript>
+        <div class="product-item__image-container" style="max-width: 600px;" data-image-with-placeholder-wrapper="">
+          <div class="product-item__image-wrapper" style="padding-top:100.0%">
+            
+            <img class="product-item__image lazyautosizes ls-is-cached lazyloaded" alt="large maritime vase" data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048, 4472]" data-aspectratio="1.0" data-sizes="auto" data-image="" data-srcset="//dans-pots.myshopify.com/cdn/shop/products/DSC_5183_360x.jpg?v=1605216830 360w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5183_540x.jpg?v=1605216830 540w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5183_720x.jpg?v=1605216830 720w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5183_900x.jpg?v=1605216830 900w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5183_1080x.jpg?v=1605216830 1080w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5183_1296x.jpg?v=1605216830 1296w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5183_1512x.jpg?v=1605216830 1512w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5183_1728x.jpg?v=1605216830 1728w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5183_1944x.jpg?v=1605216830 1944w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5183_2048x.jpg?v=1605216830 2048w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5183_4472x.jpg?v=1605216830 4472w" sizes="420px" srcset="DSC_5183_360x.jpg 360w, DSC_5183_540x.jpg 540w, DSC_5183_720x.jpg 720w, DSC_5183_900x.jpg 900w, DSC_5183_1080x.jpg 1080w, DSC_5183_1296x.jpg 1296w, DSC_5183_1512x.jpg 1512w, DSC_5183_1728x.jpg 1728w, DSC_5183_1944x.jpg 1944w, DSC_5183_2048x.jpg 2048w, DSC_5183_4472x.jpg 4472w">
+          </div>
+          <div class="placeholder-background placeholder-background--animation" data-image-placeholder="" style="display: none;"></div>
+        </div>
+      
+
+        
+        <span class="product-item__meta">
+          <span class="product-item__meta__inner">
+
+            
+            <p class="product-item__title">large maritime vase</p>
+            <p class="product-item__price-wrapper">
+              
+              
+                
+                  
+                    <span class="visually-hidden">Regular price</span>
+                  
+                  $130
+
+              
+            </p>
+
+            
+            
+          </span>
+        </span>
+
+        
+        
+      </span>
+    </a>
+  </div>
+</div>
+
+      
+        
+        <div class="product-item grid__item small--one-half medium--one-third large-up--one-quarter">
+  <div class="product-item__link-wrapper">
+    <a class="product-item__link" href="https://dans-pots.myshopify.com/products/large-patula-vase">
+      <span class="image-wrapper">
+        
+        <noscript>
+          <img class="product-item__image-no-js" src="DSC_5182_1024x.jpg" alt="large patula vase">
+        </noscript>
+        <div class="product-item__image-container" style="max-width: 600px;" data-image-with-placeholder-wrapper="">
+          <div class="product-item__image-wrapper" style="padding-top:100.0%">
+            
+            <img class="product-item__image lazyautosizes ls-is-cached lazyloaded" alt="large patula vase" data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048, 4472]" data-aspectratio="1.0" data-sizes="auto" data-image="" data-srcset="//dans-pots.myshopify.com/cdn/shop/products/DSC_5182_360x.jpg?v=1605216672 360w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5182_540x.jpg?v=1605216672 540w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5182_720x.jpg?v=1605216672 720w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5182_900x.jpg?v=1605216672 900w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5182_1080x.jpg?v=1605216672 1080w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5182_1296x.jpg?v=1605216672 1296w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5182_1512x.jpg?v=1605216672 1512w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5182_1728x.jpg?v=1605216672 1728w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5182_1944x.jpg?v=1605216672 1944w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5182_2048x.jpg?v=1605216672 2048w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5182_4472x.jpg?v=1605216672 4472w" sizes="420px" srcset="DSC_5182_360x.jpg 360w, DSC_5182_540x.jpg 540w, DSC_5182_720x.jpg 720w, DSC_5182_900x.jpg 900w, DSC_5182_1080x.jpg 1080w, DSC_5182_1296x.jpg 1296w, DSC_5182_1512x.jpg 1512w, DSC_5182_1728x.jpg 1728w, DSC_5182_1944x.jpg 1944w, DSC_5182_2048x.jpg 2048w, DSC_5182_4472x.jpg 4472w">
+          </div>
+          <div class="placeholder-background placeholder-background--animation" data-image-placeholder="" style="display: none;"></div>
+        </div>
+      
+
+        
+        <span class="product-item__meta">
+          <span class="product-item__meta__inner">
+
+            
+            <p class="product-item__title">large patula vase</p>
+            <p class="product-item__price-wrapper">
+              
+              
+                
+                  
+                    <span class="visually-hidden">Regular price</span>
+                  
+                  $150
+
+              
+            </p>
+
+            
+            
+          </span>
+        </span>
+
+        
+        
+      </span>
+    </a>
+  </div>
+</div>
+
+      
+        
+        <div class="product-item grid__item small--one-half medium--one-third large-up--one-quarter">
+  <div class="product-item__link-wrapper">
+    <a class="product-item__link" href="https://dans-pots.myshopify.com/products/large-longleaf-planter">
+      <span class="image-wrapper">
+        
+        <noscript>
+          <img class="product-item__image-no-js" src="DSC_5193_1024x.jpg" alt="large longleaf planter">
+        </noscript>
+        <div class="product-item__image-container" style="max-width: 600px;" data-image-with-placeholder-wrapper="">
+          <div class="product-item__image-wrapper" style="padding-top:100.0%">
+            
+            <img class="product-item__image lazyautosizes ls-is-cached lazyloaded" alt="large longleaf planter" data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048, 4472]" data-aspectratio="1.0" data-sizes="auto" data-image="" data-srcset="//dans-pots.myshopify.com/cdn/shop/products/DSC_5193_360x.jpg?v=1605216464 360w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5193_540x.jpg?v=1605216464 540w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5193_720x.jpg?v=1605216464 720w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5193_900x.jpg?v=1605216464 900w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5193_1080x.jpg?v=1605216464 1080w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5193_1296x.jpg?v=1605216464 1296w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5193_1512x.jpg?v=1605216464 1512w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5193_1728x.jpg?v=1605216464 1728w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5193_1944x.jpg?v=1605216464 1944w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5193_2048x.jpg?v=1605216464 2048w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5193_4472x.jpg?v=1605216464 4472w" sizes="420px" srcset="DSC_5193_360x.jpg 360w, DSC_5193_540x.jpg 540w, DSC_5193_720x.jpg 720w, DSC_5193_900x.jpg 900w, DSC_5193_1080x.jpg 1080w, DSC_5193_1296x.jpg 1296w, DSC_5193_1512x.jpg 1512w, DSC_5193_1728x.jpg 1728w, DSC_5193_1944x.jpg 1944w, DSC_5193_2048x.jpg 2048w, DSC_5193_4472x.jpg 4472w">
+          </div>
+          <div class="placeholder-background placeholder-background--animation" data-image-placeholder="" style="display: none;"></div>
+        </div>
+      
+
+        
+        <span class="product-item__meta">
+          <span class="product-item__meta__inner">
+
+            
+            <p class="product-item__title">large longleaf planter</p>
+            <p class="product-item__price-wrapper">
+              
+              
+                
+                  
+                    <span class="visually-hidden">Regular price</span>
+                  
+                  $120
+
+              
+            </p>
+
+            
+            
+          </span>
+        </span>
+
+        
+        
+      </span>
+    </a>
+  </div>
+</div>
+
+      
+        
+        <div class="product-item grid__item small--one-half medium--one-third large-up--one-quarter">
+  <div class="product-item__link-wrapper">
+    <a class="product-item__link" href="https://dans-pots.myshopify.com/products/large-orthophylla-planter">
+      <span class="image-wrapper">
+        
+        <noscript>
+          <img class="product-item__image-no-js" src="DSC_5202_1024x.jpg" alt="large orthophylla planter">
+        </noscript>
+        <div class="product-item__image-container" style="max-width: 600px;" data-image-with-placeholder-wrapper="">
+          <div class="product-item__image-wrapper" style="padding-top:100.0%">
+            
+            <img class="product-item__image lazyautosizes ls-is-cached lazyloaded" alt="large orthophylla planter" data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048, 4472]" data-aspectratio="1.0" data-sizes="auto" data-image="" data-srcset="//dans-pots.myshopify.com/cdn/shop/products/DSC_5202_360x.jpg?v=1605216189 360w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5202_540x.jpg?v=1605216189 540w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5202_720x.jpg?v=1605216189 720w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5202_900x.jpg?v=1605216189 900w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5202_1080x.jpg?v=1605216189 1080w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5202_1296x.jpg?v=1605216189 1296w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5202_1512x.jpg?v=1605216189 1512w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5202_1728x.jpg?v=1605216189 1728w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5202_1944x.jpg?v=1605216189 1944w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5202_2048x.jpg?v=1605216189 2048w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5202_4472x.jpg?v=1605216189 4472w" sizes="420px" srcset="DSC_5202_360x.jpg 360w, DSC_5202_540x.jpg 540w, DSC_5202_720x.jpg 720w, DSC_5202_900x.jpg 900w, DSC_5202_1080x.jpg 1080w, DSC_5202_1296x.jpg 1296w, DSC_5202_1512x.jpg 1512w, DSC_5202_1728x.jpg 1728w, DSC_5202_1944x.jpg 1944w, DSC_5202_2048x.jpg 2048w, DSC_5202_4472x.jpg 4472w">
+          </div>
+          <div class="placeholder-background placeholder-background--animation" data-image-placeholder="" style="display: none;"></div>
+        </div>
+      
+
+        
+        <span class="product-item__meta">
+          <span class="product-item__meta__inner">
+
+            
+            <p class="product-item__title">large orthophylla planter</p>
+            <p class="product-item__price-wrapper">
+              
+              
+                
+                  
+                    <span class="visually-hidden">Regular price</span>
+                  
+                  $120
+
+              
+            </p>
+
+            
+            
+          </span>
+        </span>
+
+        
+        
+      </span>
+    </a>
+  </div>
+</div>
+
+      
+        
+        <div class="product-item grid__item small--one-half medium--one-third large-up--one-quarter">
+  <div class="product-item__link-wrapper">
+    <a class="product-item__link" href="https://dans-pots.myshopify.com/products/large-orizaba-vase">
+      <span class="image-wrapper">
+        
+        <noscript>
+          <img class="product-item__image-no-js" src="DSC_5187_1024x.jpg" alt="large orizaba vase">
+        </noscript>
+        <div class="product-item__image-container" style="max-width: 600px;" data-image-with-placeholder-wrapper="">
+          <div class="product-item__image-wrapper" style="padding-top:100.0%">
+            
+            <img class="product-item__image lazyautosizes ls-is-cached lazyloaded" alt="large orizaba vase" data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048, 4472]" data-aspectratio="1.0" data-sizes="auto" data-image="" data-srcset="//dans-pots.myshopify.com/cdn/shop/products/DSC_5187_360x.jpg?v=1605216037 360w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5187_540x.jpg?v=1605216037 540w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5187_720x.jpg?v=1605216037 720w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5187_900x.jpg?v=1605216037 900w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5187_1080x.jpg?v=1605216037 1080w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5187_1296x.jpg?v=1605216037 1296w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5187_1512x.jpg?v=1605216037 1512w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5187_1728x.jpg?v=1605216037 1728w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5187_1944x.jpg?v=1605216037 1944w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5187_2048x.jpg?v=1605216037 2048w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5187_4472x.jpg?v=1605216037 4472w" sizes="420px" srcset="DSC_5187_360x.jpg 360w, DSC_5187_540x.jpg 540w, DSC_5187_720x.jpg 720w, DSC_5187_900x.jpg 900w, DSC_5187_1080x.jpg 1080w, DSC_5187_1296x.jpg 1296w, DSC_5187_1512x.jpg 1512w, DSC_5187_1728x.jpg 1728w, DSC_5187_1944x.jpg 1944w, DSC_5187_2048x.jpg 2048w, DSC_5187_4472x.jpg 4472w">
+          </div>
+          <div class="placeholder-background placeholder-background--animation" data-image-placeholder="" style="display: none;"></div>
+        </div>
+      
+
+        
+        <span class="product-item__meta">
+          <span class="product-item__meta__inner">
+
+            
+            <p class="product-item__title">large orizaba vase</p>
+            <p class="product-item__price-wrapper">
+              
+              
+                
+                  
+                    <span class="visually-hidden">Regular price</span>
+                  
+                  $150
+
+              
+            </p>
+
+            
+            
+          </span>
+        </span>
+
+        
+        
+      </span>
+    </a>
+  </div>
+</div>
+
+      
+        
+        <div class="product-item grid__item small--one-half medium--one-third large-up--one-quarter">
+  <div class="product-item__link-wrapper">
+    <a class="product-item__link" href="https://dans-pots.myshopify.com/products/large-montezuma-vase">
+      <span class="image-wrapper">
+        
+        <noscript>
+          <img class="product-item__image-no-js" src="DSC_5184_1024x.jpg" alt="large montezuma vase">
+        </noscript>
+        <div class="product-item__image-container" style="max-width: 600px;" data-image-with-placeholder-wrapper="">
+          <div class="product-item__image-wrapper" style="padding-top:100.0%">
+            
+            <img class="product-item__image lazyautosizes ls-is-cached lazyloaded" alt="large montezuma vase" data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048, 4472]" data-aspectratio="1.0" data-sizes="auto" data-image="" data-srcset="//dans-pots.myshopify.com/cdn/shop/products/DSC_5184_360x.jpg?v=1605215903 360w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5184_540x.jpg?v=1605215903 540w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5184_720x.jpg?v=1605215903 720w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5184_900x.jpg?v=1605215903 900w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5184_1080x.jpg?v=1605215903 1080w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5184_1296x.jpg?v=1605215903 1296w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5184_1512x.jpg?v=1605215903 1512w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5184_1728x.jpg?v=1605215903 1728w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5184_1944x.jpg?v=1605215903 1944w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5184_2048x.jpg?v=1605215903 2048w, //dans-pots.myshopify.com/cdn/shop/products/DSC_5184_4472x.jpg?v=1605215903 4472w" sizes="420px" srcset="DSC_5184_360x.jpg 360w, DSC_5184_540x.jpg 540w, DSC_5184_720x.jpg 720w, DSC_5184_900x.jpg 900w, DSC_5184_1080x.jpg 1080w, DSC_5184_1296x.jpg 1296w, DSC_5184_1512x.jpg 1512w, DSC_5184_1728x.jpg 1728w, DSC_5184_1944x.jpg 1944w, DSC_5184_2048x.jpg 2048w, DSC_5184_4472x.jpg 4472w">
+          </div>
+          <div class="placeholder-background placeholder-background--animation" data-image-placeholder="" style="display: none;"></div>
+        </div>
+      
+
+        
+        <span class="product-item__meta">
+          <span class="product-item__meta__inner">
+
+            
+            <p class="product-item__title">large montezuma vase</p>
+            <p class="product-item__price-wrapper">
+              
+              
+                
+                  
+                    <span class="visually-hidden">Regular price</span>
+                  
+                  $90
+
+              
+            </p>
+
+            
+            
+          </span>
+        </span>
+
+        
+        
+      </span>
+    </a>
+  </div>
+</div>
+
+      
+        
+        <div class="product-item grid__item small--one-half medium--one-third large-up--one-quarter">
+  <div class="product-item__link-wrapper">
+    <a class="product-item__link" href="https://dans-pots.myshopify.com/products/huangshan-vase">
+      <span class="image-wrapper">
+        
+        <noscript>
+          <img class="product-item__image-no-js" src="DSC_4935_1024x.jpg" alt="huangshan vase">
+        </noscript>
+        <div class="product-item__image-container" style="max-width: 600px;" data-image-with-placeholder-wrapper="">
+          <div class="product-item__image-wrapper" style="padding-top:100.0%">
+            
+            <img class="product-item__image lazyautosizes ls-is-cached lazyloaded" alt="huangshan vase" data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048, 4472]" data-aspectratio="1.0" data-sizes="auto" data-image="" data-srcset="//dans-pots.myshopify.com/cdn/shop/products/DSC_4935_360x.jpg?v=1604010236 360w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4935_540x.jpg?v=1604010236 540w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4935_720x.jpg?v=1604010236 720w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4935_900x.jpg?v=1604010236 900w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4935_1080x.jpg?v=1604010236 1080w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4935_1296x.jpg?v=1604010236 1296w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4935_1512x.jpg?v=1604010236 1512w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4935_1728x.jpg?v=1604010236 1728w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4935_1944x.jpg?v=1604010236 1944w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4935_2048x.jpg?v=1604010236 2048w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4935_4472x.jpg?v=1604010236 4472w" sizes="420px" srcset="DSC_4935_360x.jpg 360w, DSC_4935_540x.jpg 540w, DSC_4935_720x.jpg 720w, DSC_4935_900x.jpg 900w, DSC_4935_1080x.jpg 1080w, DSC_4935_1296x.jpg 1296w, DSC_4935_1512x.jpg 1512w, DSC_4935_1728x.jpg 1728w, DSC_4935_1944x.jpg 1944w, DSC_4935_2048x.jpg 2048w, DSC_4935_4472x.jpg 4472w">
+          </div>
+          <div class="placeholder-background placeholder-background--animation" data-image-placeholder="" style="display: none;"></div>
+        </div>
+      
+
+        
+        <span class="product-item__meta">
+          <span class="product-item__meta__inner">
+
+            
+            <p class="product-item__title">huangshan vase</p>
+            <p class="product-item__price-wrapper">
+              
+              
+                
+                  
+                    <span class="visually-hidden">Regular price</span>
+                  
+                  $85
+
+              
+            </p>
+
+            
+            
+          </span>
+        </span>
+
+        
+        
+      </span>
+    </a>
+  </div>
+</div>
+
+      
+        
+        <div class="product-item grid__item small--one-half medium--one-third large-up--one-quarter">
+  <div class="product-item__link-wrapper">
+    <a class="product-item__link" href="https://dans-pots.myshopify.com/products/spruce-vase">
+      <span class="image-wrapper">
+        
+        <noscript>
+          <img class="product-item__image-no-js" src="DSC_4926_1024x.jpg" alt="spruce vase">
+        </noscript>
+        <div class="product-item__image-container" style="max-width: 600px;" data-image-with-placeholder-wrapper="">
+          <div class="product-item__image-wrapper" style="padding-top:100.0%">
+            
+            <img class="product-item__image lazyautosizes ls-is-cached lazyloaded" alt="spruce vase" data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048, 4472]" data-aspectratio="1.0" data-sizes="auto" data-image="" data-srcset="//dans-pots.myshopify.com/cdn/shop/products/DSC_4926_360x.jpg?v=1604010333 360w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4926_540x.jpg?v=1604010333 540w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4926_720x.jpg?v=1604010333 720w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4926_900x.jpg?v=1604010333 900w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4926_1080x.jpg?v=1604010333 1080w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4926_1296x.jpg?v=1604010333 1296w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4926_1512x.jpg?v=1604010333 1512w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4926_1728x.jpg?v=1604010333 1728w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4926_1944x.jpg?v=1604010333 1944w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4926_2048x.jpg?v=1604010333 2048w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4926_4472x.jpg?v=1604010333 4472w" sizes="420px" srcset="DSC_4926_360x.jpg 360w, DSC_4926_540x.jpg 540w, DSC_4926_720x.jpg 720w, DSC_4926_900x.jpg 900w, DSC_4926_1080x.jpg 1080w, DSC_4926_1296x.jpg 1296w, DSC_4926_1512x.jpg 1512w, DSC_4926_1728x.jpg 1728w, DSC_4926_1944x.jpg 1944w, DSC_4926_2048x.jpg 2048w, DSC_4926_4472x.jpg 4472w">
+          </div>
+          <div class="placeholder-background placeholder-background--animation" data-image-placeholder="" style="display: none;"></div>
+        </div>
+      
+
+        
+        <span class="product-item__meta">
+          <span class="product-item__meta__inner">
+
+            
+            <p class="product-item__title">spruce vase</p>
+            <p class="product-item__price-wrapper">
+              
+              
+                
+                  
+                    <span class="visually-hidden">Regular price</span>
+                  
+                  $85
+
+              
+            </p>
+
+            
+            
+          </span>
+        </span>
+
+        
+        
+      </span>
+    </a>
+  </div>
+</div>
+
+      
+        
+        <div class="product-item grid__item small--one-half medium--one-third large-up--one-quarter">
+  <div class="product-item__link-wrapper">
+    <a class="product-item__link" href="https://dans-pots.myshopify.com/products/large-chilgoza-vase">
+      <span class="image-wrapper">
+        
+        <noscript>
+          <img class="product-item__image-no-js" src="DSC_4975_1024x.jpg" alt="large chilgoza vase">
+        </noscript>
+        <div class="product-item__image-container" style="max-width: 600px;" data-image-with-placeholder-wrapper="">
+          <div class="product-item__image-wrapper" style="padding-top:100.0%">
+            
+            <img class="product-item__image lazyautosizes lazyloaded" alt="large chilgoza vase" data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048, 4472]" data-aspectratio="1.0" data-sizes="auto" data-image="" data-srcset="//dans-pots.myshopify.com/cdn/shop/products/DSC_4975_360x.jpg?v=1604009961 360w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4975_540x.jpg?v=1604009961 540w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4975_720x.jpg?v=1604009961 720w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4975_900x.jpg?v=1604009961 900w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4975_1080x.jpg?v=1604009961 1080w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4975_1296x.jpg?v=1604009961 1296w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4975_1512x.jpg?v=1604009961 1512w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4975_1728x.jpg?v=1604009961 1728w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4975_1944x.jpg?v=1604009961 1944w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4975_2048x.jpg?v=1604009961 2048w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4975_4472x.jpg?v=1604009961 4472w" sizes="420px" srcset="DSC_4975_360x.jpg 360w, DSC_4975_540x.jpg 540w, DSC_4975_720x.jpg 720w, DSC_4975_900x.jpg 900w, DSC_4975_1080x.jpg 1080w, DSC_4975_1296x.jpg 1296w, DSC_4975_1512x.jpg 1512w, DSC_4975_1728x.jpg 1728w, DSC_4975_1944x.jpg 1944w, DSC_4975_2048x.jpg 2048w, DSC_4975_4472x.jpg 4472w">
+          </div>
+          <div class="placeholder-background placeholder-background--animation" data-image-placeholder="" style="display: none;"></div>
+        </div>
+      
+
+        
+        <span class="product-item__meta">
+          <span class="product-item__meta__inner">
+
+            
+            <p class="product-item__title">large chilgoza vase</p>
+            <p class="product-item__price-wrapper">
+              
+              
+                
+                  
+                    <span class="visually-hidden">Regular price</span>
+                  
+                  $100
+
+              
+            </p>
+
+            
+            
+          </span>
+        </span>
+
+        
+        
+      </span>
+    </a>
+  </div>
+</div>
+
+      
+        
+        <div class="product-item grid__item small--one-half medium--one-third large-up--one-quarter">
+  <div class="product-item__link-wrapper">
+    <a class="product-item__link" href="https://dans-pots.myshopify.com/products/apache-vase">
+      <span class="image-wrapper">
+        
+        <noscript>
+          <img class="product-item__image-no-js" src="DSC_4843_1024x.jpg" alt="apache vase">
+        </noscript>
+        <div class="product-item__image-container" style="max-width: 600px;" data-image-with-placeholder-wrapper="">
+          <div class="product-item__image-wrapper" style="padding-top:100.0%">
+            
+            <img class="product-item__image lazyautosizes lazyloaded" alt="apache vase" data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048, 4472]" data-aspectratio="1.0" data-sizes="auto" data-image="" data-srcset="//dans-pots.myshopify.com/cdn/shop/products/DSC_4843_360x.jpg?v=1604009700 360w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4843_540x.jpg?v=1604009700 540w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4843_720x.jpg?v=1604009700 720w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4843_900x.jpg?v=1604009700 900w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4843_1080x.jpg?v=1604009700 1080w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4843_1296x.jpg?v=1604009700 1296w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4843_1512x.jpg?v=1604009700 1512w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4843_1728x.jpg?v=1604009700 1728w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4843_1944x.jpg?v=1604009700 1944w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4843_2048x.jpg?v=1604009700 2048w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4843_4472x.jpg?v=1604009700 4472w" sizes="420px" srcset="DSC_4843_360x.jpg 360w, DSC_4843_540x.jpg 540w, DSC_4843_720x.jpg 720w, DSC_4843_900x.jpg 900w, DSC_4843_1080x.jpg 1080w, DSC_4843_1296x.jpg 1296w, DSC_4843_1512x.jpg 1512w, DSC_4843_1728x.jpg 1728w, DSC_4843_1944x.jpg 1944w, DSC_4843_2048x.jpg 2048w, DSC_4843_4472x.jpg 4472w">
+          </div>
+          <div class="placeholder-background placeholder-background--animation" data-image-placeholder="" style="display: none;"></div>
+        </div>
+      
+
+        
+        <span class="product-item__meta">
+          <span class="product-item__meta__inner">
+
+            
+            <p class="product-item__title">apache vase</p>
+            <p class="product-item__price-wrapper">
+              
+              
+                
+                  
+                    <span class="visually-hidden">Regular price</span>
+                  
+                  $90
+
+              
+            </p>
+
+            
+            
+          </span>
+        </span>
+
+        
+        
+      </span>
+    </a>
+  </div>
+</div>
+
+      
+        
+        <div class="product-item grid__item small--one-half medium--one-third large-up--one-quarter">
+  <div class="product-item__link-wrapper">
+    <a class="product-item__link" href="https://dans-pots.myshopify.com/products/large-pinyon-vase">
+      <span class="image-wrapper">
+        
+        <noscript>
+          <img class="product-item__image-no-js" src="DSC_4794_1024x.jpg" alt="large pinyon vase">
+        </noscript>
+        <div class="product-item__image-container" style="max-width: 600px;" data-image-with-placeholder-wrapper="">
+          <div class="product-item__image-wrapper" style="padding-top:100.0%">
+            
+            <img class="product-item__image lazyautosizes lazyloaded" alt="large pinyon vase" data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048, 4472]" data-aspectratio="1.0" data-sizes="auto" data-image="" data-srcset="//dans-pots.myshopify.com/cdn/shop/products/DSC_4794_360x.jpg?v=1604009436 360w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4794_540x.jpg?v=1604009436 540w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4794_720x.jpg?v=1604009436 720w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4794_900x.jpg?v=1604009436 900w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4794_1080x.jpg?v=1604009436 1080w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4794_1296x.jpg?v=1604009436 1296w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4794_1512x.jpg?v=1604009436 1512w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4794_1728x.jpg?v=1604009436 1728w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4794_1944x.jpg?v=1604009436 1944w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4794_2048x.jpg?v=1604009436 2048w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4794_4472x.jpg?v=1604009436 4472w" sizes="420px" srcset="DSC_4794_360x.jpg 360w, DSC_4794_540x.jpg 540w, DSC_4794_720x.jpg 720w, DSC_4794_900x.jpg 900w, DSC_4794_1080x.jpg 1080w, DSC_4794_1296x.jpg 1296w, DSC_4794_1512x.jpg 1512w, DSC_4794_1728x.jpg 1728w, DSC_4794_1944x.jpg 1944w, DSC_4794_2048x.jpg 2048w, DSC_4794_4472x.jpg 4472w">
+          </div>
+          <div class="placeholder-background placeholder-background--animation" data-image-placeholder="" style="display: none;"></div>
+        </div>
+      
+
+        
+        <span class="product-item__meta">
+          <span class="product-item__meta__inner">
+
+            
+            <p class="product-item__title">large pinyon vase</p>
+            <p class="product-item__price-wrapper">
+              
+              
+                
+                  
+                    <span class="visually-hidden">Regular price</span>
+                  
+                  $135
+
+              
+            </p>
+
+            
+            
+          </span>
+        </span>
+
+        
+        
+      </span>
+    </a>
+  </div>
+</div>
+
+      
+        
+        <div class="product-item grid__item small--one-half medium--one-third large-up--one-quarter">
+  <div class="product-item__link-wrapper">
+    <a class="product-item__link" href="https://dans-pots.myshopify.com/products/jalisco-vase">
+      <span class="image-wrapper">
+        
+        <noscript>
+          <img class="product-item__image-no-js" src="DSC_4431_1024x.jpg" alt="large jalisco vase">
+        </noscript>
+        <div class="product-item__image-container" style="max-width: 600px;" data-image-with-placeholder-wrapper="">
+          <div class="product-item__image-wrapper" style="padding-top:100.0%">
+            
+            <img class="product-item__image lazyautosizes lazyloaded" alt="large jalisco vase" data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048, 4472]" data-aspectratio="1.0" data-sizes="auto" data-image="" data-srcset="//dans-pots.myshopify.com/cdn/shop/products/DSC_4431_360x.jpg?v=1603406692 360w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4431_540x.jpg?v=1603406692 540w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4431_720x.jpg?v=1603406692 720w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4431_900x.jpg?v=1603406692 900w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4431_1080x.jpg?v=1603406692 1080w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4431_1296x.jpg?v=1603406692 1296w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4431_1512x.jpg?v=1603406692 1512w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4431_1728x.jpg?v=1603406692 1728w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4431_1944x.jpg?v=1603406692 1944w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4431_2048x.jpg?v=1603406692 2048w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4431_4472x.jpg?v=1603406692 4472w" sizes="420px" srcset="DSC_4431_360x.jpg 360w, DSC_4431_540x.jpg 540w, DSC_4431_720x.jpg 720w, DSC_4431_900x.jpg 900w, DSC_4431_1080x.jpg 1080w, DSC_4431_1296x.jpg 1296w, DSC_4431_1512x.jpg 1512w, DSC_4431_1728x.jpg 1728w, DSC_4431_1944x.jpg 1944w, DSC_4431_2048x.jpg 2048w, DSC_4431_4472x.jpg 4472w">
+          </div>
+          <div class="placeholder-background placeholder-background--animation" data-image-placeholder="" style="display: none;"></div>
+        </div>
+      
+
+        
+        <span class="product-item__meta">
+          <span class="product-item__meta__inner">
+
+            
+            <p class="product-item__title">large jalisco vase</p>
+            <p class="product-item__price-wrapper">
+              
+              
+                
+                  
+                    <span class="visually-hidden">Regular price</span>
+                  
+                  $120
+
+              
+            </p>
+
+            
+            
+              <p class="product-item__sold-out">Sold out</p>
+            
+          </span>
+        </span>
+
+        
+        
+      </span>
+    </a>
+  </div>
+</div>
+
+      
+        
+        <div class="product-item grid__item small--one-half medium--one-third large-up--one-quarter">
+  <div class="product-item__link-wrapper">
+    <a class="product-item__link" href="https://dans-pots.myshopify.com/products/small-cherrybark-planters">
+      <span class="image-wrapper">
+        
+        <noscript>
+          <img class="product-item__image-no-js" src="DSC_4460_1024x.jpg" alt="small cherrybark planters">
+        </noscript>
+        <div class="product-item__image-container" style="max-width: 600px;" data-image-with-placeholder-wrapper="">
+          <div class="product-item__image-wrapper" style="padding-top:100.0%">
+            
+            <img class="product-item__image lazyautosizes lazyloaded" alt="small cherrybark planters" data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048, 4472]" data-aspectratio="1.0" data-sizes="auto" data-image="" data-srcset="//dans-pots.myshopify.com/cdn/shop/products/DSC_4460_360x.jpg?v=1603139706 360w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4460_540x.jpg?v=1603139706 540w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4460_720x.jpg?v=1603139706 720w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4460_900x.jpg?v=1603139706 900w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4460_1080x.jpg?v=1603139706 1080w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4460_1296x.jpg?v=1603139706 1296w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4460_1512x.jpg?v=1603139706 1512w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4460_1728x.jpg?v=1603139706 1728w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4460_1944x.jpg?v=1603139706 1944w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4460_2048x.jpg?v=1603139706 2048w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4460_4472x.jpg?v=1603139706 4472w" sizes="420px" srcset="DSC_4460_360x.jpg 360w, DSC_4460_540x.jpg 540w, DSC_4460_720x.jpg 720w, DSC_4460_900x.jpg 900w, DSC_4460_1080x.jpg 1080w, DSC_4460_1296x.jpg 1296w, DSC_4460_1512x.jpg 1512w, DSC_4460_1728x.jpg 1728w, DSC_4460_1944x.jpg 1944w, DSC_4460_2048x.jpg 2048w, DSC_4460_4472x.jpg 4472w">
+          </div>
+          <div class="placeholder-background placeholder-background--animation" data-image-placeholder="" style="display: none;"></div>
+        </div>
+      
+
+        
+        <span class="product-item__meta">
+          <span class="product-item__meta__inner">
+
+            
+            <p class="product-item__title">small cherrybark planters</p>
+            <p class="product-item__price-wrapper">
+              
+              
+                
+                  
+                    <span class="visually-hidden">Regular price</span>
+                  
+                  $20
+
+              
+            </p>
+
+            
+            
+          </span>
+        </span>
+
+        
+        
+      </span>
+    </a>
+  </div>
+</div>
+
+      
+        
+        <div class="product-item grid__item small--one-half medium--one-third large-up--one-quarter">
+  <div class="product-item__link-wrapper">
+    <a class="product-item__link" href="https://dans-pots.myshopify.com/products/small-shingle-bowls">
+      <span class="image-wrapper">
+        
+        <noscript>
+          <img class="product-item__image-no-js" src="DSC_44772_1024x.jpg" alt="small pinyon bowls">
+        </noscript>
+        <div class="product-item__image-container" style="max-width: 600px;" data-image-with-placeholder-wrapper="">
+          <div class="product-item__image-wrapper" style="padding-top:100.0%">
+            
+            <img class="product-item__image lazyautosizes lazyloaded" alt="small pinyon bowls" data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048, 4472]" data-aspectratio="1.0" data-sizes="auto" data-image="" data-srcset="//dans-pots.myshopify.com/cdn/shop/products/DSC_44772_360x.jpg?v=1603140159 360w, //dans-pots.myshopify.com/cdn/shop/products/DSC_44772_540x.jpg?v=1603140159 540w, //dans-pots.myshopify.com/cdn/shop/products/DSC_44772_720x.jpg?v=1603140159 720w, //dans-pots.myshopify.com/cdn/shop/products/DSC_44772_900x.jpg?v=1603140159 900w, //dans-pots.myshopify.com/cdn/shop/products/DSC_44772_1080x.jpg?v=1603140159 1080w, //dans-pots.myshopify.com/cdn/shop/products/DSC_44772_1296x.jpg?v=1603140159 1296w, //dans-pots.myshopify.com/cdn/shop/products/DSC_44772_1512x.jpg?v=1603140159 1512w, //dans-pots.myshopify.com/cdn/shop/products/DSC_44772_1728x.jpg?v=1603140159 1728w, //dans-pots.myshopify.com/cdn/shop/products/DSC_44772_1944x.jpg?v=1603140159 1944w, //dans-pots.myshopify.com/cdn/shop/products/DSC_44772_2048x.jpg?v=1603140159 2048w, //dans-pots.myshopify.com/cdn/shop/products/DSC_44772_4472x.jpg?v=1603140159 4472w" sizes="420px" srcset="DSC_44772_360x.jpg 360w, DSC_44772_540x.jpg 540w, DSC_44772_720x.jpg 720w, DSC_44772_900x.jpg 900w, DSC_44772_1080x.jpg 1080w, DSC_44772_1296x.jpg 1296w, DSC_44772_1512x.jpg 1512w, DSC_44772_1728x.jpg 1728w, DSC_44772_1944x.jpg 1944w, DSC_44772_2048x.jpg 2048w, DSC_44772_4472x.jpg 4472w">
+          </div>
+          <div class="placeholder-background placeholder-background--animation" data-image-placeholder="" style="display: none;"></div>
+        </div>
+      
+
+        
+        <span class="product-item__meta">
+          <span class="product-item__meta__inner">
+
+            
+            <p class="product-item__title">small pinyon bowls</p>
+            <p class="product-item__price-wrapper">
+              
+              
+                
+                  
+                    <span class="visually-hidden">Regular price</span>
+                  
+                  $34
+
+              
+            </p>
+
+            
+            
+          </span>
+        </span>
+
+        
+        
+      </span>
+    </a>
+  </div>
+</div>
+
+      
+        
+        <div class="product-item grid__item small--one-half medium--one-third large-up--one-quarter">
+  <div class="product-item__link-wrapper">
+    <a class="product-item__link" href="https://dans-pots.myshopify.com/products/shellbark-bowls">
+      <span class="image-wrapper">
+        
+        <noscript>
+          <img class="product-item__image-no-js" src="DSC_4403_1024x.jpg" alt="shellbark bowls">
+        </noscript>
+        <div class="product-item__image-container" style="max-width: 600px;" data-image-with-placeholder-wrapper="">
+          <div class="product-item__image-wrapper" style="padding-top:100.0%">
+            
+            <img class="product-item__image lazyautosizes lazyloaded" alt="shellbark bowls" data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048, 4472]" data-aspectratio="1.0" data-sizes="auto" data-image="" data-srcset="//dans-pots.myshopify.com/cdn/shop/products/DSC_4403_360x.jpg?v=1603078238 360w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4403_540x.jpg?v=1603078238 540w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4403_720x.jpg?v=1603078238 720w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4403_900x.jpg?v=1603078238 900w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4403_1080x.jpg?v=1603078238 1080w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4403_1296x.jpg?v=1603078238 1296w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4403_1512x.jpg?v=1603078238 1512w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4403_1728x.jpg?v=1603078238 1728w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4403_1944x.jpg?v=1603078238 1944w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4403_2048x.jpg?v=1603078238 2048w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4403_4472x.jpg?v=1603078238 4472w" sizes="420px" srcset="DSC_4403_360x.jpg 360w, DSC_4403_540x.jpg 540w, DSC_4403_720x.jpg 720w, DSC_4403_900x.jpg 900w, DSC_4403_1080x.jpg 1080w, DSC_4403_1296x.jpg 1296w, DSC_4403_1512x.jpg 1512w, DSC_4403_1728x.jpg 1728w, DSC_4403_1944x.jpg 1944w, DSC_4403_2048x.jpg 2048w, DSC_4403_4472x.jpg 4472w">
+          </div>
+          <div class="placeholder-background placeholder-background--animation" data-image-placeholder="" style="display: none;"></div>
+        </div>
+      
+
+        
+        <span class="product-item__meta">
+          <span class="product-item__meta__inner">
+
+            
+            <p class="product-item__title">shellbark bowls</p>
+            <p class="product-item__price-wrapper">
+              
+              
+                
+                  
+                    <span class="visually-hidden">Regular price</span>
+                  
+                  $64
+
+              
+            </p>
+
+            
+            
+          </span>
+        </span>
+
+        
+        
+      </span>
+    </a>
+  </div>
+</div>
+
+      
+        
+        <div class="product-item grid__item small--one-half medium--one-third large-up--one-quarter">
+  <div class="product-item__link-wrapper">
+    <a class="product-item__link" href="https://dans-pots.myshopify.com/products/shagbark-planter">
+      <span class="image-wrapper">
+        
+        <noscript>
+          <img class="product-item__image-no-js" src="DSC_4394_1024x.jpg" alt="shagbark planter">
+        </noscript>
+        <div class="product-item__image-container" style="max-width: 600px;" data-image-with-placeholder-wrapper="">
+          <div class="product-item__image-wrapper" style="padding-top:100.0%">
+            
+            <img class="product-item__image lazyautosizes lazyloaded" alt="shagbark planter" data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048, 4472]" data-aspectratio="1.0" data-sizes="auto" data-image="" data-srcset="//dans-pots.myshopify.com/cdn/shop/products/DSC_4394_360x.jpg?v=1603078175 360w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4394_540x.jpg?v=1603078175 540w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4394_720x.jpg?v=1603078175 720w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4394_900x.jpg?v=1603078175 900w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4394_1080x.jpg?v=1603078175 1080w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4394_1296x.jpg?v=1603078175 1296w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4394_1512x.jpg?v=1603078175 1512w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4394_1728x.jpg?v=1603078175 1728w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4394_1944x.jpg?v=1603078175 1944w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4394_2048x.jpg?v=1603078175 2048w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4394_4472x.jpg?v=1603078175 4472w" sizes="420px" srcset="DSC_4394_360x.jpg 360w, DSC_4394_540x.jpg 540w, DSC_4394_720x.jpg 720w, DSC_4394_900x.jpg 900w, DSC_4394_1080x.jpg 1080w, DSC_4394_1296x.jpg 1296w, DSC_4394_1512x.jpg 1512w, DSC_4394_1728x.jpg 1728w, DSC_4394_1944x.jpg 1944w, DSC_4394_2048x.jpg 2048w, DSC_4394_4472x.jpg 4472w">
+          </div>
+          <div class="placeholder-background placeholder-background--animation" data-image-placeholder="" style="display: none;"></div>
+        </div>
+      
+
+        
+        <span class="product-item__meta">
+          <span class="product-item__meta__inner">
+
+            
+            <p class="product-item__title">shagbark planter</p>
+            <p class="product-item__price-wrapper">
+              
+              
+                
+                  
+                    <span class="visually-hidden">Regular price</span>
+                  
+                  $40
+
+              
+            </p>
+
+            
+            
+              <p class="product-item__sold-out">Sold out</p>
+            
+          </span>
+        </span>
+
+        
+        
+      </span>
+    </a>
+  </div>
+</div>
+
+      
+        
+        <div class="product-item grid__item small--one-half medium--one-third large-up--one-quarter">
+  <div class="product-item__link-wrapper">
+    <a class="product-item__link" href="https://dans-pots.myshopify.com/products/bur-cups">
+      <span class="image-wrapper">
+        
+        <noscript>
+          <img class="product-item__image-no-js" src="DSC_4419_1024x.jpg" alt="big bur cups">
+        </noscript>
+        <div class="product-item__image-container" style="max-width: 600px;" data-image-with-placeholder-wrapper="">
+          <div class="product-item__image-wrapper" style="padding-top:100.0%">
+            
+            <img class="product-item__image lazyautosizes lazyloaded" alt="big bur cups" data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048, 4472]" data-aspectratio="1.0" data-sizes="auto" data-image="" data-srcset="//dans-pots.myshopify.com/cdn/shop/products/DSC_4419_360x.jpg?v=1603078094 360w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4419_540x.jpg?v=1603078094 540w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4419_720x.jpg?v=1603078094 720w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4419_900x.jpg?v=1603078094 900w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4419_1080x.jpg?v=1603078094 1080w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4419_1296x.jpg?v=1603078094 1296w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4419_1512x.jpg?v=1603078094 1512w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4419_1728x.jpg?v=1603078094 1728w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4419_1944x.jpg?v=1603078094 1944w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4419_2048x.jpg?v=1603078094 2048w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4419_4472x.jpg?v=1603078094 4472w" sizes="420px" srcset="DSC_4419_360x.jpg 360w, DSC_4419_540x.jpg 540w, DSC_4419_720x.jpg 720w, DSC_4419_900x.jpg 900w, DSC_4419_1080x.jpg 1080w, DSC_4419_1296x.jpg 1296w, DSC_4419_1512x.jpg 1512w, DSC_4419_1728x.jpg 1728w, DSC_4419_1944x.jpg 1944w, DSC_4419_2048x.jpg 2048w, DSC_4419_4472x.jpg 4472w">
+          </div>
+          <div class="placeholder-background placeholder-background--animation" data-image-placeholder="" style="display: none;"></div>
+        </div>
+      
+
+        
+        <span class="product-item__meta">
+          <span class="product-item__meta__inner">
+
+            
+            <p class="product-item__title">big bur cups</p>
+            <p class="product-item__price-wrapper">
+              
+              
+                
+                  <span class="txt--emphasis">from</span> $42
+                
+              
+            </p>
+
+            
+            
+          </span>
+        </span>
+
+        
+        
+      </span>
+    </a>
+  </div>
+</div>
+
+      
+        
+        <div class="product-item grid__item small--one-half medium--one-third large-up--one-quarter">
+  <div class="product-item__link-wrapper">
+    <a class="product-item__link" href="https://dans-pots.myshopify.com/products/chestnut-planter">
+      <span class="image-wrapper">
+        
+        <noscript>
+          <img class="product-item__image-no-js" src="DSC_4390_1024x.jpg" alt="chestnut planter">
+        </noscript>
+        <div class="product-item__image-container" style="max-width: 600px;" data-image-with-placeholder-wrapper="">
+          <div class="product-item__image-wrapper" style="padding-top:100.0%">
+            
+            <img class="product-item__image lazyautosizes lazyloaded" alt="chestnut planter" data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048, 4472]" data-aspectratio="1.0" data-sizes="auto" data-image="" data-srcset="//dans-pots.myshopify.com/cdn/shop/products/DSC_4390_360x.jpg?v=1603077948 360w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4390_540x.jpg?v=1603077948 540w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4390_720x.jpg?v=1603077948 720w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4390_900x.jpg?v=1603077948 900w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4390_1080x.jpg?v=1603077948 1080w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4390_1296x.jpg?v=1603077948 1296w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4390_1512x.jpg?v=1603077948 1512w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4390_1728x.jpg?v=1603077948 1728w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4390_1944x.jpg?v=1603077948 1944w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4390_2048x.jpg?v=1603077948 2048w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4390_4472x.jpg?v=1603077948 4472w" sizes="420px" srcset="DSC_4390_360x.jpg 360w, DSC_4390_540x.jpg 540w, DSC_4390_720x.jpg 720w, DSC_4390_900x.jpg 900w, DSC_4390_1080x.jpg 1080w, DSC_4390_1296x.jpg 1296w, DSC_4390_1512x.jpg 1512w, DSC_4390_1728x.jpg 1728w, DSC_4390_1944x.jpg 1944w, DSC_4390_2048x.jpg 2048w, DSC_4390_4472x.jpg 4472w">
+          </div>
+          <div class="placeholder-background placeholder-background--animation" data-image-placeholder="" style="display: none;"></div>
+        </div>
+      
+
+        
+        <span class="product-item__meta">
+          <span class="product-item__meta__inner">
+
+            
+            <p class="product-item__title">chestnut planter</p>
+            <p class="product-item__price-wrapper">
+              
+              
+                
+                  
+                    <span class="visually-hidden">Regular price</span>
+                  
+                  $40
+
+              
+            </p>
+
+            
+            
+          </span>
+        </span>
+
+        
+        
+      </span>
+    </a>
+  </div>
+</div>
+
+      
+        
+        <div class="product-item grid__item small--one-half medium--one-third large-up--one-quarter">
+  <div class="product-item__link-wrapper">
+    <a class="product-item__link" href="https://dans-pots.myshopify.com/products/chinkapin-bowl">
+      <span class="image-wrapper">
+        
+        <noscript>
+          <img class="product-item__image-no-js" src="DSC_4376_1024x.jpg" alt="chinkapin bowl">
+        </noscript>
+        <div class="product-item__image-container" style="max-width: 600px;" data-image-with-placeholder-wrapper="">
+          <div class="product-item__image-wrapper" style="padding-top:100.0%">
+            
+            <img class="product-item__image lazyautosizes ls-is-cached lazyloaded" alt="chinkapin bowl" data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048, 4472]" data-aspectratio="1.0" data-sizes="auto" data-image="" data-srcset="//dans-pots.myshopify.com/cdn/shop/products/DSC_4376_360x.jpg?v=1603076183 360w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4376_540x.jpg?v=1603076183 540w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4376_720x.jpg?v=1603076183 720w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4376_900x.jpg?v=1603076183 900w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4376_1080x.jpg?v=1603076183 1080w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4376_1296x.jpg?v=1603076183 1296w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4376_1512x.jpg?v=1603076183 1512w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4376_1728x.jpg?v=1603076183 1728w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4376_1944x.jpg?v=1603076183 1944w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4376_2048x.jpg?v=1603076183 2048w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4376_4472x.jpg?v=1603076183 4472w" sizes="420px" srcset="DSC_4376_360x.jpg 360w, DSC_4376_540x.jpg 540w, DSC_4376_720x.jpg 720w, DSC_4376_900x.jpg 900w, DSC_4376_1080x.jpg 1080w, DSC_4376_1296x.jpg 1296w, DSC_4376_1512x.jpg 1512w, DSC_4376_1728x.jpg 1728w, DSC_4376_1944x.jpg 1944w, DSC_4376_2048x.jpg 2048w, DSC_4376_4472x.jpg 4472w">
+          </div>
+          <div class="placeholder-background placeholder-background--animation" data-image-placeholder="" style="display: none;"></div>
+        </div>
+      
+
+        
+        <span class="product-item__meta">
+          <span class="product-item__meta__inner">
+
+            
+            <p class="product-item__title">chinkapin bowl</p>
+            <p class="product-item__price-wrapper">
+              
+              
+                
+                  
+                    <span class="visually-hidden">Regular price</span>
+                  
+                  $40
+
+              
+            </p>
+
+            
+            
+              <p class="product-item__sold-out">Sold out</p>
+            
+          </span>
+        </span>
+
+        
+        
+      </span>
+    </a>
+  </div>
+</div>
+
+      
+        
+        <div class="product-item grid__item small--one-half medium--one-third large-up--one-quarter">
+  <div class="product-item__link-wrapper">
+    <a class="product-item__link" href="https://dans-pots.myshopify.com/products/nuttall-bowls">
+      <span class="image-wrapper">
+        
+        <noscript>
+          <img class="product-item__image-no-js" src="DSC_4378_1024x.jpg" alt="nuttall bowls">
+        </noscript>
+        <div class="product-item__image-container" style="max-width: 600px;" data-image-with-placeholder-wrapper="">
+          <div class="product-item__image-wrapper" style="padding-top:100.0%">
+            
+            <img class="product-item__image lazyautosizes ls-is-cached lazyloaded" alt="nuttall bowls" data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048, 4472]" data-aspectratio="1.0" data-sizes="auto" data-image="" data-srcset="//dans-pots.myshopify.com/cdn/shop/products/DSC_4378_360x.jpg?v=1603076174 360w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4378_540x.jpg?v=1603076174 540w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4378_720x.jpg?v=1603076174 720w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4378_900x.jpg?v=1603076174 900w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4378_1080x.jpg?v=1603076174 1080w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4378_1296x.jpg?v=1603076174 1296w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4378_1512x.jpg?v=1603076174 1512w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4378_1728x.jpg?v=1603076174 1728w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4378_1944x.jpg?v=1603076174 1944w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4378_2048x.jpg?v=1603076174 2048w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4378_4472x.jpg?v=1603076174 4472w" sizes="420px" srcset="DSC_4378_360x.jpg 360w, DSC_4378_540x.jpg 540w, DSC_4378_720x.jpg 720w, DSC_4378_900x.jpg 900w, DSC_4378_1080x.jpg 1080w, DSC_4378_1296x.jpg 1296w, DSC_4378_1512x.jpg 1512w, DSC_4378_1728x.jpg 1728w, DSC_4378_1944x.jpg 1944w, DSC_4378_2048x.jpg 2048w, DSC_4378_4472x.jpg 4472w">
+          </div>
+          <div class="placeholder-background placeholder-background--animation" data-image-placeholder="" style="display: none;"></div>
+        </div>
+      
+
+        
+        <span class="product-item__meta">
+          <span class="product-item__meta__inner">
+
+            
+            <p class="product-item__title">nuttall bowls</p>
+            <p class="product-item__price-wrapper">
+              
+              
+                
+                  
+                    <span class="visually-hidden">Regular price</span>
+                  
+                  $60
+
+              
+            </p>
+
+            
+            
+          </span>
+        </span>
+
+        
+        
+      </span>
+    </a>
+  </div>
+</div>
+
+      
+        
+        <div class="product-item grid__item small--one-half medium--one-third large-up--one-quarter">
+  <div class="product-item__link-wrapper">
+    <a class="product-item__link" href="https://dans-pots.myshopify.com/products/shumard-bowl">
+      <span class="image-wrapper">
+        
+        <noscript>
+          <img class="product-item__image-no-js" src="DSC_4385_1024x.jpg" alt="shumard bowl">
+        </noscript>
+        <div class="product-item__image-container" style="max-width: 600px;" data-image-with-placeholder-wrapper="">
+          <div class="product-item__image-wrapper" style="padding-top:100.0%">
+            
+            <img class="product-item__image lazyautosizes ls-is-cached lazyloaded" alt="shumard bowl" data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048, 4472]" data-aspectratio="1.0" data-sizes="auto" data-image="" data-srcset="//dans-pots.myshopify.com/cdn/shop/products/DSC_4385_360x.jpg?v=1603076097 360w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4385_540x.jpg?v=1603076097 540w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4385_720x.jpg?v=1603076097 720w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4385_900x.jpg?v=1603076097 900w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4385_1080x.jpg?v=1603076097 1080w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4385_1296x.jpg?v=1603076097 1296w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4385_1512x.jpg?v=1603076097 1512w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4385_1728x.jpg?v=1603076097 1728w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4385_1944x.jpg?v=1603076097 1944w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4385_2048x.jpg?v=1603076097 2048w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4385_4472x.jpg?v=1603076097 4472w" sizes="420px" srcset="DSC_4385_360x.jpg 360w, DSC_4385_540x.jpg 540w, DSC_4385_720x.jpg 720w, DSC_4385_900x.jpg 900w, DSC_4385_1080x.jpg 1080w, DSC_4385_1296x.jpg 1296w, DSC_4385_1512x.jpg 1512w, DSC_4385_1728x.jpg 1728w, DSC_4385_1944x.jpg 1944w, DSC_4385_2048x.jpg 2048w, DSC_4385_4472x.jpg 4472w">
+          </div>
+          <div class="placeholder-background placeholder-background--animation" data-image-placeholder="" style="display: none;"></div>
+        </div>
+      
+
+        
+        <span class="product-item__meta">
+          <span class="product-item__meta__inner">
+
+            
+            <p class="product-item__title">shumard bowl</p>
+            <p class="product-item__price-wrapper">
+              
+              
+                
+                  
+                    <span class="visually-hidden">Regular price</span>
+                  
+                  $40
+
+              
+            </p>
+
+            
+            
+          </span>
+        </span>
+
+        
+        
+      </span>
+    </a>
+  </div>
+</div>
+
+      
+        
+        <div class="product-item grid__item small--one-half medium--one-third large-up--one-quarter">
+  <div class="product-item__link-wrapper">
+    <a class="product-item__link" href="https://dans-pots.myshopify.com/products/nuttall-planter">
+      <span class="image-wrapper">
+        
+        <noscript>
+          <img class="product-item__image-no-js" src="DSC_4259_1024x.jpg" alt="nuttall planter">
+        </noscript>
+        <div class="product-item__image-container" style="max-width: 600px;" data-image-with-placeholder-wrapper="">
+          <div class="product-item__image-wrapper" style="padding-top:100.0%">
+            
+            <img class="product-item__image lazyautosizes ls-is-cached lazyloaded" alt="nuttall planter" data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048, 4472]" data-aspectratio="1.0" data-sizes="auto" data-image="" data-srcset="//dans-pots.myshopify.com/cdn/shop/products/DSC_4259_360x.jpg?v=1603072841 360w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4259_540x.jpg?v=1603072841 540w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4259_720x.jpg?v=1603072841 720w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4259_900x.jpg?v=1603072841 900w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4259_1080x.jpg?v=1603072841 1080w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4259_1296x.jpg?v=1603072841 1296w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4259_1512x.jpg?v=1603072841 1512w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4259_1728x.jpg?v=1603072841 1728w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4259_1944x.jpg?v=1603072841 1944w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4259_2048x.jpg?v=1603072841 2048w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4259_4472x.jpg?v=1603072841 4472w" sizes="420px" srcset="DSC_4259_360x.jpg 360w, DSC_4259_540x.jpg 540w, DSC_4259_720x.jpg 720w, DSC_4259_900x.jpg 900w, DSC_4259_1080x.jpg 1080w, DSC_4259_1296x.jpg 1296w, DSC_4259_1512x.jpg 1512w, DSC_4259_1728x.jpg 1728w, DSC_4259_1944x.jpg 1944w, DSC_4259_2048x.jpg 2048w, DSC_4259_4472x.jpg 4472w">
+          </div>
+          <div class="placeholder-background placeholder-background--animation" data-image-placeholder="" style="display: none;"></div>
+        </div>
+      
+
+        
+        <span class="product-item__meta">
+          <span class="product-item__meta__inner">
+
+            
+            <p class="product-item__title">nuttall planter</p>
+            <p class="product-item__price-wrapper">
+              
+              
+                
+                  
+                    <span class="visually-hidden">Regular price</span>
+                  
+                  $40
+
+              
+            </p>
+
+            
+            
+          </span>
+        </span>
+
+        
+        
+      </span>
+    </a>
+  </div>
+</div>
+
+      
+        
+        <div class="product-item grid__item small--one-half medium--one-third large-up--one-quarter">
+  <div class="product-item__link-wrapper">
+    <a class="product-item__link" href="https://dans-pots.myshopify.com/products/chinkapin-cups">
+      <span class="image-wrapper">
+        
+        <noscript>
+          <img class="product-item__image-no-js" src="DSC_4302_1024x.jpg" alt="chinkapin cups">
+        </noscript>
+        <div class="product-item__image-container" style="max-width: 600px;" data-image-with-placeholder-wrapper="">
+          <div class="product-item__image-wrapper" style="padding-top:100.0%">
+            
+            <img class="product-item__image lazyautosizes ls-is-cached lazyloaded" alt="chinkapin cups" data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048, 4472]" data-aspectratio="1.0" data-sizes="auto" data-image="" data-srcset="//dans-pots.myshopify.com/cdn/shop/products/DSC_4302_360x.jpg?v=1603072515 360w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4302_540x.jpg?v=1603072515 540w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4302_720x.jpg?v=1603072515 720w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4302_900x.jpg?v=1603072515 900w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4302_1080x.jpg?v=1603072515 1080w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4302_1296x.jpg?v=1603072515 1296w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4302_1512x.jpg?v=1603072515 1512w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4302_1728x.jpg?v=1603072515 1728w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4302_1944x.jpg?v=1603072515 1944w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4302_2048x.jpg?v=1603072515 2048w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4302_4472x.jpg?v=1603072515 4472w" sizes="420px" srcset="DSC_4302_360x.jpg 360w, DSC_4302_540x.jpg 540w, DSC_4302_720x.jpg 720w, DSC_4302_900x.jpg 900w, DSC_4302_1080x.jpg 1080w, DSC_4302_1296x.jpg 1296w, DSC_4302_1512x.jpg 1512w, DSC_4302_1728x.jpg 1728w, DSC_4302_1944x.jpg 1944w, DSC_4302_2048x.jpg 2048w, DSC_4302_4472x.jpg 4472w">
+          </div>
+          <div class="placeholder-background placeholder-background--animation" data-image-placeholder="" style="display: none;"></div>
+        </div>
+      
+
+        
+        <span class="product-item__meta">
+          <span class="product-item__meta__inner">
+
+            
+            <p class="product-item__title">chinkapin cups</p>
+            <p class="product-item__price-wrapper">
+              
+              
+                
+                  
+                    <span class="visually-hidden">Regular price</span>
+                  
+                  $40
+
+              
+            </p>
+
+            
+            
+          </span>
+        </span>
+
+        
+        
+      </span>
+    </a>
+  </div>
+</div>
+
+      
+        
+        <div class="product-item grid__item small--one-half medium--one-third large-up--one-quarter">
+  <div class="product-item__link-wrapper">
+    <a class="product-item__link" href="https://dans-pots.myshopify.com/products/lacebark">
+      <span class="image-wrapper">
+        
+        <noscript>
+          <img class="product-item__image-no-js" src="DSC_4317_1024x.jpg" alt="lacebark cups">
+        </noscript>
+        <div class="product-item__image-container" style="max-width: 600px;" data-image-with-placeholder-wrapper="">
+          <div class="product-item__image-wrapper" style="padding-top:100.0%">
+            
+            <img class="product-item__image lazyautosizes ls-is-cached lazyloaded" alt="lacebark cups" data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048, 4472]" data-aspectratio="1.0" data-sizes="auto" data-image="" data-srcset="//dans-pots.myshopify.com/cdn/shop/products/DSC_4317_360x.jpg?v=1603071042 360w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4317_540x.jpg?v=1603071042 540w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4317_720x.jpg?v=1603071042 720w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4317_900x.jpg?v=1603071042 900w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4317_1080x.jpg?v=1603071042 1080w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4317_1296x.jpg?v=1603071042 1296w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4317_1512x.jpg?v=1603071042 1512w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4317_1728x.jpg?v=1603071042 1728w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4317_1944x.jpg?v=1603071042 1944w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4317_2048x.jpg?v=1603071042 2048w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4317_4472x.jpg?v=1603071042 4472w" sizes="420px" srcset="DSC_4317_360x.jpg 360w, DSC_4317_540x.jpg 540w, DSC_4317_720x.jpg 720w, DSC_4317_900x.jpg 900w, DSC_4317_1080x.jpg 1080w, DSC_4317_1296x.jpg 1296w, DSC_4317_1512x.jpg 1512w, DSC_4317_1728x.jpg 1728w, DSC_4317_1944x.jpg 1944w, DSC_4317_2048x.jpg 2048w, DSC_4317_4472x.jpg 4472w">
+          </div>
+          <div class="placeholder-background placeholder-background--animation" data-image-placeholder="" style="display: none;"></div>
+        </div>
+      
+
+        
+        <span class="product-item__meta">
+          <span class="product-item__meta__inner">
+
+            
+            <p class="product-item__title">lacebark cups</p>
+            <p class="product-item__price-wrapper">
+              
+              
+                
+                  
+                    <span class="visually-hidden">Regular price</span>
+                  
+                  $50
+
+              
+            </p>
+
+            
+            
+              <p class="product-item__sold-out">Sold out</p>
+            
+          </span>
+        </span>
+
+        
+        
+      </span>
+    </a>
+  </div>
+</div>
+
+      
+        
+        <div class="product-item grid__item small--one-half medium--one-third large-up--one-quarter">
+  <div class="product-item__link-wrapper">
+    <a class="product-item__link" href="https://dans-pots.myshopify.com/products/arizona">
+      <span class="image-wrapper">
+        
+        <noscript>
+          <img class="product-item__image-no-js" src="DSC_4342_1024x.jpg" alt="large arizona planter">
+        </noscript>
+        <div class="product-item__image-container" style="max-width: 600px;" data-image-with-placeholder-wrapper="">
+          <div class="product-item__image-wrapper" style="padding-top:100.0%">
+            
+            <img class="product-item__image lazyautosizes ls-is-cached lazyloaded" alt="large arizona planter" data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048, 4472]" data-aspectratio="1.0" data-sizes="auto" data-image="" data-srcset="//dans-pots.myshopify.com/cdn/shop/products/DSC_4342_360x.jpg?v=1603067759 360w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4342_540x.jpg?v=1603067759 540w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4342_720x.jpg?v=1603067759 720w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4342_900x.jpg?v=1603067759 900w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4342_1080x.jpg?v=1603067759 1080w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4342_1296x.jpg?v=1603067759 1296w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4342_1512x.jpg?v=1603067759 1512w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4342_1728x.jpg?v=1603067759 1728w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4342_1944x.jpg?v=1603067759 1944w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4342_2048x.jpg?v=1603067759 2048w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4342_4472x.jpg?v=1603067759 4472w" sizes="420px" srcset="DSC_4342_360x.jpg 360w, DSC_4342_540x.jpg 540w, DSC_4342_720x.jpg 720w, DSC_4342_900x.jpg 900w, DSC_4342_1080x.jpg 1080w, DSC_4342_1296x.jpg 1296w, DSC_4342_1512x.jpg 1512w, DSC_4342_1728x.jpg 1728w, DSC_4342_1944x.jpg 1944w, DSC_4342_2048x.jpg 2048w, DSC_4342_4472x.jpg 4472w">
+          </div>
+          <div class="placeholder-background placeholder-background--animation" data-image-placeholder="" style="display: none;"></div>
+        </div>
+      
+
+        
+        <span class="product-item__meta">
+          <span class="product-item__meta__inner">
+
+            
+            <p class="product-item__title">large arizona planter</p>
+            <p class="product-item__price-wrapper">
+              
+              
+                
+                  
+                    <span class="visually-hidden">Regular price</span>
+                  
+                  $60
+
+              
+            </p>
+
+            
+            
+          </span>
+        </span>
+
+        
+        
+      </span>
+    </a>
+  </div>
+</div>
+
+      
+        
+        <div class="product-item grid__item small--one-half medium--one-third large-up--one-quarter">
+  <div class="product-item__link-wrapper">
+    <a class="product-item__link" href="https://dans-pots.myshopify.com/products/apulco">
+      <span class="image-wrapper">
+        
+        <noscript>
+          <img class="product-item__image-no-js" src="DSC_4283_1024x.jpg" alt="apulco bowl">
+        </noscript>
+        <div class="product-item__image-container" style="max-width: 600px;" data-image-with-placeholder-wrapper="">
+          <div class="product-item__image-wrapper" style="padding-top:100.0%">
+            
+            <img class="product-item__image lazyautosizes ls-is-cached lazyloaded" alt="apulco bowl" data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048, 4472]" data-aspectratio="1.0" data-sizes="auto" data-image="" data-srcset="//dans-pots.myshopify.com/cdn/shop/products/DSC_4283_360x.jpg?v=1603067603 360w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4283_540x.jpg?v=1603067603 540w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4283_720x.jpg?v=1603067603 720w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4283_900x.jpg?v=1603067603 900w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4283_1080x.jpg?v=1603067603 1080w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4283_1296x.jpg?v=1603067603 1296w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4283_1512x.jpg?v=1603067603 1512w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4283_1728x.jpg?v=1603067603 1728w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4283_1944x.jpg?v=1603067603 1944w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4283_2048x.jpg?v=1603067603 2048w, //dans-pots.myshopify.com/cdn/shop/products/DSC_4283_4472x.jpg?v=1603067603 4472w" sizes="420px" srcset="DSC_4283_360x.jpg 360w, DSC_4283_540x.jpg 540w, DSC_4283_720x.jpg 720w, DSC_4283_900x.jpg 900w, DSC_4283_1080x.jpg 1080w, DSC_4283_1296x.jpg 1296w, DSC_4283_1512x.jpg 1512w, DSC_4283_1728x.jpg 1728w, DSC_4283_1944x.jpg 1944w, DSC_4283_2048x.jpg 2048w, DSC_4283_4472x.jpg 4472w">
+          </div>
+          <div class="placeholder-background placeholder-background--animation" data-image-placeholder="" style="display: none;"></div>
+        </div>
+      
+
+        
+        <span class="product-item__meta">
+          <span class="product-item__meta__inner">
+
+            
+            <p class="product-item__title">apulco bowl</p>
+            <p class="product-item__price-wrapper">
+              
+              
+                
+                  
+                    <span class="visually-hidden">Regular price</span>
+                  
+                  $40
+
+              
+            </p>
+
+            
+            
+              <p class="product-item__sold-out">Sold out</p>
+            
+          </span>
+        </span>
+
+        
+        
+      </span>
+    </a>
+  </div>
+</div>
+
+      
+    
+  </div>
+</div>
+
+
+
+
+</div><!-- END content_for_index -->
+
+    
+
+    <div id="shopify-section-footer" class="shopify-section footer-section"><footer class="site-footer" role="contentinfo">
+  
+  
+    <ul class="list--inline site-footer__linklist">
+      
+        <li class="h4"><a href="https://dans-pots.myshopify.com/pages/shipping-terms-conditions">shipping · returns</a></li>
+      
+        <li class="h4"><a href="mailto:Daniel@danspots.com">daniel@danspots.com</a></li>
+      
+    </ul>
+  
+
+  <div class="grid text-center large-up--grid--table">
+    <div class="grid__item large-up--one-quarter text-center">
+      <ul class="list--inline social-icons social-icons--footer">
+        
+        
+        
+        
+        
+        <center>
+          <li>
+            <a href="https://www.instagram.com/danspots/" title="danspots on Instagram">
+              <span class="icon icon-instagram" aria-hidden="true"></span>
+              <span class="visually-hidden">Instagram</span>
+            </a>
+          </li>
+        </center>
+        
+        
+        
+        
+        
+        
+      </ul>
+    </div>
+    <div class="grid__item large-up--one-half">
+      <span class="site-footer__copyright">© 2024 <a href="https://dans-pots.myshopify.com/">danspots</a> <a target="_blank" rel="nofollow" href="https://www.shopify.com/?utm_campaign=poweredby&amp;utm_medium=shopify&amp;utm_source=onlinestore"> </a></span>
+    </div>
+    <div class="grid__item large-up--one-quarter text-center"></div>
+  </div>
+</footer>
+
+
+
+
+</div>
+
+  
+
+  
+  
+    
+    
+
+  
+  <ul hidden="">
+    <li id="a11y-refresh-page-message">Choosing a selection results in a full page refresh.</li>
+    <li id="a11y-selection-message">Press the space key then arrow keys to make a selection.</li>
+  </ul>
+
+
+</body></html>

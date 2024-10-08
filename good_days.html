@@ -3,171 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Day Streak Tracker</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <title>Firebase Mood Tracker</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <style>
         body {
-            font-family: 'Roboto', sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
             padding: 20px;
         }
-        .container {
-            text-align: center;
-            background-color: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-            width: 80%;
-            max-width: 600px;
-        }
         h1, h2 {
-            color: #333;
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
+            text-align: center;
         }
-        #days {
-            font-size: 4rem;
-            margin: 1rem 0;
-            color: #4CAF50;
+        #question {
+            text-align: center;
+            font-size: 1.5em;
+            margin-bottom: 20px;
         }
         .button-container {
             display: flex;
-            flex-wrap: wrap;
             justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
+            gap: 20px;
         }
-        button {
+        .option-button {
+            width: 200px;
+            height: 200px;
+            font-size: 1.5em;
+            cursor: pointer;
+            border: none;
+            color: white;
+        }
+        .green-button {
+            background-color: #4CAF50;
+        }
+        .red-button {
+            background-color: #f44336;
+        }
+        #results {
+            margin-top: 40px;
+        }
+        .day-box {
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            position: relative;
+            cursor: pointer;
+        }
+        .day-box div {
+            width: 33.33%;
+            height: 100%;
+            float: left;
+        }
+        .day-box .delete-btn {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: red;
             color: white;
             border: none;
-            padding: 15px 20px;
-            font-size: 1rem;
-            cursor: pointer;
-            border-radius: 50px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 8px rgba(0,0,0,0.15);
-        }
-        button:active {
-            transform: translateY(1px);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .bad-day { background-color: #FF4136; }
-        .good-day { background-color: #2ECC40; }
-        #visualization {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 4px;
-            max-width: 800px;
-            justify-content: center;
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .day {
+            border-radius: 50%;
             width: 20px;
             height: 20px;
-            border-radius: 4px;
-            transition: all 0.3s ease;
+            font-size: 12px;
             cursor: pointer;
-            position: relative;
-        }
-        .day:hover {
-            transform: scale(1.2);
-        }
-        .day .actions {
             display: none;
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: white;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            z-index: 10;
         }
-        .day:hover .actions {
-            display: flex;
-            flex-direction: column;
+        .day-box:hover .delete-btn {
+            display: block;
         }
-        .day .actions button {
-            font-size: 0.8rem;
-            padding: 5px 10px;
-            margin: 2px;
-            border-radius: 4px;
-        }
-        .day .actions button.change-to-good { background-color: #2ECC40; }
-        .day .actions button.change-to-bad { background-color: #FF4136; }
-        .day .actions button.delete { background-color: #FF851B; }
-        #day-info {
-            position: absolute;
-            background-color: #333;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        #analytics {
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            margin-top: 20px;
-            width: 80%;
-            max-width: 600px;
-        }
-        #analytics ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        #analytics li {
-            margin-bottom: 10px;
-        }
-        #chart-container {
-            width: 80%;
-            max-width: 600px;
-            margin-top: 20px;
+        #add-missing-day {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1 id="streak-title">Days on Good Streak</h1>
-        <div id="days">0</div>
+    <h1>Firebase Mood Tracker</h1>
+    <div id="tracker">
+        <div id="question"></div>
         <div class="button-container">
-            <button class="bad-day" onclick="toggleDay('bad')">Bad day</button>
-            <button class="good-day" onclick="toggleDay('good')">Good day</button>
+            <button id="option1" class="option-button green-button"></button>
+            <button id="option2" class="option-button red-button"></button>
         </div>
     </div>
-    <div id="visualization"></div>
-    <div id="day-info"></div>
-    <div id="analytics">
+    <div id="results" style="display: none;">
         <h2>Analytics</h2>
-        <ul>
-            <li>Total Good Days: <span id="good-days-count">0</span></li>
-            <li>Total Bad Days: <span id="bad-days-count">0</span></li>
-            <li>Longest Good Streak: <span id="longest-good-streak">0</span></li>
-            <li>Longest Bad Streak: <span id="longest-bad-streak">0</span></li>
-        </ul>
-    </div>
-    <div id="chart-container">
-        <canvas id="analyticsChart"></canvas>
+        <div id="analytics"></div>
+        <h2>Trend Chart</h2>
+        <canvas id="trendChart"></canvas>
+        <h2>Daily Summary</h2>
+        <div id="history"></div>
+        <button id="add-missing-day">Add Missing Day</button>
     </div>
 
     <script>
@@ -179,209 +112,212 @@
           projectId: "good-days-5515e",
           storageBucket: "good-days-5515e.appspot.com",
           messagingSenderId: "50443495976",
-          appId: "1:50443495976:web:c98f7989cb34da6e83631d",
-          measurementId: "G-EL08E9D8TX"
+          appId: "1:50443495976:web:16e4d1fac4a23cda83631d",
+          measurementId: "G-WXFZ6CSKPJ"
         };
-
 
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
-        const daysRef = database.ref('days');
 
-        let days = {};
-        let lastDayType = 'good';
-        let chart;
+        const questions = [
+            { id: 'day', options: ['Good day', 'Bad day'] },
+            { id: 'touch', options: ['Touching', 'No touching'] },
+            { id: 'energy', options: ['Energized', 'Tired'] }
+        ];
 
-        // Listen for data changes
-        daysRef.on('value', (snapshot) => {
-            days = snapshot.val() || {};
-            updateDays();
-            updateVisualization();
-            updateAnalytics();
-            updateChart();
-        });
+        let currentQuestion = 0;
+        let dailyData = [];
+        let todayData = {};
+        let editingDate = null;
+        let chart = null;
 
-        function updateDays() {
-            const dayEntries = Object.entries(days);
-            let streakCount = 0;
-            let streakType = lastDayType;
+        function updateQuestion() {
+            document.getElementById('question').textContent = `${questions[currentQuestion].options[0]} or ${questions[currentQuestion].options[1]}?`;
+            document.getElementById('option1').textContent = questions[currentQuestion].options[0];
+            document.getElementById('option2').textContent = questions[currentQuestion].options[1];
+        }
 
-            if (dayEntries.length > 0) {
-                streakType = dayEntries[dayEntries.length - 1][1];
-                for (let i = dayEntries.length - 1; i >= 0; i--) {
-                    if (dayEntries[i][1] === streakType) {
-                        streakCount++;
-                    } else {
-                        break;
-                    }
-                }
-            }
+        function handleSelection(option) {
+            todayData[questions[currentQuestion].id] = option;
 
-            const streakTitle = document.getElementById('streak-title');
-            const daysElement = document.getElementById('days');
-
-            if (streakType === 'good') {
-                streakTitle.textContent = 'Days on Good Streak';
-                daysElement.style.color = '#2ECC40';
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                updateQuestion();
             } else {
-                streakTitle.textContent = 'Days Since Good Day';
-                daysElement.style.color = '#FF4136';
+                saveTodayData();
+                showResults();
             }
-
-            daysElement.textContent = streakCount;
         }
 
-        function toggleDay(type) {
-            const now = Date.now();
-            daysRef.update({
-                [now]: type
-            });
-            lastDayType = type;
-        }
-
-        function updateVisualization() {
-            const visualization = document.getElementById('visualization');
-            visualization.innerHTML = '';
-            Object.entries(days).forEach(([timestamp, type]) => {
-                const dayElement = document.createElement('div');
-                dayElement.className = 'day';
-                dayElement.style.backgroundColor = getDayColor(type);
-                dayElement.dataset.timestamp = timestamp;
-                dayElement.dataset.type = type;
-                dayElement.addEventListener('mouseover', showDayInfo);
-                dayElement.addEventListener('mouseout', hideDayInfo);
-
-                const actionsDiv = document.createElement('div');
-                actionsDiv.className = 'actions';
-                
-                const changeButtons = ['good', 'bad'].filter(t => t !== type);
-                changeButtons.forEach(newType => {
-                    const button = document.createElement('button');
-                    button.textContent = `Change to ${capitalizeFirstLetter(newType)}`;
-                    button.className = `change-to-${newType}`;
-                    button.onclick = () => changeDay(timestamp, newType);
-                    actionsDiv.appendChild(button);
+        function saveTodayData() {
+            const date = editingDate || new Date().toISOString().split('T')[0];
+            todayData.date = date;
+            
+            // Update Firebase
+            database.ref('moodData/' + date.replace(/-/g, '')).set(todayData)
+                .then(() => {
+                    console.log("Data saved successfully.");
+                    editingDate = null;
+                    todayData = {};
+                })
+                .catch((error) => {
+                    console.error("Error saving data: ", error);
                 });
-
-                const deleteButton = document.createElement('button');
-                deleteButton.textContent = 'Delete';
-                deleteButton.className = 'delete';
-                deleteButton.onclick = () => deleteDay(timestamp);
-                actionsDiv.appendChild(deleteButton);
-
-                dayElement.appendChild(actionsDiv);
-                visualization.appendChild(dayElement);
-            });
         }
 
-        function changeDay(timestamp, newType) {
-            daysRef.update({
-                [timestamp]: newType
-            });
-        }
-
-        function deleteDay(timestamp) {
-            daysRef.child(timestamp).remove();
-        }
-
-        function showDayInfo(event) {
-            const dayInfo = document.getElementById('day-info');
-            const date = new Date(parseInt(event.target.dataset.timestamp));
-            const type = event.target.dataset.type;
-            dayInfo.textContent = `${capitalizeFirstLetter(type)} day on ${date.toLocaleDateString()}`;
-            dayInfo.style.left = `${event.pageX + 10}px`;
-            dayInfo.style.top = `${event.pageY + 10}px`;
-            dayInfo.style.opacity = 1;
-        }
-
-        function hideDayInfo() {
-            const dayInfo = document.getElementById('day-info');
-            dayInfo.style.opacity = 0;
+        function showResults() {
+            document.getElementById('tracker').style.display = 'none';
+            document.getElementById('results').style.display = 'block';
+            updateAnalytics();
+            updateHistory();
+            updateTrendChart();
         }
 
         function updateAnalytics() {
-            const dayEntries = Object.values(days);
-            const goodDaysCount = dayEntries.filter(day => day === 'good').length;
-            const badDaysCount = dayEntries.filter(day => day === 'bad').length;
+            const analyticsDiv = document.getElementById('analytics');
+            analyticsDiv.innerHTML = `
+                <p>Longest Good day streak: ${getLongestStreak('day', 'Good day')}</p>
+                <p>Longest Touching streak: ${getLongestStreak('touch', 'Touching')}</p>
+                <p>Longest Energized streak: ${getLongestStreak('energy', 'Energized')}</p>
+            `;
+        }
 
-            let currentGoodStreak = 0;
-            let longestGoodStreak = 0;
-            let currentBadStreak = 0;
-            let longestBadStreak = 0;
-
-            dayEntries.forEach(day => {
-                if (day === 'good') {
-                    currentGoodStreak++;
-                    currentBadStreak = 0;
-                    longestGoodStreak = Math.max(longestGoodStreak, currentGoodStreak);
+        function getLongestStreak(key, value) {
+            let maxStreak = 0;
+            let currentStreak = 0;
+            dailyData.forEach(day => {
+                if (day[key] === value) {
+                    currentStreak++;
+                    maxStreak = Math.max(maxStreak, currentStreak);
                 } else {
-                    currentBadStreak++;
-                    currentGoodStreak = 0;
-                    longestBadStreak = Math.max(longestBadStreak, currentBadStreak);
+                    currentStreak = 0;
                 }
             });
-
-            document.getElementById('good-days-count').textContent = goodDaysCount;
-            document.getElementById('bad-days-count').textContent = badDaysCount;
-            document.getElementById('longest-good-streak').textContent = longestGoodStreak;
-            document.getElementById('longest-bad-streak').textContent = longestBadStreak;
+            return maxStreak;
         }
 
-        function getDayColor(type) {
-            switch(type) {
-                case 'good': return '#2ECC40';
-                case 'bad': return '#FF4136';
-                default: return '#999';
-            }
+        function updateHistory() {
+            const historyDiv = document.getElementById('history');
+            historyDiv.innerHTML = '';
+            dailyData.forEach(day => {
+                const dayBox = document.createElement('div');
+                dayBox.className = 'day-box';
+                dayBox.title = day.date;
+
+                const dayColor = day.day === 'Good day' ? 'green' : day.day === 'Bad day' ? 'red' : 'gray';
+                const touchColor = day.touch === 'Touching' ? 'green' : day.touch === 'No touching' ? 'red' : 'gray';
+                const energyColor = day.energy === 'Energized' ? 'green' : day.energy === 'Tired' ? 'red' : 'gray';
+
+                dayBox.innerHTML = `
+                    <div style="background-color: ${dayColor};"></div>
+                    <div style="background-color: ${touchColor};"></div>
+                    <div style="background-color: ${energyColor};"></div>
+                    <button class="delete-btn">×</button>
+                `;
+
+                dayBox.addEventListener('click', () => editDay(day.date));
+                dayBox.querySelector('.delete-btn').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    deleteDay(day.date);
+                });
+
+                historyDiv.appendChild(dayBox);
+            });
         }
 
-        function capitalizeFirstLetter(string) {
-            return string.charAt(0).toUpperCase() + string.slice(1);
-        }
-
-        function updateChart() {
-            const dayEntries = Object.entries(days).sort((a, b) => parseInt(a[0]) - parseInt(b[0]));
-            const labels = dayEntries.map(([timestamp, _]) => new Date(parseInt(timestamp)).toLocaleDateString());
-            const data = dayEntries.map(([_, type]) => type === 'good' ? 1 : 0);
+        function updateTrendChart() {
+            const ctx = document.getElementById('trendChart').getContext('2d');
+            const data = {
+                labels: dailyData.map(day => day.date),
+                datasets: [
+                    {
+                        label: 'Day',
+                        data: dailyData.map(day => day.day === 'Good day' ? 1 : day.day === 'Bad day' ? 0 : null),
+                        borderColor: 'green',
+                        tension: 0.1
+                    },
+                    {
+                        label: 'Touch',
+                        data: dailyData.map(day => day.touch === 'Touching' ? 1 : day.touch === 'No touching' ? 0 : null),
+                        borderColor: 'blue',
+                        tension: 0.1
+                    },
+                    {
+                        label: 'Energy',
+                        data: dailyData.map(day => day.energy === 'Energized' ? 1 : day.energy === 'Tired' ? 0 : null),
+                        borderColor: 'orange',
+                        tension: 0.1
+                    }
+                ]
+            };
 
             if (chart) {
-                chart.data.labels = labels;
-                chart.data.datasets[0].data = data;
-                chart.update();
-            } else {
-                const ctx = document.getElementById('analyticsChart').getContext('2d');
-                chart = new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            label: 'Day Quality',
-                            data: data,
-                            borderColor: '#2ECC40',
-                            backgroundColor: '#2ECC40',
-                            tension: 0.1,
-                            stepped: true
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                max: 1,
-                                ticks: {
-                                    stepSize: 1,
-                                    callback: function(value, index, values) {
-                                        return ['Bad', 'Good'][value];
-                                    }
-                                }
-                            }
+                chart.destroy();
+            }
+
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: data,
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 1
                         }
                     }
+                }
+            });
+        }
+
+        function editDay(date) {
+            editingDate = date;
+            todayData = dailyData.find(day => day.date === date) || {};
+            currentQuestion = 0;
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('tracker').style.display = 'block';
+            updateQuestion();
+        }
+
+        function deleteDay(date) {
+            // Delete from Firebase
+            database.ref('moodData/' + date.replace(/-/g, '')).remove()
+                .then(() => {
+                    console.log("Data deleted successfully.");
+                })
+                .catch((error) => {
+                    console.error("Error deleting data: ", error);
                 });
+        }
+
+        function addMissingDay() {
+            const date = prompt("Enter date (YYYY-MM-DD) for the day you want to add:");
+            if (date && !dailyData.some(d => d.date === date)) {
+                editDay(date);
             }
         }
+
+        // Load data from Firebase
+        function loadData() {
+            database.ref('moodData').on('value', (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    dailyData = Object.values(data);
+                    dailyData.sort((a, b) => new Date(a.date) - new Date(b.date));
+                    if (dailyData.length > 0) {
+                        showResults();
+                    }
+                }
+            });
+        }
+
+        document.getElementById('option1').addEventListener('click', () => handleSelection(questions[currentQuestion].options[0]));
+        document.getElementById('option2').addEventListener('click', () => handleSelection(questions[currentQuestion].options[1]));
+        document.getElementById('add-missing-day').addEventListener('click', addMissingDay);
+
+        updateQuestion();
+        loadData();
     </script>
 </body>
 </html>

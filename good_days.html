@@ -3,24 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Firebase Mood Tracker</title>
+    <title>Good Days</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
         }
         h1, h2 {
             text-align: center;
+            color: #1a73e8;
         }
         #question {
             text-align: center;
             font-size: 1.5em;
             margin-bottom: 20px;
+            color: #202124;
         }
         .button-container {
             display: flex;
@@ -34,24 +39,40 @@
             cursor: pointer;
             border: none;
             color: white;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .option-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
         }
         .green-button {
-            background-color: #4CAF50;
+            background-color: #34a853;
         }
         .red-button {
-            background-color: #f44336;
+            background-color: #ea4335;
         }
         #results {
             margin-top: 40px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         .day-box {
             display: inline-block;
             width: 60px;
             height: 60px;
             margin: 5px;
-            border: 1px solid #ccc;
+            border-radius: 10px;
             position: relative;
             cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        .day-box:hover {
+            transform: scale(1.05);
         }
         .day-box div {
             width: 33.33%;
@@ -62,7 +83,7 @@
             position: absolute;
             top: -10px;
             right: -10px;
-            background-color: red;
+            background-color: #ea4335;
             color: white;
             border: none;
             border-radius: 50%;
@@ -75,23 +96,41 @@
         .day-box:hover .delete-btn {
             display: block;
         }
-        #add-missing-day {
+        #add-missing-day, #add-note-btn {
             display: block;
             margin: 20px auto;
             padding: 10px 20px;
             font-size: 1em;
             cursor: pointer;
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        #add-missing-day:hover, #add-note-btn:hover {
+            background-color: #185abc;
+        }
+        #note-input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #dadce0;
+            border-radius: 5px;
+            font-size: 1em;
         }
     </style>
 </head>
 <body>
-    <h1>Firebase Mood Tracker</h1>
+    <h1>Good Days</h1>
     <div id="tracker">
         <div id="question"></div>
         <div class="button-container">
             <button id="option1" class="option-button green-button"></button>
             <button id="option2" class="option-button red-button"></button>
         </div>
+        <textarea id="note-input" placeholder="Add a note for today..." rows="3"></textarea>
+        <button id="add-note-btn">Save Note</button>
     </div>
     <div id="results" style="display: none;">
         <h2>Analytics</h2>
@@ -145,14 +184,15 @@
                 currentQuestion++;
                 updateQuestion();
             } else {
-                saveTodayData();
-                showResults();
+                document.getElementById('note-input').style.display = 'block';
+                document.getElementById('add-note-btn').style.display = 'block';
             }
         }
 
         function saveTodayData() {
             const date = editingDate || new Date().toISOString().split('T')[0];
             todayData.date = date;
+            todayData.note = document.getElementById('note-input').value;
             
             // Update Firebase
             database.ref('moodData/' + date.replace(/-/g, '')).set(todayData)
@@ -160,6 +200,8 @@
                     console.log("Data saved successfully.");
                     editingDate = null;
                     todayData = {};
+                    document.getElementById('note-input').value = '';
+                    showResults();
                 })
                 .catch((error) => {
                     console.error("Error saving data: ", error);
@@ -203,16 +245,16 @@
             dailyData.forEach(day => {
                 const dayBox = document.createElement('div');
                 dayBox.className = 'day-box';
-                dayBox.title = day.date;
+                dayBox.title = `${day.date}\n${day.note || ''}`;
 
-                const dayColor = day.day === 'Good day' ? 'green' : day.day === 'Bad day' ? 'red' : 'gray';
-                const touchColor = day.touch === 'Touching' ? 'green' : day.touch === 'No touching' ? 'red' : 'gray';
-                const energyColor = day.energy === 'Energized' ? 'green' : day.energy === 'Tired' ? 'red' : 'gray';
+                const dayColor = day.day === 'Good day' ? '#34a853' : day.day === 'Bad day' ? '#ea4335' : '#dadce0';
+                const touchColor = day.touch === 'Touching' ? '#34a853' : day.touch === 'No touching' ? '#ea4335' : '#dadce0';
+                const energyColor = day.energy === 'Energized' ? '#34a853' : day.energy === 'Tired' ? '#ea4335' : '#dadce0';
 
                 dayBox.innerHTML = `
-                    <div style="background-color: ${dayColor};"></div>
+                    <div style="background-color: ${dayColor}; border-radius: 10px 0 0 10px;"></div>
                     <div style="background-color: ${touchColor};"></div>
-                    <div style="background-color: ${energyColor};"></div>
+                    <div style="background-color: ${energyColor}; border-radius: 0 10px 10px 0;"></div>
                     <button class="delete-btn">×</button>
                 `;
 
@@ -234,19 +276,19 @@
                     {
                         label: 'Day',
                         data: dailyData.map(day => day.day === 'Good day' ? 1 : day.day === 'Bad day' ? 0 : null),
-                        borderColor: 'green',
+                        borderColor: '#34a853',
                         tension: 0.1
                     },
                     {
                         label: 'Touch',
                         data: dailyData.map(day => day.touch === 'Touching' ? 1 : day.touch === 'No touching' ? 0 : null),
-                        borderColor: 'blue',
+                        borderColor: '#4285f4',
                         tension: 0.1
                     },
                     {
                         label: 'Energy',
                         data: dailyData.map(day => day.energy === 'Energized' ? 1 : day.energy === 'Tired' ? 0 : null),
-                        borderColor: 'orange',
+                        borderColor: '#fbbc05',
                         tension: 0.1
                     }
                 ]
@@ -277,6 +319,7 @@
             currentQuestion = 0;
             document.getElementById('results').style.display = 'none';
             document.getElementById('tracker').style.display = 'block';
+            document.getElementById('note-input').value = todayData.note || '';
             updateQuestion();
         }
 
@@ -315,6 +358,7 @@
         document.getElementById('option1').addEventListener('click', () => handleSelection(questions[currentQuestion].options[0]));
         document.getElementById('option2').addEventListener('click', () => handleSelection(questions[currentQuestion].options[1]));
         document.getElementById('add-missing-day').addEventListener('click', addMissingDay);
+        document.getElementById('add-note-btn').addEventListener('click', saveTodayData);
 
         updateQuestion();
         loadData();

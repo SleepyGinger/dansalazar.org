@@ -8,6 +8,8 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <style>
         body {
             font-family: 'Roboto', sans-serif;
@@ -119,6 +121,16 @@
             border-radius: 5px;
             font-size: 1em;
         }
+        #date-picker-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        #date-picker {
+            padding: 10px;
+            font-size: 1em;
+            border: 1px solid #dadce0;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
@@ -139,7 +151,10 @@
         <canvas id="trendChart"></canvas>
         <h2>Daily Summary</h2>
         <div id="history"></div>
-        <button id="add-missing-day">Add Missing Day</button>
+        <div id="date-picker-container">
+            <input type="text" id="date-picker" placeholder="Select a date">
+            <button id="add-missing-day">Add Missing Day</button>
+        </div>
     </div>
 
     <script>
@@ -215,6 +230,16 @@
             updateHistory();
             updateTrendChart();
         }
+        
+        function showQuestions() {
+            document.getElementById('tracker').style.display = 'block';
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('note-input').style.display = 'none';
+            document.getElementById('add-note-btn').style.display = 'none';
+            currentQuestion = 0;
+            todayData = {};
+            updateQuestion();
+        }
 
         function updateAnalytics() {
             const analyticsDiv = document.getElementById('analytics');
@@ -270,24 +295,37 @@
 
         function updateTrendChart() {
             const ctx = document.getElementById('trendChart').getContext('2d');
+            
+            const calculateCompoundingValues = (data, key, positiveValue) => {
+                let compoundingValue = 0;
+                return data.map(day => {
+                    if (day[key] === positiveValue) {
+                        compoundingValue++;
+                    } else {
+                        compoundingValue = 0;
+                    }
+                    return compoundingValue;
+                });
+            };
+
             const data = {
                 labels: dailyData.map(day => day.date),
                 datasets: [
                     {
                         label: 'Day',
-                        data: dailyData.map(day => day.day === 'Good day' ? 1 : day.day === 'Bad day' ? 0 : null),
+                        data: calculateCompoundingValues(dailyData, 'day', 'Good day'),
                         borderColor: '#34a853',
                         tension: 0.1
                     },
                     {
                         label: 'Touch',
-                        data: dailyData.map(day => day.touch === 'Touching' ? 1 : day.touch === 'No touching' ? 0 : null),
+                        data: calculateCompoundingValues(dailyData, 'touch', 'Touching'),
                         borderColor: '#4285f4',
                         tension: 0.1
                     },
                     {
                         label: 'Energy',
-                        data: dailyData.map(day => day.energy === 'Energized' ? 1 : day.energy === 'Tired' ? 0 : null),
+                        data: calculateCompoundingValues(dailyData, 'energy', 'Energized'),
                         borderColor: '#fbbc05',
                         tension: 0.1
                     }
@@ -306,7 +344,10 @@
                     scales: {
                         y: {
                             beginAtZero: true,
-                            max: 1
+                            title: {
+                                display: true,
+                                text: 'Consecutive Days'
+                            }
                         }
                     }
                 }
@@ -315,42 +356,49 @@
 
         function editDay(date) {
             editingDate = date;
-            todayData = dailyData.find(day => day.date === date) || {};
+            const dayData = dailyData.find(day => day.date === date) || {};
+            todayData = { ...dayData };
             currentQuestion = 0;
-            document.getElementById('results').style.display = 'none';
-            document.getElementById('tracker').style.display = 'block';
-            document.getElementById('note-input').value = todayData.note || '';
+            showQuestions();
             updateQuestion();
+            document.getElementById('note-input').value = dayData.note || '';
         }
 
         function deleteDay(date) {
-            // Delete from Firebase
-            database.ref('moodData/' + date.replace(/-/g, '')).remove()
-                .then(() => {
-                    console.log("Data deleted successfully.");
-                })
-                .catch((error) => {
-                    console.error("Error deleting data: ", error);
-                });
-        }
-
-        function addMissingDay() {
-            const date = prompt("Enter date (YYYY-MM-DD) for the day you want to add:");
-            if (date && !dailyData.some(d => d.date === date)) {
-                editDay(date);
+            if (confirm('Are you sure you want to delete this day?')) {
+                database.ref('moodData/' + date.replace(/-/g, '')).remove()
+                    .then(() => {
+                        console.log("Data deleted successfully.");
+                        loadData(); // Reload data after deletion
+                    })
+                    .catch((error) => {
+                        console.error("Error deleting data: ", error);
+                    });
             }
         }
 
-        // Load data from Firebase
+        function addMissingDay() {
+            const selectedDate = document.getElementById('date-picker').value;
+            if (selectedDate && !dailyData.some(d => d.date === selectedDate)) {
+                editDay(selectedDate);
+            } else {
+                alert('Please select a valid date that doesn\'t already have an entry.');
+            }
+        }
+
         function loadData() {
-            database.ref('moodData').on('value', (snapshot) => {
+            database.ref('moodData').once('value', (snapshot) => {
                 const data = snapshot.val();
                 if (data) {
                     dailyData = Object.values(data);
                     dailyData.sort((a, b) => new Date(a.date) - new Date(b.date));
                     if (dailyData.length > 0) {
                         showResults();
+                    } else {
+                        showQuestions();
                     }
+                } else {
+                    showQuestions();
                 }
             });
         }
@@ -360,8 +408,18 @@
         document.getElementById('add-missing-day').addEventListener('click', addMissingDay);
         document.getElementById('add-note-btn').addEventListener('click', saveTodayData);
 
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            flatpickr("#date-picker", {
+                dateFormat: "Y-m-d",
+                maxDate: "today"
+            });
+            
+            loadData();
+        });
+
+        // Initialize
         updateQuestion();
-        loadData();
     </script>
 </body>
 </html>

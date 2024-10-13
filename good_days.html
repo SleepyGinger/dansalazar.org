@@ -292,19 +292,19 @@
                 historyDiv.appendChild(dayBox);
             });
         }
-
+        
         function updateTrendChart() {
             const ctx = document.getElementById('trendChart').getContext('2d');
-            
-            const calculateCompoundingValues = (data, key, positiveValue) => {
-                let compoundingValue = 0;
+
+            const calculateSmoothValues = (data, key, positiveValue) => {
+                let value = 0;
                 return data.map(day => {
                     if (day[key] === positiveValue) {
-                        compoundingValue++;
+                        value++;
                     } else {
-                        compoundingValue = 0;
+                        value = Math.max(0, value - 1); // Decrease by 1 instead of resetting to 0
                     }
-                    return compoundingValue;
+                    return value;
                 });
             };
 
@@ -313,19 +313,19 @@
                 datasets: [
                     {
                         label: 'Day',
-                        data: calculateCompoundingValues(dailyData, 'day', 'Good day'),
+                        data: calculateSmoothValues(dailyData, 'day', 'Good day'),
                         borderColor: '#34a853',
                         tension: 0.1
                     },
                     {
                         label: 'Touch',
-                        data: calculateCompoundingValues(dailyData, 'touch', 'Touching'),
+                        data: calculateSmoothValues(dailyData, 'touch', 'Touching'),
                         borderColor: '#4285f4',
                         tension: 0.1
                     },
                     {
                         label: 'Energy',
-                        data: calculateCompoundingValues(dailyData, 'energy', 'Energized'),
+                        data: calculateSmoothValues(dailyData, 'energy', 'Energized'),
                         borderColor: '#fbbc05',
                         tension: 0.1
                     }

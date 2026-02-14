@@ -18,8 +18,7 @@
     <meta name="description" content="Handmade pots by Dan in San Francisco">
   
 
-  <!-- /snippets/social-meta-tags.liquid -->
-
+  
 
 
 
@@ -56,316 +55,7 @@
 
 
 
-<style id="shopify-accelerated-checkout-cart-grid">#dynamic-checkout-cart {
-  container-type: inline-size;
-  container-name: dcc;
-  width: 100%;
-}
 
-.wallet-cart-grid {
-  --wallet-button-height-horizontal: clamp(
-    25px,
-    var(
-      --shopify-accelerated-checkout-button-inline-size,
-      42px
-    ),
-    55px
-  );
-  --wallet-button-height-vertical: clamp(
-    25px,
-    var(
-      --shopify-accelerated-checkout-button-block-size,
-      54px
-    ),
-    55px
-  );
-  --wallet-button-width-horizontal: 150px;
-  --wallet-button-width-vertical: 100%;
-  --wallet-button-border-radius: var(
-    --shopify-accelerated-checkout-button-border-radius,
-    4px
-  );
-  --wallet-grid-margin-horizontal: 0 -5px -5px -5px;
-  --wallet-button-container-margin-horizontal: 0 5px 5px;
-  --wallet-button-container-margin-vertical: var(--shopify-accelerated-checkout-row-gap, 8px) 0 0;
-}
-
-@keyframes acceleratedCheckoutLoadingSkeleton {
-  50% {opacity: var(--shopify-accelerated-checkout-skeleton-animation-opacity-start, 1);}
-  75% {opacity: var(--shopify-accelerated-checkout-skeleton-animation-opacity-end, 0.5);}
-  100% {opacity: var(--shopify-accelerated-checkout-skeleton-animation-opacity-start, 1);}
-}
-
-.wallet-cart-button__skeleton {
-  animation: acceleratedCheckoutLoadingSkeleton var(--shopify-accelerated-checkout-skeleton-animation-duration, 4s) var(--shopify-accelerated-checkout-skeleton-animation-timing-function, ease) infinite;
-  animation-delay: -0.168s;
-  background-color: var(--shopify-accelerated-checkout-skeleton-background-color, #dedede);
-  box-sizing: border-box;
-  text-decoration: none !important;
-}
-
-.wallet-cart-grid {
-  margin: var(--wallet-grid-margin-horizontal);
-  padding: 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: var(--shopify-accelerated-checkout-inline-alignment, start);
-  gap: 0 !important;
-}
-
-.wallet-cart-button-container {
-  position: relative;
-  margin: var(--wallet-button-container-margin-horizontal);
-}
-
-.wallet-cart-button-container,
-.wallet-cart-button {
-  width: var(--wallet-button-width-horizontal);
-  height: var(--wallet-button-height-horizontal);
-  border-radius: var(--wallet-button-border-radius);
-  list-style-type: none !important;
-  text-align: center;
-  flex-shrink: 0;
-  flex-grow: 0;
-}
-
-.additional-checkout-buttons--vertical .wallet-cart-grid {
-  justify-content: start;
-  flex-direction: column;
-  margin: 0;
-}
-.additional-checkout-buttons--vertical .wallet-cart-grid .wallet-cart-button-container {
-  width: var(--wallet-button-width-vertical);
-  height: var(--wallet-button-height-vertical);
-  margin: var(--wallet-button-container-margin-vertical);
-}
-.additional-checkout-buttons--vertical .wallet-cart-grid .wallet-cart-button-container:first-child {
-  margin-top: 0;
-}
-.additional-checkout-buttons--vertical .wallet-cart-grid .wallet-cart-button {
-  width: var(--wallet-button-width-vertical);
-  height: var(--wallet-button-height-vertical);
-}
-
-.additional-checkout-buttons--horizontal .wallet-cart-grid .wallet-cart-button-container,
-.additional-checkout-buttons--horizontal .wallet-cart-grid .wallet-cart-button {
-  width: var(--wallet-button-width-horizontal) !important;
-  height: var(--wallet-button-height-horizontal) !important;
-  border-radius: var(--wallet-button-border-radius) !important;
-}
-
-@container dcc (width >= 150px) and (width <= 500px) {
-  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(1)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(2))) {
-    justify-content: start;
-    flex-direction: column;
-    margin: 0;
-  }
-  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(1)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(2))) .wallet-cart-button-container {
-    width: var(--wallet-button-width-vertical);
-    height: var(--wallet-button-height-vertical);
-    margin: var(--wallet-button-container-margin-vertical);
-  }
-  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(1)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(2))) .wallet-cart-button-container:first-child {
-    margin-top: 0;
-  }
-  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(1)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(2))) .wallet-cart-button {
-    width: var(--wallet-button-width-vertical);
-    height: var(--wallet-button-height-vertical);
-  }
-}
-
-@container dcc (width <= 310px) {
-  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(2)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(3))) {
-    justify-content: start;
-    flex-direction: column;
-    margin: 0;
-  }
-  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(2)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(3))) .wallet-cart-button-container {
-    width: var(--wallet-button-width-vertical);
-    height: var(--wallet-button-height-vertical);
-    margin: var(--wallet-button-container-margin-vertical);
-  }
-  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(2)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(3))) .wallet-cart-button-container:first-child {
-    margin-top: 0;
-  }
-  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(2)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(3))) .wallet-cart-button {
-    width: var(--wallet-button-width-vertical);
-    height: var(--wallet-button-height-vertical);
-  }
-}
-
-@container dcc (width <= 470px) {
-  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(3)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(4))) {
-    justify-content: start;
-    flex-direction: column;
-    margin: 0;
-  }
-  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(3)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(4))) .wallet-cart-button-container {
-    width: var(--wallet-button-width-vertical);
-    height: var(--wallet-button-height-vertical);
-    margin: var(--wallet-button-container-margin-vertical);
-  }
-  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(3)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(4))) .wallet-cart-button-container:first-child {
-    margin-top: 0;
-  }
-  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(3)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(4))) .wallet-cart-button {
-    width: var(--wallet-button-width-vertical);
-    height: var(--wallet-button-height-vertical);
-  }
-}
-
-@container dcc (width <= 630px) {
-  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(4)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(5))) {
-    justify-content: start;
-    flex-direction: column;
-    margin: 0;
-  }
-  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(4)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(5))) .wallet-cart-button-container {
-    width: var(--wallet-button-width-vertical);
-    height: var(--wallet-button-height-vertical);
-    margin: var(--wallet-button-container-margin-vertical);
-  }
-  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(4)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(5))) .wallet-cart-button-container:first-child {
-    margin-top: 0;
-  }
-  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(4)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(5))) .wallet-cart-button {
-    width: var(--wallet-button-width-vertical);
-    height: var(--wallet-button-height-vertical);
-  }
-}
-
-@container dcc (width <= 790px) {
-  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(5)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(6))) {
-    justify-content: start;
-    flex-direction: column;
-    margin: 0;
-  }
-  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(5)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(6))) .wallet-cart-button-container {
-    width: var(--wallet-button-width-vertical);
-    height: var(--wallet-button-height-vertical);
-    margin: var(--wallet-button-container-margin-vertical);
-  }
-  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(5)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(6))) .wallet-cart-button-container:first-child {
-    margin-top: 0;
-  }
-  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(5)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(6))) .wallet-cart-button {
-    width: var(--wallet-button-width-vertical);
-    height: var(--wallet-button-height-vertical);
-  }
-}
-
-.wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(6)) {
-  justify-content: start;
-  flex-direction: column;
-  margin: 0;
-}
-.wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(6)) .wallet-cart-button-container {
-  width: var(--wallet-button-width-vertical);
-  height: var(--wallet-button-height-vertical);
-  margin: var(--wallet-button-container-margin-vertical);
-}
-.wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(6)) .wallet-cart-button-container:first-child {
-  margin-top: 0;
-}
-.wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(6)) .wallet-cart-button {
-  width: var(--wallet-button-width-vertical);
-  height: var(--wallet-button-height-vertical);
-}
-
-@media screen and (max-width: 750px) {
-  .wallet-cart-grid {
-    justify-content: start;
-    flex-direction: column;
-    max-width: none;
-    margin: 0;
-  }
-  .wallet-cart-grid .wallet-cart-button-container {
-    max-width: none;
-    width: var(--wallet-button-width-vertical);
-    height: var(--wallet-button-height-vertical);
-    margin: var(--wallet-button-container-margin-vertical);
-  }
-  .wallet-cart-grid .wallet-cart-button-container:first-child {
-    margin-top: 0;
-  }
-  .wallet-cart-grid .wallet-cart-button {
-    width: var(--wallet-button-width-vertical);
-    height: var(--wallet-button-height-vertical);
-  }
-}
-
-@supports (not (container-type: inline-size)) or (not (selector(:has(*)))) {
-  .wallet-cart-grid {
-    justify-content: start;
-    flex-direction: column;
-    margin: 0;
-  }
-  .wallet-cart-button-container {
-    width: var(--wallet-button-width-vertical);
-    height: var(--wallet-button-height-vertical);
-    margin: var(--wallet-button-container-margin-vertical);
-  }
-  .wallet-cart-button-container:first-child {
-    margin-top: 0;
-  }
-  .wallet-cart-grid .wallet-cart-button {
-    width: var(--wallet-button-width-vertical);
-    height: var(--wallet-button-height-vertical);
-  }
-}
-</style>
-
-<style id="shopify-accelerated-checkout-cart-grid-with-margin-top">.additional-checkout-buttons--vertical .wallet-cart-grid .wallet-cart-button-container:first-child {
-  margin-top: 8px;
-}
-
-
-@container dcc (width >= 150px) and (width <= 500px) {
-  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(1)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(2))) .wallet-cart-button-container:first-child {
-    margin-top: 8px;
-  }
-}
-
-@container dcc (width <= 310px) {
-  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(2)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(3))) .wallet-cart-button-container:first-child {
-    margin-top: 8px;
-  }
-}
-
-@container dcc (width <= 470px) {
-  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(3)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(4))) .wallet-cart-button-container:first-child {
-    margin-top: 8px;
-  }
-}
-
-@container dcc (width <= 630px) {
-  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(4)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(5))) .wallet-cart-button-container:first-child {
-    margin-top: 8px;
-  }
-}
-
-@container dcc (width <= 790px) {
-  .wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(5)).wallet-cart-grid:not(:has(>.wallet-cart-button-container:nth-of-type(6))) .wallet-cart-button-container:first-child {
-    margin-top: 8px;
-  }
-}
-
-.wallet-cart-grid:has(>.wallet-cart-button-container:nth-of-type(6)) .wallet-cart-button-container:first-child {
-  margin-top: 8px;
-}
-
-@media screen and (max-width: 750px) {
-  .wallet-cart-grid .wallet-cart-button-container:first-child {
-    margin-top: 8px;
-  }
-}
-
-@supports (not (container-type: inline-size)) or (not (selector(:has(*)))) {
-  .wallet-cart-button-container:first-child {
-    margin-top: 8px;
-  }
-}
-</style>
 
 
 
@@ -402,7 +92,7 @@
 <body id="danspots" class="template-index vsc-initialized">
   <a id="top"></a>
   <div id="PageContainer" class="drawer-page-content">
-    <div id="shopify-section-announcement-bar" class="shopify-section">
+    <div id="announcement-bar-section">
   
     <style>
       .announcement-bar {
@@ -443,7 +133,7 @@
 
     <div class="site-header-wrapper">
       <div class="site-header-container">
-        <div id="shopify-section-header" class="shopify-section header-section"><style>
+        <div id="header-section" class="header-section"><style>
   .site-header__logo img {
     max-width: 170px;
   }
@@ -454,7 +144,7 @@
   }
 </style>
 
-<header class="site-header" role="banner" data-section-id="header" data-section-type="header-section">
+<header class="site-header" role="banner">
   <div class="grid grid--no-gutters grid--table site-header__inner">
     <div class="grid__item one-third medium-up--one-sixth">
       <a href="#site-links" class="site-header__link text-link site-header__toggle-nav">
@@ -483,19 +173,19 @@
     </div>
 
     <main class="main-content" role="main">
-      <!-- /templates/index.liquid -->
+      
 
 
 
 
-  <div id="shopify-section-slideshow" class="shopify-section"><style data-shopify="">.hero {
+  <div id="slideshow-section"><style>.hero {
       height:60.91131998365345vw !important;
       overflow: hidden;
     }
     .hero .slick-track,
     .hero .hero__slide:before {
       height:60.91131998365345vw;
-    }</style><style data-shopify="">.site-header__link,
+    }</style><style>.site-header__link,
   .site-header__logo-link {
     color: #ffffff !important;
   }
@@ -531,7 +221,7 @@
   .slick-active .hero__dots:before {
     background-color: transparent;
     border: 2px solid #ffffff;
-  }</style><div data-section-id="slideshow" data-section-type="slideshow-section" class="hero--adapt">
+  }</style><div class="hero--adapt">
   <div class="hero slideshow-slideshow slick-initialized slick-slider" id="Hero" role="region" aria-label="slideshow" aria-describedby="slideshow-info" tabindex="-1" data-autoplay="false" data-autoplayspeed="3000" data-adapt="true" data-slide-nav-a11y="Load slide [slide_number]" data-slide-nav-active-a11y="Slide [slide_number], current"><div class="slick-list"><div class="slick-track" style="opacity: 1; width: 1680px;"><div id="SlickSlide1" aria-hidden="true" class="hero__slide hero__slide--7bb0bd55-63fa-4418-8f18-0d69407b3257 slick-slide slick-active" index="0" style="width: 1680px; position: relative; left: 0px; top: 0px; z-index: 900; opacity: 1;">
             <img class="hero__image hero__image--7bb0bd55-63fa-4418-8f18-0d69407b3257 lazyautosizes ls-is-cached lazyloaded image-loaded" src="DSC_4371_3_300x.jpg" data-widths="[540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048, 4472]" data-aspectratio="1.6417309627641732" data-sizes="auto" data-parent-fit="cover" alt="" style="object-position: center bottom; transform: translate3d(0px, 0px, 0px);" sizes="1680px" srcset="DSC_4371_3_540x.jpg 540w, DSC_4371_3_720x.jpg 720w, DSC_4371_3_900x.jpg 900w, DSC_4371_3_1080x.jpg 1080w, DSC_4371_3_1296x.jpg 1296w, DSC_4371_3_1512x.jpg 1512w, DSC_4371_3_1728x.jpg 1728w, DSC_4371_3_1944x.jpg 1944w, DSC_4371_3_2048x.jpg 2048w, DSC_4371_3_4472x.jpg 4472w"><noscript>
                 <div class="hero__image-no-js hero__image--7bb0bd55-63fa-4418-8f18-0d69407b3257" data-image="7bb0bd55-63fa-4418-8f18-0d69407b3257" style="background-image: url(&quot;DSC_4371_3_2048x2048.jpg&quot;);"></div>
@@ -549,7 +239,7 @@
   <div class="hero__header hero__header--adapt">
    <div class="action-area">
      <!-- action bar section -->
-<div id="shopify-section-action-bar" class="shopify-section action-bar-section"><!-- snippets/action-bar.liquid -->
+<div id="action-bar-section" class="action-bar-section">
 
 
 
@@ -557,7 +247,7 @@
 
 
   
-  <div id="site-links" class="action-bar-wrapper  action-bar--hero" data-section-id="action-bar" data-section-type="action-bar-section">
+  <div id="site-links" class="action-bar-wrapper  action-bar--hero">
 
 
     <nav class="action-bar action-bar--has-menu" role="presentation">
@@ -617,7 +307,7 @@
    </div>
  </div>
 </main></div>
-<!-- BEGIN content_for_index --><div id="shopify-section-160304215659009307" class="shopify-section index-section featured-collection-section"><div id="catalog" class="featured-collection" data-section-id="160304215659009307" data-section-type="featured-collection-section">
+<div id="catalog-section" class="index-section featured-collection-section"><div id="catalog" class="featured-collection">
   
   
 
@@ -2120,7 +1810,7 @@
 
 
 
-</div><!-- END content_for_index -->
+</div>
 
 <section id="about" class="site-static-section page-width">
   <h2>About Dan</h2>
@@ -2144,7 +1834,7 @@
 
     
 
-    <div id="shopify-section-footer" class="shopify-section footer-section"><footer class="site-footer" role="contentinfo">
+    <div id="footer-section" class="footer-section"><footer class="site-footer" role="contentinfo">
   
   
     <ul class="list--inline site-footer__linklist">

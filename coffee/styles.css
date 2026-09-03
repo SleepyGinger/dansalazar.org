@@ -1,0 +1,509 @@
+:root {
+  color-scheme: light;
+  --background: #f3ede3;
+  --ink: #27221c;
+  --muted: #746a5f;
+  --line: #d7cdbf;
+  --accent: #b85e43;
+  --sans: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", sans-serif;
+  --mono: "SFMono-Regular", "SF Mono", "Roboto Mono", Consolas, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--background);
+  /* Stop iOS from inflating type when the phone turns to landscape. */
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  /* dvh keeps the page whole while the mobile address bar slides away. */
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0;
+  /* Safe areas: the notch, the Dynamic Island and the home indicator. */
+  padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px)
+    env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
+  overflow-x: hidden;
+  /* A pull-to-refresh mid-brew would reload the page and lose the timer. */
+  overscroll-behavior-y: contain;
+  color: var(--ink);
+  background: var(--background);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+  /* Removes the 300ms double-tap-to-zoom delay on touch screens. */
+  touch-action: manipulation;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.site-header,
+.app-shell {
+  width: min(680px, calc(100% - 40px));
+  margin-inline: auto;
+}
+
+.site-header {
+  display: flex;
+  min-height: 64px;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--line);
+}
+
+.brand {
+  color: var(--ink);
+  font-size: 0.92rem;
+  font-weight: 650;
+  letter-spacing: -0.025em;
+  text-decoration: none;
+}
+
+.timer-dot {
+  width: 8px;
+  height: 8px;
+  border: 1px solid var(--muted);
+  border-radius: 50%;
+  transition: border-color 150ms ease, background 150ms ease;
+}
+
+.timer-dot.is-running {
+  border-color: var(--accent);
+  background: var(--accent);
+}
+
+.app-shell {
+  padding: 28px 0 50px;
+}
+
+.timer-section,
+.targets-section,
+.settings-section,
+.dose-control,
+.dose-input-wrap,
+.ratio-control,
+.ratio-value-wrap {
+  min-width: 0;
+}
+
+.timer-display {
+  margin-bottom: 26px;
+  font-family: var(--mono);
+  font-size: clamp(5.2rem, 23vw, 7.4rem);
+  font-weight: 350;
+  letter-spacing: -0.1em;
+  line-height: 1;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.timer-actions {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 100px;
+  gap: 9px;
+  width: min(420px, 100%);
+  margin-inline: auto;
+}
+
+.button {
+  display: inline-flex;
+  min-height: 50px;
+  padding: 0 19px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--ink);
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 0.77rem;
+  font-weight: 620;
+  transition: opacity 150ms ease, transform 150ms ease;
+}
+
+.button:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.25;
+}
+
+.button--primary {
+  gap: 7px;
+  color: var(--background);
+  background: var(--ink);
+}
+
+.button--primary svg {
+  width: 16px;
+  fill: currentColor;
+}
+
+.button--secondary {
+  color: var(--ink);
+  background: transparent;
+}
+
+.settings-section {
+  display: flex;
+  gap: 22px;
+  margin-top: 32px;
+  padding-top: 26px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--line);
+}
+
+.dose-control {
+  display: grid;
+  grid-template-columns: 44px minmax(72px, 104px) 44px;
+  gap: 8px;
+  align-items: center;
+}
+
+.step-button {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--ink);
+  background: transparent;
+  cursor: pointer;
+  font-size: 1.05rem;
+  transition: border-color 150ms ease, transform 150ms ease;
+}
+
+.step-button:hover:not(:disabled) {
+  border-color: var(--ink);
+}
+
+.step-button:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.step-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.25;
+}
+
+.dose-input-wrap {
+  position: relative;
+}
+
+.dose-input-wrap input,
+.ratio-control input {
+  min-width: 0;
+  height: 44px;
+  border: 0;
+  border-bottom: 1px solid var(--ink);
+  border-radius: 0;
+  outline: 0;
+  color: var(--ink);
+  background: transparent;
+  font-family: var(--mono);
+  /* Stays above 16px so iOS never zooms the page toward the field. */
+  font-size: 1.22rem;
+  font-weight: 430;
+  font-variant-numeric: tabular-nums;
+  caret-color: transparent;
+  cursor: default;
+  -webkit-user-select: none;
+  user-select: none;
+  -moz-appearance: textfield;
+}
+
+.dose-input-wrap input::-webkit-inner-spin-button,
+.dose-input-wrap input::-webkit-outer-spin-button,
+.ratio-control input::-webkit-inner-spin-button,
+.ratio-control input::-webkit-outer-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+}
+
+.dose-input-wrap input {
+  width: 100%;
+  padding: 0 28px 0 8px;
+  text-align: center;
+}
+
+.dose-unit {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  transform: translateY(-50%);
+}
+
+.ratio-control {
+  display: grid;
+  grid-template-columns: 44px minmax(74px, 82px) 44px;
+  gap: 6px;
+  align-items: center;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+}
+
+.ratio-value-wrap {
+  display: flex;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--ink);
+}
+
+.ratio-prefix {
+  color: var(--muted);
+}
+
+.ratio-control input {
+  width: 4ch;
+  padding: 0;
+  border-bottom: 0;
+  text-align: left;
+}
+
+.dose-input-wrap input[aria-invalid="true"],
+.ratio-control input[aria-invalid="true"] {
+  border-color: var(--accent);
+}
+
+.settings-error {
+  /* A full-width flex row, so an error pushes the targets down
+     instead of covering them. */
+  flex: 0 0 100%;
+  margin: 0;
+  color: #9f3828;
+  font-size: 0.7rem;
+  text-align: center;
+}
+
+.settings-error:empty {
+  display: none;
+}
+
+.targets-section {
+  margin-top: 34px;
+}
+
+.pour-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  list-style: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.pour-item {
+  min-width: 0;
+  padding: 19px 14px 17px;
+  text-align: center;
+}
+
+.pour-item + .pour-item {
+  border-left: 1px solid var(--line);
+}
+
+.pour-percent {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.64rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.pour-target {
+  margin-top: 14px;
+}
+
+.pour-target strong {
+  display: inline-flex;
+  max-width: 100%;
+  align-items: baseline;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: clamp(2rem, 8vw, 3rem);
+  font-weight: 400;
+  letter-spacing: -0.075em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.pour-target small {
+  margin-left: 4px;
+  color: var(--muted);
+  font-size: 0.61rem;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.pour-addition {
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  font-variant-numeric: tabular-nums;
+}
+
+noscript {
+  position: fixed;
+  right: 20px;
+  bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  left: 20px;
+  padding: 14px;
+  border-radius: 10px;
+  color: white;
+  background: #8f3024;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+@media (max-width: 520px) {
+  .site-header,
+  .app-shell {
+    width: calc(100% - 28px);
+  }
+
+  .site-header {
+    min-height: 56px;
+  }
+
+  .app-shell {
+    padding: 22px 0 32px;
+  }
+
+  .timer-display {
+    margin-bottom: 22px;
+    font-size: clamp(4.9rem, 24vw, 6rem);
+  }
+
+  .settings-section {
+    gap: 10px;
+    margin-top: 26px;
+    padding-top: 22px;
+  }
+
+  .dose-control {
+    grid-template-columns: 44px minmax(62px, 74px) 44px;
+    gap: 5px;
+  }
+
+  .ratio-control {
+    grid-template-columns: 44px 74px 44px;
+    gap: 4px;
+  }
+
+  .targets-section {
+    margin-top: 28px;
+  }
+
+  .pour-item {
+    padding-right: 8px;
+    padding-left: 8px;
+  }
+
+  .pour-target strong {
+    font-size: clamp(1.8rem, 9vw, 2.25rem);
+  }
+}
+
+@media (max-width: 360px) {
+  .settings-section {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+/* A phone on its side has very little height. Scale by height, not width,
+   so the timer, the controls and the targets all stay on one screen. */
+@media (orientation: landscape) and (max-height: 560px) {
+  .site-header {
+    min-height: 48px;
+  }
+
+  .app-shell {
+    padding: 14px 0 24px;
+  }
+
+  .timer-display {
+    margin-bottom: 14px;
+    font-size: clamp(3rem, 13vh, 4.4rem);
+  }
+
+  .button {
+    min-height: 44px;
+  }
+
+  .settings-section {
+    margin-top: 16px;
+    padding-top: 16px;
+  }
+
+  .targets-section {
+    margin-top: 16px;
+  }
+
+  .pour-item {
+    padding: 12px 10px 10px;
+  }
+
+  .pour-target {
+    margin-top: 8px;
+  }
+
+  .pour-target strong {
+    font-size: clamp(1.5rem, 7vh, 2.1rem);
+  }
+
+  .pour-addition {
+    margin-top: 7px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}

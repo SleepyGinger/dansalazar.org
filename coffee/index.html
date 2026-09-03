@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#f3ede3" />
+    <meta
+      name="description"
+      content="A simple pour-over calculator with three cumulative pour targets and a brew timer."
+    />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Pour" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>Pour</title>
+    <link rel="icon" href="./icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="stylesheet" href="./styles.css?v=5" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="./" aria-label="Pour home">Pour</a>
+      <span class="timer-dot" id="timer-dot" aria-hidden="true"></span>
+    </header>
+
+    <main class="app-shell">
+      <h1 class="sr-only">Pour-over timer and calculator</h1>
+
+      <section class="timer-section" aria-labelledby="timer-title">
+        <h2 class="sr-only" id="timer-title">Timer</h2>
+        <div class="timer-display" id="timer-display" role="timer" aria-label="Elapsed time">00:00</div>
+        <p class="sr-only" id="timer-state">Ready</p>
+
+        <div class="timer-actions">
+          <button class="button button--primary" id="timer-toggle" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path id="timer-button-icon" d="m9 7 8 5-8 5V7Z" />
+            </svg>
+            <span id="timer-button-label">Start</span>
+          </button>
+          <button class="button button--secondary" id="timer-reset" type="button" disabled>
+            Reset
+          </button>
+        </div>
+
+        <p class="sr-only" id="timer-announcement" aria-live="polite" aria-atomic="true"></p>
+      </section>
+
+      <section class="settings-section" aria-label="Recipe settings">
+        <div class="dose-control">
+          <button
+            class="step-button"
+            id="decrease-dose"
+            type="button"
+            aria-label="Decrease coffee dose by 1 gram"
+          >
+            <span aria-hidden="true">−</span>
+          </button>
+          <div class="dose-input-wrap">
+            <label class="sr-only" for="coffee-dose">Coffee dose in grams</label>
+            <input
+              id="coffee-dose"
+              name="coffee-dose"
+              type="number"
+              inputmode="none"
+              min="1"
+              max="100"
+              step="0.1"
+              readonly
+              tabindex="-1"
+              aria-describedby="dose-help dose-error"
+            />
+            <span class="dose-unit" aria-hidden="true">g</span>
+          </div>
+          <button
+            class="step-button"
+            id="increase-dose"
+            type="button"
+            aria-label="Increase coffee dose by 1 gram"
+          >
+            <span aria-hidden="true">+</span>
+          </button>
+        </div>
+
+        <div class="ratio-control">
+          <button
+            class="step-button"
+            id="decrease-ratio"
+            type="button"
+            aria-label="Decrease water ratio by 1"
+          >
+            <span aria-hidden="true">−</span>
+          </button>
+          <div class="ratio-value-wrap">
+            <span class="ratio-prefix" aria-hidden="true">1:</span>
+            <label class="sr-only" for="water-ratio">Water ratio</label>
+            <input
+              id="water-ratio"
+              name="water-ratio"
+              type="number"
+              inputmode="none"
+              min="1"
+              max="30"
+              step="0.1"
+              readonly
+              tabindex="-1"
+              aria-describedby="ratio-error"
+            />
+          </div>
+          <button
+            class="step-button"
+            id="increase-ratio"
+            type="button"
+            aria-label="Increase water ratio by 1"
+          >
+            <span aria-hidden="true">+</span>
+          </button>
+        </div>
+
+        <p class="sr-only" id="dose-help">Coffee dose from 1 to 100 grams.</p>
+        <p class="settings-error" id="dose-error" role="alert"></p>
+        <p class="settings-error" id="ratio-error" role="alert"></p>
+        <span class="sr-only" id="total-water">289</span>
+      </section>
+
+      <section class="targets-section" aria-labelledby="targets-title">
+        <h2 class="sr-only" id="targets-title">Cumulative scale targets</h2>
+        <ol class="pour-list" id="pour-list">
+          <li class="pour-item">
+            <span class="sr-only">Pour 1, </span>
+            <span class="pour-percent">20%</span>
+            <div class="pour-target">
+              <span class="sr-only">Pour to </span>
+              <strong><span data-target="0">58</span><small>g</small></strong>
+            </div>
+            <p class="pour-addition">+<span data-addition="0">58</span> g</p>
+          </li>
+
+          <li class="pour-item">
+            <span class="sr-only">Pour 2, </span>
+            <span class="pour-percent">60%</span>
+            <div class="pour-target">
+              <span class="sr-only">Pour to </span>
+              <strong><span data-target="1">173</span><small>g</small></strong>
+            </div>
+            <p class="pour-addition">+<span data-addition="1">115</span> g</p>
+          </li>
+
+          <li class="pour-item">
+            <span class="sr-only">Pour 3, </span>
+            <span class="pour-percent">100%</span>
+            <div class="pour-target">
+              <span class="sr-only">Pour to </span>
+              <strong><span data-target="2">289</span><small>g</small></strong>
+            </div>
+            <p class="pour-addition">+<span data-addition="2">116</span> g</p>
+          </li>
+        </ol>
+        <p class="sr-only" id="recipe-announcement" aria-live="polite" aria-atomic="true"></p>
+      </section>
+    </main>
+
+    <noscript>This guide needs JavaScript to calculate your pour targets and run the timer.</noscript>
+    <script type="module" src="./src/app.js?v=5"></script>
+  </body>
+</html>

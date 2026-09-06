@@ -1,0 +1,37 @@
+@font-face{font-family:Nunito;src:url("Nunito-Variable.ttf") format("truetype");font-weight:200 1000;font-display:swap}
+:root{--paper:#f6f3ec;--ink:#293e34;--muted:#626b63;--line:#d9ddcf;--accent:#aa4932;--bar-height:140px}
+*{box-sizing:border-box}[hidden]{display:none!important}
+body{margin:0;background:var(--paper);color:var(--ink);font:18px/1.5 Nunito,system-ui,sans-serif;padding-bottom:calc(var(--bar-height) + env(safe-area-inset-bottom))}
+body[data-step="review"],body[data-step="thanks"]{padding-bottom:24px}
+button,input{font:inherit}button{cursor:pointer;color:inherit;touch-action:manipulation}button:disabled{cursor:default;opacity:.55}
+button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:4px}
+header,main,footer{max-width:1360px;margin:auto;padding-inline:28px}header{padding-top:26px}
+.eyebrow{margin:0 0 8px;color:var(--muted);font-size:14px;letter-spacing:.09em;font-weight:800}
+.step-label{font-size:16px;font-weight:800;margin:0;color:var(--accent)}
+h1{font:400 clamp(28px,4vw,42px)/1.15 Georgia,serif;letter-spacing:-.025em;margin:10px 0}
+h2{font-size:18px;line-height:1.4;margin:0}.intro{margin:0 0 24px;max-width:700px}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:30px 20px}
+.art{width:100%;display:block;padding:0;border:3px solid transparent;border-radius:16px;background:#fffdf6;overflow:hidden}
+.art img{display:block;width:100%;height:auto;aspect-ratio:1}
+.pick-label{display:block;min-height:48px;padding:10px 8px;font-size:17px;font-weight:800;border-top:1px solid var(--line)}
+.card.selected .art{border-color:var(--ink)}.card.selected .pick-label{background:var(--ink);color:white;border-color:var(--ink)}
+.caption{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-top:6px}.caption h2{font-size:15px;padding-top:10px}.number{color:var(--accent);font-weight:900;white-space:nowrap}
+.closer{flex-shrink:0;min-height:44px;padding:7px 0 7px 6px;border:0;background:none;text-decoration:underline;text-underline-offset:3px;font-size:14px}
+.primary,.secondary{min-height:52px;border-radius:12px;padding:12px 20px;font-weight:900;border:1px solid var(--line);text-align:center}
+.primary{background:var(--ink);color:white;border-color:var(--ink)}.secondary{background:transparent}
+.continue-bar{position:fixed;bottom:0;left:0;right:0;z-index:3;background:#fffdf6;border-top:1px solid var(--line);padding:14px 28px calc(14px + env(safe-area-inset-bottom));box-shadow:0 -5px 22px #293e3410}
+.continue-inner{max-width:1304px;margin:auto;display:flex;justify-content:space-between;gap:18px;align-items:center}
+.continue-inner>div{min-width:0}.continue-inner strong{display:block;font-size:18px}.continue-inner p{margin:2px 0 0;font-size:15px;color:var(--muted)}.continue-inner .primary{flex-shrink:0;min-width:160px}
+#pick-status.error{color:var(--accent);font-weight:800}.end-hint{margin-top:26px}.text-button{min-height:48px;padding:10px 0;border:0;background:none;text-decoration:underline;text-underline-offset:4px;text-align:left;font-size:16px}
+.narrow{max-width:580px}.review-picks{display:flex;gap:12px;margin:14px 0 24px}.review-pick{margin:0;flex:1;min-width:0;max-width:180px}.review-pick img{width:100%;display:block;aspect-ratio:1;border-radius:10px;border:2px solid var(--ink)}.review-pick figcaption{font-size:14px;margin-top:5px;overflow-wrap:anywhere}
+.ballot label{display:block;font-size:20px;font-weight:900}.ballot input{display:block;width:100%;height:56px;margin-top:8px;padding:10px 14px;border-radius:10px;border:1px solid #aeb9ae;background:white;color:var(--ink);font-size:20px}
+.status{font-size:16px;min-height:24px;margin:12px 0;color:var(--accent)}.send{width:100%;font-size:20px;min-height:58px}.privacy{font-size:14px;line-height:1.55;color:var(--muted);margin:18px 0}
+.saved-check{display:flex;align-items:center;justify-content:center;border-radius:50%;background:var(--ink);color:white;width:64px;height:64px;font-size:38px;margin:18px 0}.thanks-name{font-size:20px;font-weight:800}.all-done{font-size:20px}.more-options{margin:26px 0;color:var(--muted)}.more-options summary{min-height:48px;padding-block:10px;font-size:16px;cursor:pointer;touch-action:manipulation}.more-options button{display:block}
+.results-toolbar{display:flex;gap:16px;align-items:center;margin-bottom:22px;flex-wrap:wrap}.results-toolbar p{margin:0;font-size:16px}.score{margin-top:8px;font-size:16px}.track,.fill{display:block;height:7px;border-radius:7px}.track{margin-top:6px;background:#e0e2d9}.fill{background:var(--accent);width:0}
+footer{display:flex;align-items:center;gap:8px;padding-top:26px;padding-bottom:18px;color:var(--muted);font-size:14px}.owner-access{border:0;background:none;width:44px;height:44px;padding:0;color:var(--muted);font-size:18px;border-radius:50%;flex-shrink:0}
+dialog{border:0;border-radius:16px;width:min(820px,96vw);max-height:94dvh;padding:16px;background:var(--paper);color:var(--ink);overflow:auto}dialog::backdrop{background:#15221ddb}.close{display:block;margin:0 0 10px auto;min-height:44px;padding:7px 16px}dialog img{display:block;width:100%;max-height:60dvh;object-fit:contain;border-radius:10px}#viewer-title{display:block;font-size:17px;margin-top:10px}.viewer-tools{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}#viewer-pick{flex:1}#viewer-message{font-size:16px;color:var(--accent);margin-bottom:0}.noscript{position:fixed;inset:0;z-index:10;background:var(--paper);padding:40px}
+@media(max-width:1050px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.caption{display:block}.closer{padding-left:0}}
+@media(max-width:760px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:540px){header,main,footer{padding-inline:18px}header{padding-top:18px}.intro{font-size:18px;margin-bottom:20px}.grid{grid-template-columns:minmax(0,1fr);gap:26px;max-width:440px;margin-inline:auto}.caption{display:flex}.caption h2{font-size:16px}.closer{font-size:15px}.continue-bar{padding:12px 18px calc(12px + env(safe-area-inset-bottom))}.continue-inner{gap:12px}.continue-inner strong{font-size:17px}.continue-inner p{font-size:14px}.continue-inner .primary{min-width:124px;padding:12px;font-size:17px}.review-picks{gap:8px}.review-pick figcaption{font-size:14px}}
+@media(max-width:350px){.continue-inner{flex-wrap:wrap}.continue-inner .primary{width:100%}.caption{display:block}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}

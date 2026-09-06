@@ -3,6 +3,18 @@ const STYLES=[{"id":"01","title":"Rounded flat shapes","file":"images/01-rounded
 const API="https://us-central1-you-feed-nalu.cloudfunctions.net/milaVotes";
 const KEY="mila-family-ballot-key-v1",DRAFT="mila-family-ballot-draft-v1";
 const $=selector=>document.querySelector(selector);
+// Shuffle presentation once per page load; stable style IDs still identify every vote.
+const DISPLAY_ORDER=STYLES.map((_,index)=>index);
+for(let i=DISPLAY_ORDER.length-1;i>0;i--){
+  const j=Math.floor(Math.random()*(i+1));
+  [DISPLAY_ORDER[i],DISPLAY_ORDER[j]]=[DISPLAY_ORDER[j],DISPLAY_ORDER[i]];
+}
+const cardsById=new Map([...document.querySelectorAll(".card")].map(card=>[card.dataset.id,card]));
+$(".grid").replaceChildren(...DISPLAY_ORDER.map((index,position)=>{
+  const card=cardsById.get(STYLES[index].id);
+  card.querySelector("img").loading=position<2?"eager":"lazy";
+  return card;
+}));
 const state={picks:new Set(),name:"",step:"choose",view:"all",current:0,busy:false,results:null,saved:null,token:null,hasDraft:false,writeEpoch:0,activity:0,chooseScroll:0};
 try{
   state.token=localStorage.getItem(KEY);
@@ -98,6 +110,10 @@ function show(index){
   $("#viewer-title").textContent=s.id+" · "+s.title;$("#viewer-message").textContent="";
   render();if(!$("#viewer").open)$("#viewer").showModal();
 }
+function navigate(delta){
+  const position=DISPLAY_ORDER.indexOf(state.current);
+  show(DISPLAY_ORDER[(position+delta+DISPLAY_ORDER.length)%DISPLAY_ORDER.length]);
+}
 async function request(method="GET",body){
   const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),20000);
   try{
@@ -157,12 +173,12 @@ $("#voter-name").addEventListener("input",event=>{state.name=event.target.value;
 document.querySelectorAll("[data-pick]").forEach(button=>button.addEventListener("click",()=>pick(button.dataset.pick)));
 document.querySelectorAll("[data-open]").forEach(button=>button.addEventListener("click",()=>show(STYLES.findIndex(s=>s.id===button.dataset.open))));
 $("#viewer-pick").onclick=()=>pick(STYLES[state.current].id);
-$("#previous").onclick=()=>show(state.current-1);$("#next").onclick=()=>show(state.current+1);
+$("#previous").onclick=()=>navigate(-1);$("#next").onclick=()=>navigate(1);
 $(".close").onclick=()=>$("#viewer").close();
 document.addEventListener("keydown",event=>{
   if(!$("#viewer").open)return;
-  if(event.key==="ArrowRight"){event.preventDefault();show(state.current+1);}
-  if(event.key==="ArrowLeft"){event.preventDefault();show(state.current-1);}
+  if(event.key==="ArrowRight"){event.preventDefault();navigate(1);}
+  if(event.key==="ArrowLeft"){event.preventDefault();navigate(-1);}
 });
 // Discreet entry only; the admin API still requires the owner's verified Google sign-in.
 let firstOwnerPress=null;
@@ -174,6 +190,7 @@ $("#owner-access").addEventListener("click",()=>{
 if(typeof ResizeObserver!=="undefined")new ResizeObserver(()=>{
   if(state.step==="choose")document.documentElement.style.setProperty("--bar-height",$("#continue-bar").getBoundingClientRect().height+"px");
 }).observe($("#continue-bar"));
+$(".grid").hidden=false;$("#gallery-loading").hidden=true;
 render();refresh(true);
 setInterval(()=>{if(!document.hidden&&!state.busy)refresh();},45000);
 document.addEventListener("visibilitychange",()=>{if(!document.hidden&&!state.busy)refresh();});

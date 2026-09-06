@@ -4,21 +4,22 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow"><meta name="description" content="Help choose the pictures for Mila’s book. Tap your favorites and send your vote.">
 <meta name="theme-color" content="#f6f3ec"><link rel="canonical" href="https://dansalazar.org/mila/">
-<title>Choose pictures for Mila’s book</title><link rel="stylesheet" href="voting.css?v=3"><script src="app.js?v=3" defer></script>
+<title>Choose pictures for Mila’s book</title><link rel="stylesheet" href="voting.css?v=3"><script src="app.js?v=4" defer></script>
 </head>
 <body class="voting-page">
 <header><p class="eyebrow">Mila’s Love Book</p><p id="step-label" class="step-label">Step 1 of 2 · Choose pictures</p><h1 id="step-title" tabindex="-1">Which pictures feel like Mila?</h1><p id="step-intro" class="intro">Tap <strong>1, 2, or 3 favorites.</strong> Then tap Continue.</p></header>
 <main>
 <section id="choose-step" aria-label="Choose your favorite pictures">
 <div id="results-toolbar" class="results-toolbar" hidden><button id="back-to-choosing" class="secondary" type="button">Back to choosing</button><p id="voter-count" role="status"></p></div>
-<section class="grid" aria-label="Sixteen pictures of Mila">
+<p id="gallery-loading" class="status" role="status">Loading pictures…</p>
+<section class="grid" aria-label="Sixteen pictures of Mila" hidden>
 <article class="card" data-id="01">
-<button type="button" class="art" data-pick="01" aria-label="Choose picture 01: Rounded flat shapes" aria-pressed="false"><img src="images/01-rounded-flat.png" alt="Mila in rounded flat shapes style" width="1254" height="1254" loading="eager"><span class="pick-label">Tap to choose</span></button>
+<button type="button" class="art" data-pick="01" aria-label="Choose picture 01: Rounded flat shapes" aria-pressed="false"><img src="images/01-rounded-flat.png" alt="Mila in rounded flat shapes style" width="1254" height="1254" loading="lazy"><span class="pick-label">Tap to choose</span></button>
 <div class="caption"><h2><span class="number">01</span> Rounded flat shapes</h2><button class="closer" type="button" data-open="01" aria-label="Look closer at picture 01">Look closer</button></div>
 <div class="score" hidden><span class="score-text"></span><span class="track"><span class="fill"></span></span></div>
 </article>
 <article class="card" data-id="02">
-<button type="button" class="art" data-pick="02" aria-label="Choose picture 02: Bold outline cartoon" aria-pressed="false"><img src="images/02-bold-outline.png" alt="Mila in bold outline cartoon style" width="1254" height="1254" loading="eager"><span class="pick-label">Tap to choose</span></button>
+<button type="button" class="art" data-pick="02" aria-label="Choose picture 02: Bold outline cartoon" aria-pressed="false"><img src="images/02-bold-outline.png" alt="Mila in bold outline cartoon style" width="1254" height="1254" loading="lazy"><span class="pick-label">Tap to choose</span></button>
 <div class="caption"><h2><span class="number">02</span> Bold outline cartoon</h2><button class="closer" type="button" data-open="02" aria-label="Look closer at picture 02">Look closer</button></div>
 <div class="score" hidden><span class="score-text"></span><span class="track"><span class="fill"></span></span></div>
 </article>

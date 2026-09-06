@@ -3,12 +3,12 @@ const STYLES=[{"id":"01","title":"Rounded flat shapes","file":"images/01-rounded
 const API="https://us-central1-you-feed-nalu.cloudfunctions.net/milaVotes";
 const KEY="mila-family-ballot-key-v1",DRAFT="mila-family-ballot-draft-v1";
 const $=selector=>document.querySelector(selector);
-const state={picks:new Set(),name:"",note:"",view:"all",current:0,busy:false,results:null,saved:null,token:null,hasDraft:false,writeEpoch:0};
-try{state.token=localStorage.getItem(KEY);const draft=JSON.parse(localStorage.getItem(DRAFT)||"null");if(draft&&typeof draft.name==="string"&&Array.isArray(draft.selections)){state.name=draft.name.slice(0,40);state.note=typeof draft.note==="string"?draft.note.slice(0,400):"";state.picks=new Set(draft.selections.filter(id=>STYLES.some(s=>s.id===id)).slice(0,3));state.hasDraft=true;}}catch{}
+const state={picks:new Set(),name:"",view:"all",current:0,busy:false,results:null,saved:null,token:null,hasDraft:false,writeEpoch:0};
+try{state.token=localStorage.getItem(KEY);const draft=JSON.parse(localStorage.getItem(DRAFT)||"null");if(draft&&typeof draft.name==="string"&&Array.isArray(draft.selections)){state.name=draft.name.slice(0,40);state.picks=new Set(draft.selections.filter(id=>STYLES.some(s=>s.id===id)).slice(0,3));state.hasDraft=true;}}catch{}
 if(!/^[a-f0-9]{64}$/.test(state.token||"")){state.token=Array.from(crypto.getRandomValues(new Uint8Array(32)),b=>b.toString(16).padStart(2,"0")).join("");try{localStorage.setItem(KEY,state.token);}catch{}}
-$("#voter-name").value=state.name;$("#voter-note").value=state.note;
-function ballot(){return {name:state.name.trim(),selections:[...state.picks].sort(),note:state.note.trim()};}
-function signature(value){return value?JSON.stringify({name:value.name.trim(),selections:[...value.selections].sort(),note:(value.note||"").trim()}):"";}
+$("#voter-name").value=state.name;
+function ballot(){return {name:state.name.trim(),selections:[...state.picks].sort()};}
+function signature(value){return value?JSON.stringify({name:value.name.trim(),selections:[...value.selections].sort()}):"";}
 function persist(){try{localStorage.setItem(DRAFT,JSON.stringify(ballot()));}catch{}}
 function status(message,kind=""){$("#save-status").textContent=message;$("#ballot").className="ballot"+(kind?" "+kind:"");}
 function changed(){state.hasDraft=true;persist();status(state.saved?"Changes haven’t been sent yet.":"Your vote hasn’t been sent yet.");render();}
@@ -21,7 +21,7 @@ function render(){
   $("#empty").hidden=state.view!=="picks"||picks.length>0;
   if(state.results){const total=state.results.totalBallots;$("#voter-count").textContent=total+" "+(total===1?"family vote":"family votes")+" received";}
   $("#submit-vote").disabled=state.busy;$("#submit-vote").textContent=state.busy?"Sending…":state.saved?"Update my vote":"Send my vote";
-  $("#voter-name").disabled=state.busy;$("#voter-note").disabled=state.busy;$("#withdraw").disabled=state.busy;$("#withdraw").hidden=!state.saved;
+  $("#voter-name").disabled=state.busy;$("#withdraw").disabled=state.busy;$("#withdraw").hidden=!state.saved;
   const on=state.picks.has(STYLES[state.current].id);$("#viewer-pick").setAttribute("aria-pressed",on);$("#viewer-pick").textContent=on?"♥ Picked":"♡ Pick this";$("#viewer-pick").disabled=state.busy;
   const n=state.results?.counts[STYLES[state.current].id]||0;$("#viewer-score").textContent=state.view==="results"&&state.results?n+" "+(n===1?"vote":"votes")+" so far":"";
 }
@@ -39,12 +39,12 @@ async function request(method="GET",body){
 }
 async function refresh(initial=false){
   const epoch=state.writeEpoch;
-  try{const data=await request();if(epoch!==state.writeEpoch)return;state.results=data;if(initial){state.saved=data.ballot;if(data.ballot&&!state.hasDraft){state.picks=new Set(data.ballot.selections);state.name=data.ballot.name;state.note=data.ballot.note||"";$("#voter-name").value=state.name;$("#voter-note").value=state.note;persist();}if(data.ballot&&signature(data.ballot)===signature(ballot()))status("Your vote is saved. Thank you!","saved");else if(data.ballot)status("You have unsent changes.");}render();}
+  try{const data=await request();if(epoch!==state.writeEpoch)return;state.results=data;if(initial){state.saved=data.ballot;if(data.ballot&&!state.hasDraft){state.picks=new Set(data.ballot.selections);state.name=data.ballot.name;$("#voter-name").value=state.name;persist();}if(data.ballot&&signature(data.ballot)===signature(ballot()))status("Your vote is saved. Thank you!","saved");else if(data.ballot)status("You have unsent changes.");}render();}
   catch{if(!state.results)$("#voter-count").textContent="Vote totals are temporarily unavailable";if(initial)status("You can choose styles now. We’ll reconnect when you send.");}
 }
 $("#ballot").addEventListener("submit",async event=>{
   event.preventDefault();if(state.busy)return;
-  state.name=$("#voter-name").value;state.note=$("#voter-note").value;persist();
+  state.name=$("#voter-name").value;persist();
   if(!state.picks.size){status("Pick at least one style before sending.","error");return;}
   const submission=ballot();state.writeEpoch++;state.busy=true;status("Saving your vote…");render();
   try{const data=await request("POST",submission);state.results=data;state.saved=data.ballot;status("Your vote is saved. Thank you!","saved");}
@@ -52,7 +52,7 @@ $("#ballot").addEventListener("submit",async event=>{
   finally{state.busy=false;render();}
 });
 $("#withdraw").addEventListener("click",async()=>{if(state.busy)return;state.writeEpoch++;state.busy=true;status("Withdrawing your vote…");render();try{const data=await request("DELETE");state.results=data;state.saved=null;state.picks.clear();persist();status("Your vote was withdrawn. You can choose again.");}catch(error){status(error.message,"error");}finally{state.busy=false;render();}});
-$("#voter-name").addEventListener("input",event=>{state.name=event.target.value;changed();});$("#voter-note").addEventListener("input",event=>{state.note=event.target.value;changed();});
+$("#voter-name").addEventListener("input",event=>{state.name=event.target.value;changed();});
 document.querySelectorAll("[data-pick]").forEach(b=>b.addEventListener("click",()=>pick(b.dataset.pick)));document.querySelectorAll("[data-open]").forEach(b=>b.addEventListener("click",()=>show(STYLES.findIndex(s=>s.id===b.dataset.open))));document.querySelectorAll("[data-view]").forEach(b=>b.addEventListener("click",()=>{state.view=b.dataset.view;render();if(state.view==="results")refresh();}));
 $("#viewer-pick").onclick=()=>pick(STYLES[state.current].id);$("#previous").onclick=()=>navigate(-1);$("#next").onclick=()=>navigate(1);$(".close").onclick=()=>$("#viewer").close();
 document.addEventListener("keydown",event=>{if(!$("#viewer").open)return;if(event.key==="ArrowRight"){event.preventDefault();navigate(1);}if(event.key==="ArrowLeft"){event.preventDefault();navigate(-1);}});

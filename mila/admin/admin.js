@@ -6,10 +6,10 @@ provider.setCustomParameters({prompt:"select_account",login_hint:"danielrsalazar
 const API="https://us-central1-you-feed-nalu.cloudfunctions.net/milaVotes/admin";
 const STYLES=[{"id":"01","title":"Rounded flat shapes","file":"images/01-rounded-flat.png"},{"id":"02","title":"Bold outline cartoon","file":"images/02-bold-outline.png"},{"id":"03","title":"Cut-paper collage","file":"images/03-cut-paper.png"},{"id":"04","title":"Torn painted paper","file":"images/04-torn-paper.png"},{"id":"05","title":"Wax crayon","file":"images/05-wax-crayon.png"},{"id":"06","title":"Sparse colored pencil","file":"images/06-colored-pencil.png"},{"id":"07","title":"Chalk pastel","file":"images/07-chalk-pastel.png"},{"id":"08","title":"Felt applique","file":"images/08-felt-applique.png"},{"id":"09","title":"Midcentury geometry","file":"images/09-midcentury-geometric.png"},{"id":"10","title":"Two-ink risograph","file":"images/10-two-ink-print.png"},{"id":"11","title":"Soft block print","file":"images/11-soft-block-print.png"},{"id":"12","title":"Loose ink and wash","file":"images/12-loose-ink-wash.png"},{"id":"13","title":"Naive folk art","file":"images/13-folk-art.png"},{"id":"14","title":"Chunky marker","file":"images/14-chunky-marker.png"},{"id":"15","title":"Minimal dot eyes","file":"images/15-minimal-dot-eyes.png"},{"id":"16","title":"Simple gouache","file":"images/16-simple-gouache.png"}];
 const $=selector=>document.querySelector(selector);
-let votes=null,view="people",generation=0,busy=false;
+let votes=null,view="styles",generation=0,busy=false;
 function element(tag,className,text){const node=document.createElement(tag);if(className)node.className=className;if(text!==undefined)node.textContent=text;return node;}
 function clearVotes(){votes=null;$("#votes").replaceChildren();$("#summary").textContent="";$("#signed-in").textContent="";$("#admin-panel").hidden=true;$("#sign-in-panel").hidden=false;}
-function styleLink(style){const link=element("a","choice");link.href="../"+style.file;link.target="_blank";link.rel="noopener";const img=element("img");img.src="../"+style.file;img.alt=style.title;img.loading="lazy";const label=element("span");label.append(element("strong","",style.id),document.createTextNode(style.title));link.append(img,label);return link;}
+function styleLink(style,rank){const link=element("a","choice");link.href="../"+style.file;link.target="_blank";link.rel="noopener";const img=element("img");img.src="../"+style.file;img.alt=style.title;img.loading="lazy";const label=element("span");label.append(element("strong","",rank+" · "+style.id),document.createTextNode(style.title));link.append(img,label);return link;}
 function render(){
   if(!votes)return;
   document.querySelectorAll("[data-view]").forEach(button=>button.setAttribute("aria-pressed",button.dataset.view===view));
@@ -17,9 +17,40 @@ function render(){
   const root=$("#votes");root.className=view==="styles"?"style-list":"";root.replaceChildren();
   if(!votes.ballots.length){root.append(element("p","empty","No votes yet. Share the family voting page to get started."));return;}
   if(view==="people"){
-    for(const ballot of votes.ballots){const row=element("article","person");const info=element("div");info.append(element("h2","",ballot.name));if(ballot.updatedAt){const date=new Date(ballot.updatedAt);if(!Number.isNaN(date.getTime()))info.append(element("p","updated","Updated "+new Intl.DateTimeFormat(undefined,{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}).format(date)));}const choices=element("div","choices");for(const id of ballot.selections){const style=STYLES.find(s=>s.id===id);if(style)choices.append(styleLink(style));}row.append(info,choices);root.append(row);}
+    for(const ballot of votes.ballots){
+      const row=element("article","person"),info=element("div");
+      info.append(element("h2","",ballot.name));
+      if(!ballot.ranking)info.append(element("p","updated","Earlier vote · not ranked"));
+      if(ballot.updatedAt){
+        const date=new Date(ballot.updatedAt);
+        if(!Number.isNaN(date.getTime()))info.append(element("p","updated","Updated "+new Intl.DateTimeFormat(undefined,{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}).format(date)));
+      }
+      const choices=element("div","choices"),order=ballot.ranking||ballot.selections;
+      for(const [index,id] of order.entries()){
+        const style=STYLES.find(s=>s.id===id);
+        if(style)choices.append(styleLink(style,ballot.ranking?["1st","2nd","3rd"][index]:"Unranked"));
+      }
+      row.append(info,choices);root.append(row);
+    }
   }else{
-    for(const style of [...STYLES].sort((a,b)=>(votes.counts[b.id]||0)-(votes.counts[a.id]||0)||a.id.localeCompare(b.id))){const card=element("article","style-vote");const link=element("a");link.href="../"+style.file;link.target="_blank";link.rel="noopener";const img=element("img");img.src="../"+style.file;img.alt=style.title;img.loading="lazy";link.append(img);const info=element("div","style-info");info.append(element("h2","",style.id+" · "+style.title));const people=votes.ballots.filter(b=>b.selections.includes(style.id));info.append(element("p","total",people.length+" "+(people.length===1?"vote":"votes")));const names=element("div","voter-names");for(const person of people)names.append(element("span","",person.name));if(!people.length)names.append(element("span","","No votes yet"));info.append(names);card.append(link,info);root.append(card);}
+    for(const style of [...STYLES].sort((a,b)=>(votes.counts[b.id]||0)-(votes.counts[a.id]||0)||a.id.localeCompare(b.id))){
+      const card=element("article","style-vote"),link=element("a");
+      link.href="../"+style.file;link.target="_blank";link.rel="noopener";
+      const img=element("img");img.src="../"+style.file;img.alt=style.title;img.loading="lazy";link.append(img);
+      const info=element("div","style-info");info.append(element("h2","",style.id+" · "+style.title));
+      const people=votes.ballots.filter(b=>b.selections.includes(style.id));
+      info.append(element("p","total",people.length+" "+(people.length===1?"vote":"votes")));
+      const places=["1st","2nd","3rd"].map((label,index)=>label+": "+people.filter(b=>b.ranking?.[index]===style.id).length);
+      const earlier=people.filter(b=>!b.ranking).length;if(earlier)places.push("Earlier: "+earlier);
+      info.append(element("p","rank-breakdown",places.join(" · ")));
+      const names=element("div","voter-names");
+      for(const person of people){
+        const position=person.ranking?.indexOf(style.id);
+        names.append(element("span","",person.name+" · "+(position>=0?["1st","2nd","3rd"][position]:"earlier vote")));
+      }
+      if(!people.length)names.append(element("span","","No votes yet"));
+      info.append(names);card.append(link,info);root.append(card);
+    }
   }
 }
 async function loadVotes(){

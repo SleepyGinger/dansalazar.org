@@ -15,14 +15,18 @@ $(".grid").replaceChildren(...DISPLAY_ORDER.map((index,position)=>{
   card.querySelector("img").loading=position<2?"eager":"lazy";
   return card;
 }));
-const state={picks:new Set(),name:"",step:"choose",view:"all",current:0,busy:false,results:null,saved:null,token:null,hasDraft:false,writeEpoch:0,activity:0,chooseScroll:0};
+const RANKS=["1st","2nd","3rd"];
+let displayedOrder=DISPLAY_ORDER.join(",");
+const state={picks:new Set(),name:"",step:"choose",view:"all",current:0,busy:false,results:null,saved:null,token:null,hasDraft:false,legacyChoices:[],writeEpoch:0,activity:0,chooseScroll:0};
 try{
   state.token=localStorage.getItem(KEY);
   const draft=JSON.parse(localStorage.getItem(DRAFT)||"null");
   if(draft&&typeof draft.name==="string"&&Array.isArray(draft.selections)){
     state.name=draft.name.slice(0,40);
-    state.picks=new Set(draft.selections.filter(id=>STYLES.some(s=>s.id===id)).slice(0,3));
-    state.hasDraft=true;
+    if(Array.isArray(draft.ranking)){
+      state.picks=new Set(draft.ranking.filter(id=>STYLES.some(s=>s.id===id)).slice(0,3));
+      state.hasDraft=true;
+    }else state.legacyChoices=draft.selections.filter(id=>STYLES.some(s=>s.id===id)).slice(0,3);
   }
 }catch{}
 if(!/^[a-f0-9]{64}$/.test(state.token||"")){
@@ -30,22 +34,34 @@ if(!/^[a-f0-9]{64}$/.test(state.token||"")){
   try{localStorage.setItem(KEY,state.token);}catch{}
 }
 $("#voter-name").value=state.name;
-function ballot(){return {name:state.name.trim(),selections:[...state.picks].sort()};}
-function signature(value){return value?JSON.stringify({name:value.name.trim(),selections:[...value.selections].sort()}):"";}
+function ballot(){return {name:state.name.trim(),selections:[...state.picks].sort(),ranking:[...state.picks]};}
+function signature(value){return value?JSON.stringify({name:value.name.trim(),selections:[...value.selections].sort(),ranking:value.ranking||null}):"";}
 function persist(){try{localStorage.setItem(DRAFT,JSON.stringify(ballot()));}catch{}}
 function status(message){$("#save-status").textContent=message;}
 function pickMessage(message,error=false){$("#pick-status").textContent=message;$("#pick-status").classList.toggle("error",error);$("#viewer-message").textContent=error?message:"";}
 function changed(){state.activity++;state.hasDraft=true;persist();status("");$("#voter-name").removeAttribute("aria-invalid");render();}
-function thumbnails(target,selections){
+function thumbnails(target,selections,editable=false,ranked=true){
   target.replaceChildren();
-  for(const id of selections){
+  for(const [index,id] of selections.entries()){
     const s=STYLES.find(style=>style.id===id);if(!s)continue;
     const figure=document.createElement("figure");figure.className="review-pick";
     const img=document.createElement("img");img.src=s.file;img.alt=s.title;img.width=160;img.height=160;
+    const rank=document.createElement("strong");rank.className="review-rank";rank.textContent=ranked?RANKS[index]+(index===0?" · Top choice":" choice"):"Earlier choice";
     const caption=document.createElement("figcaption");caption.textContent=s.id+" · "+s.title;
-    figure.append(img,caption);target.append(figure);
+    figure.append(rank,img,caption);
+    if(editable){
+      const up=document.createElement("button");up.type="button";up.className="move-up";up.dataset.moveUp=id;up.textContent="↑ Move up";up.disabled=state.busy||index===0;
+      up.setAttribute("aria-label","Move picture "+id+" up one place");
+      up.onclick=()=>{if(state.busy||index===0)return;const order=[...state.picks];[order[index-1],order[index]]=[order[index],order[index-1]];state.picks=new Set(order);changed();[...document.querySelectorAll("[data-move-up]")].find(button=>button.dataset.moveUp===id)?.focus();};
+      figure.append(up);
+    }
+    target.append(figure);
   }
 }
+function galleryOrder(){
+  return state.view==="results"?[...DISPLAY_ORDER].sort((a,b)=>(state.results?.counts[STYLES[b].id]||0)-(state.results?.counts[STYLES[a].id]||0)):DISPLAY_ORDER;
+}
+function nextChoiceMessage(){return state.picks.size===3?"All 3 chosen. Tap Review & send.":"Now tap your "+RANKS[state.picks.size]+(state.picks.size===0?" choice — your favorite picture.":" favorite picture.");}
 function go(step,restore=false){
   state.activity++;
   if(state.step==="choose"&&step!=="choose")state.chooseScroll=window.scrollY;
@@ -53,19 +69,34 @@ function go(step,restore=false){
   window.scrollTo({top:restore?state.chooseScroll:0,behavior:"auto"});
 }
 function render(){
-  const picks=[...state.picks].sort();
+  const picks=[...state.picks],results=state.view==="results"&&state.step==="choose";
   document.body.dataset.step=state.step;
   for(const step of ["choose","review","thanks"])$("#"+step+"-step").hidden=state.step!==step;
-  $("#continue-bar").hidden=state.step!=="choose";
-  $("#step-label").textContent=state.step==="choose"?"Step 1 of 2 · Choose pictures":state.step==="review"?"Step 2 of 2 · Send your vote":"All done";
-  $("#step-title").textContent=state.step==="choose"?"Which pictures feel like Mila?":state.step==="review"?"Almost done!":"Your vote is saved!";
-  $("#step-intro").textContent=state.step==="choose"?"Tap 1, 2, or 3 favorites. Then tap Continue.":state.step==="review"?"Add your first name, then send your vote.":"Thank you for helping with Mila’s book. You’re all done.";
-  $("#selection").textContent=picks.length?picks.length+" "+(picks.length===1?"picture chosen":"pictures chosen"):"Choose your favorites";
-  $("#continue").disabled=!picks.length||state.busy;
+  $("#continue-bar").hidden=state.step!=="choose"||results;
+  $("#step-label").textContent=results?"Most votes first":state.step==="choose"?"Step 1 of 2 · Rank 3 pictures":state.step==="review"?"Step 2 of 2 · Check your order & send":"All done";
+  $("#step-title").textContent=results?"Family results":state.step==="choose"?"Choose your top 3 pictures":state.step==="review"?"Is this your favorite order?":"Your vote is saved!";
+  $("#step-intro").textContent=results?"Sorted by total votes. Every chosen picture counts once, including earlier votes.":state.step==="choose"?"First tap your favorite picture. Then choose a 2nd and a 3rd favorite. All three are needed before you send.":state.step==="review"?"Your favorite goes first. Use Move up to change the order, then add your name and send.":state.saved?.ranking?"Your 1st, 2nd and 3rd choices are saved. Thank you!":"This is your earlier vote, without a ranking. You can choose your top 3 to update it, or remove it under More options.";
+  $("#selection").textContent=picks.length+" of 3 chosen";
+  $("#continue").disabled=picks.length!==3||state.busy;
+  $("#continue").textContent=picks.length===3?"Review & send →":"Choose all 3";
+  const legacy=state.saved&&!state.saved.ranking;
+  $("#legacy-vote").hidden=!legacy||results;
+  $("#legacy-view").hidden=!legacy||results;
+  $("#legacy-vote").textContent=legacy?"Your earlier vote is still saved (picture"+(state.saved.selections.length===1?" ":"s ")+state.saved.selections.join(", ")+"). Choose a 1st, 2nd and 3rd favorite to update it.":"";
+  for(let index=0;index<3;index++){
+    const chosen=STYLES.find(s=>s.id===picks[index]),image=$("#rank-image-"+index);
+    image.hidden=!chosen;if(chosen){image.src=chosen.file;image.alt=RANKS[index]+" choice: "+chosen.title;}
+    $("#rank-slot-"+index).textContent=chosen?"Picture "+chosen.id:index===picks.length?"Choose now":"Not chosen";
+    $("#rank-choice-"+index).classList.toggle("next",index===picks.length);
+  }
+  $("#end-hint").textContent=results?"Totals include all family votes. Rank your favorites on the voting page.":"That’s all 16 pictures. Choose your 1st, 2nd and 3rd favorites, then tap Review & send.";
+  const order=galleryOrder(),key=order.join(",");
+  if(key!==displayedOrder){$(".grid").replaceChildren(...order.map(index=>cardsById.get(STYLES[index].id)));displayedOrder=key;}
   document.querySelectorAll("[data-pick]").forEach(button=>{
     const on=state.picks.has(button.dataset.pick);
-    button.setAttribute("aria-pressed",String(on));
-    button.querySelector(".pick-label").textContent=on?"✓ Chosen · tap to undo":"Tap to choose";
+    if(results)button.removeAttribute("aria-pressed");else button.setAttribute("aria-pressed",String(on));
+    button.querySelector(".pick-label").textContent=results?"Tap to look closer":on?"✓ "+RANKS[picks.indexOf(button.dataset.pick)]+" choice · tap to undo":picks.length===3?"Undo a choice first":"Tap for "+RANKS[picks.length]+" choice";
+    button.setAttribute("aria-label",results?"Look closer at picture "+button.dataset.pick:on?"Remove picture "+button.dataset.pick+", your "+RANKS[picks.indexOf(button.dataset.pick)]+" choice":"Choose picture "+button.dataset.pick+(picks.length<3?" as your "+RANKS[picks.length]+" choice":""));
     button.disabled=state.busy;
   });
   document.querySelectorAll(".card").forEach(card=>{
@@ -81,27 +112,30 @@ function render(){
   $("#submit-vote").disabled=state.busy;
   $("#submit-vote").textContent=state.busy?"Sending…":state.saved?"Save my changes":"Send my vote";
   for(const id of ["voter-name","withdraw","back-to-pictures","edit-vote","saved-results"])$("#"+id).disabled=state.busy;
+  $("#edit-vote").textContent=legacy?"Choose my top 3":"Change my choices";
   const on=state.picks.has(STYLES[state.current].id);
   $("#viewer-pick").setAttribute("aria-pressed",String(on));
-  $("#viewer-pick").textContent=on?"✓ Chosen · tap to undo":"Choose this picture";
+  $("#viewer-pick").hidden=state.view==="results";
+  $("#viewer-pick").textContent=on?"✓ "+RANKS[picks.indexOf(STYLES[state.current].id)]+" choice · undo":picks.length===3?"Undo a choice first":"Choose as "+RANKS[picks.length]+" favorite";
   $("#viewer-pick").disabled=state.busy;
-  if(state.step==="review")thumbnails($("#review-picks"),picks);
+  if(state.step==="review")thumbnails($("#review-picks"),picks,true);
   if(state.step==="thanks"&&state.saved){
-    thumbnails($("#saved-picks"),state.saved.selections);
+    thumbnails($("#saved-picks"),state.saved.ranking||state.saved.selections,false,!!state.saved.ranking);
     $("#thanks-name").textContent="Thanks, "+state.saved.name+"!";
   }
   // Reserve the real bar height, including larger text and the iPhone safe area.
-  if(state.step==="choose")document.documentElement.style.setProperty("--bar-height",$("#continue-bar").getBoundingClientRect().height+"px");
+  document.body.dataset.results=String(results);
+  if(state.step==="choose"&&!results)document.documentElement.style.setProperty("--bar-height",$("#continue-bar").getBoundingClientRect().height+"px");
 }
 function pick(id){
-  if(state.busy)return;
+  if(state.busy||state.view==="results")return;
   if(state.picks.has(id))state.picks.delete(id);
   else{
-    if(state.picks.size===3){pickMessage("You have 3. Tap a chosen picture to undo it first.",true);return;}
+    if(state.picks.size===3){pickMessage("You have all 3 choices. Tap a chosen picture to undo it first.",true);return;}
     state.picks.add(id);
   }
   changed();
-  pickMessage(state.picks.size===3?"Ready? Tap Continue.":state.picks.size?"Choose more, or tap Continue.":"Tap a picture to choose it.");
+  pickMessage(nextChoiceMessage());
 }
 function show(index){
   state.activity++;
@@ -111,8 +145,8 @@ function show(index){
   render();if(!$("#viewer").open)$("#viewer").showModal();
 }
 function navigate(delta){
-  const position=DISPLAY_ORDER.indexOf(state.current);
-  show(DISPLAY_ORDER[(position+delta+DISPLAY_ORDER.length)%DISPLAY_ORDER.length]);
+  const order=galleryOrder(),position=order.indexOf(state.current);
+  show(order[(position+delta+order.length)%order.length]);
 }
 async function request(method="GET",body){
   const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),20000);
@@ -127,10 +161,11 @@ async function refresh(initial=false){
     const data=await request();if(epoch!==state.writeEpoch)return;state.results=data;
     if(initial){
       state.saved=data.ballot;
-      if(data.ballot&&!state.hasDraft){
-        state.picks=new Set(data.ballot.selections);state.name=data.ballot.name;$("#voter-name").value=state.name;persist();
+      if(data.ballot?.ranking&&!state.hasDraft){
+        state.picks=new Set(data.ballot.ranking);state.name=data.ballot.name;$("#voter-name").value=state.name;persist();
       }
-      if(data.ballot&&signature(data.ballot)===signature(ballot())&&activity===state.activity){
+      if(data.ballot&&!state.name){state.name=data.ballot.name;$("#voter-name").value=state.name;}
+      if(data.ballot?.ranking&&signature(data.ballot)===signature(ballot())&&activity===state.activity){
         state.step="thanks";
       }
     }
@@ -140,16 +175,17 @@ async function refresh(initial=false){
     if(initial&&activity===state.activity)pickMessage("You can choose pictures now. Try sending when you’re connected.");
   }
 }
-$("#continue").onclick=()=>{if(state.picks.size&&!state.busy){status("");go("review");}};
+$("#continue").onclick=()=>{if(state.picks.size===3&&!state.busy){status("");go("review");}};
 $("#back-to-pictures").onclick=()=>{if(!state.busy)go("choose",true);};
-$("#edit-vote").onclick=()=>{if(!state.busy){state.view="all";pickMessage("Tap a chosen picture to undo it, or choose another.");go("choose");}};
+$("#edit-vote").onclick=()=>{if(!state.busy){state.view="all";pickMessage(state.picks.size?"Tap a chosen picture to undo it. You can change the order on the next page.":nextChoiceMessage());go("choose");}};
+$("#legacy-view").onclick=()=>{if(state.saved&&!state.busy)go("thanks");};
 function showResults(){state.view="results";go("choose");refresh();}
 $("#show-results").onclick=showResults;$("#saved-results").onclick=showResults;
-$("#back-to-choosing").onclick=()=>{state.view="all";render();};
+$("#back-to-choosing").onclick=()=>{state.view="all";pickMessage(nextChoiceMessage());render();};
 $("#ballot").addEventListener("submit",async event=>{
   event.preventDefault();if(state.busy)return;
   state.name=$("#voter-name").value;persist();
-  if(!state.picks.size){go("choose");pickMessage("Choose at least one picture.",true);return;}
+  if(state.picks.size!==3){go("choose");pickMessage("Choose your 1st, 2nd and 3rd favorites before sending.",true);return;}
   if(!state.name.trim()){status("Please add your first name.");$("#voter-name").setAttribute("aria-invalid","true");$("#voter-name").focus();return;}
   const submission=ballot();state.writeEpoch++;state.busy=true;status("Sending your vote…");render();$("#voter-name").blur();
   try{
@@ -170,7 +206,7 @@ $("#withdraw").onclick=async()=>{
   finally{state.busy=false;render();}
 };
 $("#voter-name").addEventListener("input",event=>{state.name=event.target.value;changed();});
-document.querySelectorAll("[data-pick]").forEach(button=>button.addEventListener("click",()=>pick(button.dataset.pick)));
+document.querySelectorAll("[data-pick]").forEach(button=>button.addEventListener("click",()=>state.view==="results"?show(STYLES.findIndex(s=>s.id===button.dataset.pick)):pick(button.dataset.pick)));
 document.querySelectorAll("[data-open]").forEach(button=>button.addEventListener("click",()=>show(STYLES.findIndex(s=>s.id===button.dataset.open))));
 $("#viewer-pick").onclick=()=>pick(STYLES[state.current].id);
 $("#previous").onclick=()=>navigate(-1);$("#next").onclick=()=>navigate(1);
@@ -191,6 +227,7 @@ if(typeof ResizeObserver!=="undefined")new ResizeObserver(()=>{
   if(state.step==="choose")document.documentElement.style.setProperty("--bar-height",$("#continue-bar").getBoundingClientRect().height+"px");
 }).observe($("#continue-bar"));
 $(".grid").hidden=false;$("#gallery-loading").hidden=true;
+pickMessage(nextChoiceMessage());
 render();refresh(true);
 setInterval(()=>{if(!document.hidden&&!state.busy)refresh();},45000);
 document.addEventListener("visibilitychange",()=>{if(!document.hidden&&!state.busy)refresh();});

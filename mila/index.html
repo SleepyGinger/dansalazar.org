@@ -2,14 +2,16 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="robots" content="noindex,nofollow"><meta name="description" content="Help choose the pictures for Mila’s book. Tap your favorites and send your vote.">
+<meta name="robots" content="noindex,nofollow"><meta name="description" content="Rank your 1st, 2nd and 3rd favorite pictures for Mila’s book, then send your vote.">
 <meta name="theme-color" content="#f6f3ec"><link rel="canonical" href="https://dansalazar.org/mila/">
-<title>Choose pictures for Mila’s book</title><link rel="stylesheet" href="voting.css?v=3"><script src="app.js?v=4" defer></script>
+<title>Choose pictures for Mila’s book</title><link rel="stylesheet" href="voting.css?v=5"><script src="app.js?v=5" defer></script>
 </head>
 <body class="voting-page">
-<header><p class="eyebrow">Mila’s Love Book</p><p id="step-label" class="step-label">Step 1 of 2 · Choose pictures</p><h1 id="step-title" tabindex="-1">Which pictures feel like Mila?</h1><p id="step-intro" class="intro">Tap <strong>1, 2, or 3 favorites.</strong> Then tap Continue.</p></header>
+<header><p class="eyebrow">Mila’s Love Book</p><p id="step-label" class="step-label">Step 1 of 2 · Rank 3 pictures</p><h1 id="step-title" tabindex="-1">Choose your top 3 pictures</h1><p id="step-intro" class="intro">First tap your favorite picture. Then choose a <strong>2nd and a 3rd favorite.</strong> All three are needed before you send.</p></header>
 <main>
 <section id="choose-step" aria-label="Choose your favorite pictures">
+<p id="legacy-vote" class="legacy-vote" hidden></p>
+<button id="legacy-view" class="text-button" type="button" hidden>See my earlier vote</button>
 <div id="results-toolbar" class="results-toolbar" hidden><button id="back-to-choosing" class="secondary" type="button">Back to choosing</button><p id="voter-count" role="status"></p></div>
 <p id="gallery-loading" class="status" role="status">Loading pictures…</p>
 <section class="grid" aria-label="Sixteen pictures of Mila" hidden>
@@ -94,12 +96,12 @@
 <div class="score" hidden><span class="score-text"></span><span class="track"><span class="fill"></span></span></div>
 </article>
 </section>
-<p class="end-hint">That’s all 16 pictures. Choose your favorites, then tap Continue.</p>
+<p id="end-hint" class="end-hint">That’s all 16 pictures. Choose your 1st, 2nd and 3rd favorites, then tap Review &amp; send.</p>
 <button id="show-results" class="text-button" type="button">See family votes</button>
 </section>
 <section id="review-step" class="narrow" hidden aria-label="Review and send your vote">
 <button id="back-to-pictures" class="text-button" type="button">← Back to pictures</button>
-<h2>Your favorites</h2><div id="review-picks" class="review-picks"></div>
+<h2>Your top 3, in order</h2><div id="review-picks" class="review-picks"></div>
 <form id="ballot" class="ballot" novalidate>
 <label for="voter-name">Your first name</label>
 <input id="voter-name" name="name" autocomplete="given-name" autocapitalize="words" enterkeyhint="send" maxlength="40" required placeholder="First name" aria-describedby="save-status">
@@ -117,7 +119,12 @@
 </section>
 </main>
 <aside id="continue-bar" class="continue-bar" aria-label="Your choices">
-<div class="continue-inner"><div><strong id="selection">Choose your favorites</strong><p id="pick-status" role="status" aria-live="polite">Tap a picture to choose it.</p></div><button id="continue" class="primary" type="button" disabled>Continue →</button></div>
+<div class="rank-slots" aria-label="Your first, second and third choices">
+<div id="rank-choice-0" class="rank-slot"><strong>1st</strong><div><img id="rank-image-0" alt="" width="40" height="40" hidden><span id="rank-slot-0">Choose now</span></div></div>
+<div id="rank-choice-1" class="rank-slot"><strong>2nd</strong><div><img id="rank-image-1" alt="" width="40" height="40" hidden><span id="rank-slot-1">Not chosen</span></div></div>
+<div id="rank-choice-2" class="rank-slot"><strong>3rd</strong><div><img id="rank-image-2" alt="" width="40" height="40" hidden><span id="rank-slot-2">Not chosen</span></div></div>
+</div>
+<div class="continue-inner"><div><strong id="selection">0 of 3 chosen</strong><p id="pick-status" role="status" aria-live="polite">Now tap your 1st choice — your favorite picture.</p></div><button id="continue" class="primary" type="button" disabled>Choose all 3</button></div>
 </aside>
 <footer><span>Made with love for Mila.</span><button id="owner-access" class="owner-access" type="button" aria-label="Owner access. Activate twice."><span aria-hidden="true">•</span></button></footer>
 <dialog id="viewer" aria-labelledby="viewer-title"><button type="button" class="close secondary" aria-label="Close picture">Done</button><img id="viewer-image" alt=""><strong id="viewer-title"></strong><div class="viewer-tools"><button type="button" id="previous" class="secondary" aria-label="Previous picture">←</button><button type="button" id="next" class="secondary" aria-label="Next picture">→</button><button type="button" id="viewer-pick" class="primary" aria-pressed="false">Choose this picture</button></div><p id="viewer-message" role="status" aria-live="polite"></p></dialog>

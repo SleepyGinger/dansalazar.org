@@ -3,50 +3,63 @@ import {getAuth,GoogleAuthProvider,signInWithPopup,onAuthStateChanged,signOut} f
 const app=initializeApp({apiKey:"AIzaSyDe6NoEXexvF3KNKKZwLqPPDDOI6upNKiE",authDomain:"paternity-planner.firebaseapp.com",projectId:"paternity-planner",appId:"1:730313869486:web:0b80b221f20410033f853f"});
 const auth=getAuth(app),provider=new GoogleAuthProvider();
 provider.setCustomParameters({prompt:"select_account",login_hint:"danielrsalazar@gmail.com"});
-const API="https://us-central1-you-feed-nalu.cloudfunctions.net/milaVotes/admin";
+const API="https://us-central1-you-feed-nalu.cloudfunctions.net/milaVotes";
 const STYLES=[{"id":"01","title":"Rounded flat shapes","file":"images/01-rounded-flat.png"},{"id":"02","title":"Bold outline cartoon","file":"images/02-bold-outline.png"},{"id":"03","title":"Cut-paper collage","file":"images/03-cut-paper.png"},{"id":"04","title":"Torn painted paper","file":"images/04-torn-paper.png"},{"id":"05","title":"Wax crayon","file":"images/05-wax-crayon.png"},{"id":"06","title":"Sparse colored pencil","file":"images/06-colored-pencil.png"},{"id":"07","title":"Chalk pastel","file":"images/07-chalk-pastel.png"},{"id":"08","title":"Felt applique","file":"images/08-felt-applique.png"},{"id":"09","title":"Midcentury geometry","file":"images/09-midcentury-geometric.png"},{"id":"10","title":"Two-ink risograph","file":"images/10-two-ink-print.png"},{"id":"11","title":"Soft block print","file":"images/11-soft-block-print.png"},{"id":"12","title":"Loose ink and wash","file":"images/12-loose-ink-wash.png"},{"id":"13","title":"Naive folk art","file":"images/13-folk-art.png"},{"id":"14","title":"Chunky marker","file":"images/14-chunky-marker.png"},{"id":"15","title":"Minimal dot eyes","file":"images/15-minimal-dot-eyes.png"},{"id":"16","title":"Simple gouache","file":"images/16-simple-gouache.png"}];
+const FINAL_FILES={"01":"01-rounded-flat-final-v1.png","04":"04-torn-paper-final-v2.png","05":"05-wax-crayon-final-v1.png","06":"06-colored-pencil-final-v1.png","14":"14-chunky-marker-final-v2.png","16":"16-simple-gouache-final-v2.png"};
+const FINAL_STYLES=STYLES.filter(style=>Object.hasOwn(FINAL_FILES,style.id)).map(style=>({...style,file:"images/final/"+FINAL_FILES[style.id]}));
+const POLLS={final:{path:"/admin/final",id:"mila-final-01",label:"Final round",styles:FINAL_STYLES},first:{path:"/admin",id:"mila-round-01",label:"Round one",styles:STYLES}};
 const $=selector=>document.querySelector(selector);
-let votes=null,view="styles",generation=0,busy=false;
+let votes=null,view="styles",poll="final",generation=0,busy=false,activeRequest=null;
 function element(tag,className,text){const node=document.createElement(tag);if(className)node.className=className;if(text!==undefined)node.textContent=text;return node;}
-function clearVotes(){votes=null;$("#votes").replaceChildren();$("#summary").textContent="";$("#signed-in").textContent="";$("#admin-panel").hidden=true;$("#sign-in-panel").hidden=false;}
+function clearVotes(keepPanel=false){votes=null;$("#votes").replaceChildren();$("#summary").textContent="";$("#signed-in").textContent="";$("#load-status").textContent="";$("#admin-panel").hidden=!keepPanel;$("#sign-in-panel").hidden=keepPanel;$("#retry-access").hidden=true;}
+function invalidateRequests(){generation++;activeRequest?.abort();activeRequest=null;busy=false;$("#refresh").disabled=false;}
+function updateControls(){
+  document.querySelectorAll("[data-poll]").forEach(button=>button.setAttribute("aria-pressed",String(button.dataset.poll===poll)));
+  document.querySelectorAll("[data-view]").forEach(button=>button.setAttribute("aria-pressed",String(button.dataset.view===view)));
+  $("#rank-note").textContent=poll==="final"?"Most votes first. Each person chooses one final favorite.":"Round one is complete. Most votes first; each selected picture counts once. Earlier votes have no 1st, 2nd or 3rd rank.";
+}
 function styleLink(style,rank){const link=element("a","choice");link.href="../"+style.file;link.target="_blank";link.rel="noopener";const img=element("img");img.src="../"+style.file;img.alt=style.title;img.loading="lazy";const label=element("span");label.append(element("strong","",rank+" · "+style.id),document.createTextNode(style.title));link.append(img,label);return link;}
 function render(){
   if(!votes)return;
-  document.querySelectorAll("[data-view]").forEach(button=>button.setAttribute("aria-pressed",button.dataset.view===view));
-  $("#summary").textContent=votes.totalBallots+" "+(votes.totalBallots===1?"ballot":"ballots")+" · "+Object.values(votes.counts).reduce((a,b)=>a+b,0)+" selections";
+  updateControls();
+  const current=POLLS[poll],isFinal=poll==="final";
+  $("#summary").textContent=current.label+" · "+votes.totalBallots+" "+(votes.totalBallots===1?"ballot":"ballots")+(isFinal?"":" · "+Object.values(votes.counts).reduce((a,b)=>a+b,0)+" selections")+(votes.closed?" · Closed":"");
   const root=$("#votes");root.className=view==="styles"?"style-list":"";root.replaceChildren();
-  if(!votes.ballots.length){root.append(element("p","empty","No votes yet. Share the family voting page to get started."));return;}
+  if(!votes.ballots.length){root.append(element("p","empty",isFinal?"No final votes yet. Share the family voting page to get started.":"No round-one votes to show."));return;}
   if(view==="people"){
     for(const ballot of votes.ballots){
       const row=element("article","person"),info=element("div");
       info.append(element("h2","",ballot.name));
-      if(!ballot.ranking)info.append(element("p","updated","Earlier vote · not ranked"));
+      if(isFinal)info.append(element("p","updated","One final choice"));
+      else if(!ballot.ranking)info.append(element("p","updated","Earlier vote · not ranked"));
       if(ballot.updatedAt){
         const date=new Date(ballot.updatedAt);
         if(!Number.isNaN(date.getTime()))info.append(element("p","updated","Updated "+new Intl.DateTimeFormat(undefined,{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}).format(date)));
       }
-      const choices=element("div","choices"),order=ballot.ranking||ballot.selections;
+      const choices=element("div","choices"),order=isFinal?ballot.selections:ballot.ranking||ballot.selections;
       for(const [index,id] of order.entries()){
-        const style=STYLES.find(s=>s.id===id);
-        if(style)choices.append(styleLink(style,ballot.ranking?["1st","2nd","3rd"][index]:"Unranked"));
+        const style=current.styles.find(s=>s.id===id);
+        if(style)choices.append(styleLink(style,isFinal?"Final choice":ballot.ranking?["1st","2nd","3rd"][index]:"Unranked"));
       }
       row.append(info,choices);root.append(row);
     }
   }else{
-    for(const style of [...STYLES].sort((a,b)=>(votes.counts[b.id]||0)-(votes.counts[a.id]||0)||a.id.localeCompare(b.id))){
+    for(const style of [...current.styles].sort((a,b)=>(votes.counts[b.id]||0)-(votes.counts[a.id]||0)||a.id.localeCompare(b.id))){
       const card=element("article","style-vote"),link=element("a");
       link.href="../"+style.file;link.target="_blank";link.rel="noopener";
       const img=element("img");img.src="../"+style.file;img.alt=style.title;img.loading="lazy";link.append(img);
       const info=element("div","style-info");info.append(element("h2","",style.id+" · "+style.title));
       const people=votes.ballots.filter(b=>b.selections.includes(style.id));
       info.append(element("p","total",people.length+" "+(people.length===1?"vote":"votes")));
-      const places=["1st","2nd","3rd"].map((label,index)=>label+": "+people.filter(b=>b.ranking?.[index]===style.id).length);
-      const earlier=people.filter(b=>!b.ranking).length;if(earlier)places.push("Earlier: "+earlier);
-      info.append(element("p","rank-breakdown",places.join(" · ")));
+      if(!isFinal){
+        const places=["1st","2nd","3rd"].map((label,index)=>label+": "+people.filter(b=>b.ranking?.[index]===style.id).length);
+        const earlier=people.filter(b=>!b.ranking).length;if(earlier)places.push("Earlier: "+earlier);
+        info.append(element("p","rank-breakdown",places.join(" · ")));
+      }
       const names=element("div","voter-names");
       for(const person of people){
         const position=person.ranking?.indexOf(style.id);
-        names.append(element("span","",person.name+" · "+(position>=0?["1st","2nd","3rd"][position]:"earlier vote")));
+        names.append(element("span","",person.name+(isFinal?"":" · "+(position>=0?["1st","2nd","3rd"][position]:"earlier vote"))));
       }
       if(!people.length)names.append(element("span","","No votes yet"));
       info.append(names);card.append(link,info);root.append(card);
@@ -54,12 +67,29 @@ function render(){
   }
 }
 async function loadVotes(){
-  const user=auth.currentUser;if(!user||busy)return;const version=generation;busy=true;$("#refresh").disabled=true;$("#load-status").textContent="Loading votes…";
-  try{const token=await user.getIdToken();const response=await fetch(API,{headers:{Authorization:"Bearer "+token},cache:"no-store",signal:AbortSignal.timeout(20000)});const data=await response.json();if(version!==generation)return;if(!response.ok){const error=new Error(data.error||"Couldn’t load votes.");error.status=response.status;throw error;}votes=data;$("#sign-in-panel").hidden=true;$("#admin-panel").hidden=false;$("#signed-in").textContent=user.email;$("#load-status").textContent="Updated just now";render();}
-  catch(error){if(version!==generation)return;if(error.status===401||error.status===403){clearVotes();$("#auth-message").textContent=error.message;$("#switch-account").hidden=false;}else{const message=error.name==="TimeoutError"?"The request timed out. Please try again.":error.message;$("#load-status").textContent=message;$("#auth-message").textContent=message;}}
-  finally{if(version===generation){busy=false;$("#refresh").disabled=false;}}
+  const user=auth.currentUser;if(!user||busy)return;
+  const version=generation,currentPoll=poll,controller=new AbortController();activeRequest=controller;busy=true;
+  $("#refresh").disabled=true;$("#retry-access").hidden=true;$("#load-status").textContent="Loading "+POLLS[currentPoll].label.toLowerCase()+" votes…";
+  const timeout=setTimeout(()=>controller.abort("timeout"),20000);
+  try{
+    const token=await user.getIdToken();
+    if(version!==generation)return;
+    if(controller.signal.aborted)throw new Error("The request timed out. Please try again.");
+    const response=await fetch(API+POLLS[currentPoll].path,{headers:{Authorization:"Bearer "+token},cache:"no-store",signal:controller.signal});
+    const data=await response.json();
+    if(version!==generation||currentPoll!==poll||auth.currentUser?.uid!==user.uid)return;
+    if(!response.ok){const error=new Error(data.error||"Couldn’t load votes.");error.status=response.status;throw error;}
+    if(data.poll!==POLLS[currentPoll].id||!Array.isArray(data.ballots)||!data.counts)throw new Error("The voting round changed. Please refresh.");
+    votes=data;$("#sign-in-panel").hidden=true;$("#admin-panel").hidden=false;$("#signed-in").textContent=user.email;$("#load-status").textContent="Updated just now";render();
+  }catch(error){
+    if(version!==generation)return;
+    if(error.status===401||error.status===403){clearVotes();$("#auth-message").textContent=error.message;$("#switch-account").hidden=false;}
+    else{const message=controller.signal.aborted?"The request timed out. Please try again.":error.message;$("#load-status").textContent=message;$("#auth-message").textContent=message;$("#retry-access").hidden=false;}
+  }finally{clearTimeout(timeout);if(version===generation){activeRequest=null;busy=false;$("#refresh").disabled=false;}}
 }
 $("#sign-in").addEventListener("click",async()=>{$("#sign-in").disabled=true;$("#auth-message").textContent="Opening Google sign-in…";try{await signInWithPopup(auth,provider);}catch(error){$("#auth-message").textContent=error.code==="auth/popup-closed-by-user"?"Sign-in was cancelled.":error.code==="auth/popup-blocked"?"Allow the sign-in popup, then try again.":error.message;}finally{$("#sign-in").disabled=false;}});
-$("#sign-out").onclick=()=>signOut(auth);$("#switch-account").onclick=()=>signOut(auth);$("#refresh").onclick=loadVotes;
+async function leaveAdmin(){invalidateRequests();clearVotes();try{await signOut(auth);}catch{$("#auth-message").textContent="Couldn’t sign out. Please try again.";$("#switch-account").hidden=false;}}
+$("#sign-out").onclick=leaveAdmin;$("#switch-account").onclick=leaveAdmin;$("#refresh").onclick=loadVotes;$("#retry-access").onclick=loadVotes;
 document.querySelectorAll("[data-view]").forEach(button=>button.onclick=()=>{view=button.dataset.view;render();});
-onAuthStateChanged(auth,user=>{generation++;busy=false;clearVotes();$("#switch-account").hidden=!user;if(user){$("#auth-message").textContent="Checking admin access…";loadVotes();}else{$("#auth-message").textContent="";$("#sign-in").disabled=false;}});
+document.querySelectorAll("[data-poll]").forEach(button=>button.onclick=()=>{if(button.dataset.poll===poll)return;invalidateRequests();poll=button.dataset.poll;view="styles";clearVotes(true);updateControls();loadVotes();});
+onAuthStateChanged(auth,user=>{invalidateRequests();clearVotes();updateControls();$("#switch-account").hidden=!user;if(user){$("#auth-message").textContent="Checking admin access…";loadVotes();}else{$("#auth-message").textContent="";$("#sign-in").disabled=false;}});

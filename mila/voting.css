@@ -42,3 +42,4 @@ body[data-results="true"]{padding-bottom:24px}
 .review-rank{display:block;font-size:16px;min-height:48px;line-height:1.35;color:var(--accent)}.move-up{display:block;width:100%;min-height:44px;padding:7px 3px;margin-top:8px;border:1px solid var(--line);border-radius:8px;background:#fffdf6;font-size:15px;font-weight:800}
 @media(max-width:540px){.rank-slot{padding-inline:6px}.rank-slot.next{padding-inline:5px}.rank-slot img{width:32px;height:32px}.rank-slot>div{min-height:34px;gap:4px}.rank-slot span{font-size:13px}.continue-inner .primary{max-width:145px}.review-rank{font-size:15px}}
 @media(max-width:350px){.continue-inner .primary{max-width:none}}
+.final-pick .review-pick{max-width:260px}.archive-link{color:var(--muted);text-underline-offset:3px;min-height:44px;display:inline-flex;align-items:center}footer{flex-wrap:wrap}

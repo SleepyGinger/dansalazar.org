@@ -1,132 +1,50 @@
 <!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="robots" content="noindex,nofollow"><meta name="description" content="Rank your 1st, 2nd and 3rd favorite pictures for Mila’s book, then send your vote.">
-<meta name="theme-color" content="#f6f3ec"><link rel="canonical" href="https://dansalazar.org/mila/">
-<title>Choose pictures for Mila’s book</title><link rel="stylesheet" href="voting.css?v=5"><script src="app.js?v=5" defer></script>
-</head>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="description" content="The final round for Mila’s book. Choose just one favorite picture."><meta name="theme-color" content="#f6f3ec"><link rel="canonical" href="https://dansalazar.org/mila/"><title>Mila’s book · The final vote</title><link rel="stylesheet" href="voting.css?v=6"><script src="final.js?v=1" defer></script></head>
 <body class="voting-page">
-<header><p class="eyebrow">Mila’s Love Book</p><p id="step-label" class="step-label">Step 1 of 2 · Rank 3 pictures</p><h1 id="step-title" tabindex="-1">Choose your top 3 pictures</h1><p id="step-intro" class="intro">First tap your favorite picture. Then choose a <strong>2nd and a 3rd favorite.</strong> All three are needed before you send.</p></header>
+<header><p class="eyebrow">Mila’s Love Book · Final round</p><p id="step-label" class="step-label">Step 1 of 2 · Choose just one</p><h1 id="step-title" tabindex="-1">Which one is your favorite?</h1><p id="step-intro" class="intro">Choose <strong>ONE picture</strong> for Mila’s book. Tap your favorite, then tap Continue.</p></header>
 <main>
-<section id="choose-step" aria-label="Choose your favorite pictures">
-<p id="legacy-vote" class="legacy-vote" hidden></p>
-<button id="legacy-view" class="text-button" type="button" hidden>See my earlier vote</button>
+<p id="round-status" class="legacy-vote" role="status" hidden></p>
+<section id="choose-step" aria-label="Choose one finalist">
 <div id="results-toolbar" class="results-toolbar" hidden><button id="back-to-choosing" class="secondary" type="button">Back to choosing</button><p id="voter-count" role="status"></p></div>
-<p id="gallery-loading" class="status" role="status">Loading pictures…</p>
-<section class="grid" aria-label="Sixteen pictures of Mila" hidden>
+<p id="gallery-loading" class="status" role="status">Loading the finalists…</p>
+<section class="grid" aria-label="Six finalists" hidden>
 <article class="card" data-id="01">
-<button type="button" class="art" data-pick="01" aria-label="Choose picture 01: Rounded flat shapes" aria-pressed="false"><img src="images/01-rounded-flat.png" alt="Mila in rounded flat shapes style" width="1254" height="1254" loading="lazy"><span class="pick-label">Tap to choose</span></button>
+<button type="button" class="art" data-pick="01" aria-label="Choose picture 01: Rounded flat shapes" aria-pressed="false"><img src="images/final/01-rounded-flat-final-v1.png" alt="Mila in rounded flat shapes style" width="1254" height="1254" loading="lazy"><span class="pick-label">Choose this one</span></button>
 <div class="caption"><h2><span class="number">01</span> Rounded flat shapes</h2><button class="closer" type="button" data-open="01" aria-label="Look closer at picture 01">Look closer</button></div>
-<div class="score" hidden><span class="score-text"></span><span class="track"><span class="fill"></span></span></div>
-</article>
-<article class="card" data-id="02">
-<button type="button" class="art" data-pick="02" aria-label="Choose picture 02: Bold outline cartoon" aria-pressed="false"><img src="images/02-bold-outline.png" alt="Mila in bold outline cartoon style" width="1254" height="1254" loading="lazy"><span class="pick-label">Tap to choose</span></button>
-<div class="caption"><h2><span class="number">02</span> Bold outline cartoon</h2><button class="closer" type="button" data-open="02" aria-label="Look closer at picture 02">Look closer</button></div>
-<div class="score" hidden><span class="score-text"></span><span class="track"><span class="fill"></span></span></div>
-</article>
-<article class="card" data-id="03">
-<button type="button" class="art" data-pick="03" aria-label="Choose picture 03: Cut-paper collage" aria-pressed="false"><img src="images/03-cut-paper.png" alt="Mila in cut-paper collage style" width="1254" height="1254" loading="lazy"><span class="pick-label">Tap to choose</span></button>
-<div class="caption"><h2><span class="number">03</span> Cut-paper collage</h2><button class="closer" type="button" data-open="03" aria-label="Look closer at picture 03">Look closer</button></div>
-<div class="score" hidden><span class="score-text"></span><span class="track"><span class="fill"></span></span></div>
-</article>
+<div class="score" hidden><span class="score-text"></span><span class="track"><span class="fill"></span></span></div></article>
 <article class="card" data-id="04">
-<button type="button" class="art" data-pick="04" aria-label="Choose picture 04: Torn painted paper" aria-pressed="false"><img src="images/04-torn-paper.png" alt="Mila in torn painted paper style" width="1254" height="1254" loading="lazy"><span class="pick-label">Tap to choose</span></button>
+<button type="button" class="art" data-pick="04" aria-label="Choose picture 04: Torn painted paper" aria-pressed="false"><img src="images/final/04-torn-paper-final-v2.png" alt="Mila in torn painted paper style" width="1254" height="1254" loading="lazy"><span class="pick-label">Choose this one</span></button>
 <div class="caption"><h2><span class="number">04</span> Torn painted paper</h2><button class="closer" type="button" data-open="04" aria-label="Look closer at picture 04">Look closer</button></div>
-<div class="score" hidden><span class="score-text"></span><span class="track"><span class="fill"></span></span></div>
-</article>
+<div class="score" hidden><span class="score-text"></span><span class="track"><span class="fill"></span></span></div></article>
 <article class="card" data-id="05">
-<button type="button" class="art" data-pick="05" aria-label="Choose picture 05: Wax crayon" aria-pressed="false"><img src="images/05-wax-crayon.png" alt="Mila in wax crayon style" width="1254" height="1254" loading="lazy"><span class="pick-label">Tap to choose</span></button>
+<button type="button" class="art" data-pick="05" aria-label="Choose picture 05: Wax crayon" aria-pressed="false"><img src="images/final/05-wax-crayon-final-v1.png" alt="Mila in wax crayon style" width="1254" height="1254" loading="lazy"><span class="pick-label">Choose this one</span></button>
 <div class="caption"><h2><span class="number">05</span> Wax crayon</h2><button class="closer" type="button" data-open="05" aria-label="Look closer at picture 05">Look closer</button></div>
-<div class="score" hidden><span class="score-text"></span><span class="track"><span class="fill"></span></span></div>
-</article>
+<div class="score" hidden><span class="score-text"></span><span class="track"><span class="fill"></span></span></div></article>
 <article class="card" data-id="06">
-<button type="button" class="art" data-pick="06" aria-label="Choose picture 06: Sparse colored pencil" aria-pressed="false"><img src="images/06-colored-pencil.png" alt="Mila in sparse colored pencil style" width="1254" height="1254" loading="lazy"><span class="pick-label">Tap to choose</span></button>
+<button type="button" class="art" data-pick="06" aria-label="Choose picture 06: Sparse colored pencil" aria-pressed="false"><img src="images/final/06-colored-pencil-final-v1.png" alt="Mila in sparse colored pencil style" width="1254" height="1254" loading="lazy"><span class="pick-label">Choose this one</span></button>
 <div class="caption"><h2><span class="number">06</span> Sparse colored pencil</h2><button class="closer" type="button" data-open="06" aria-label="Look closer at picture 06">Look closer</button></div>
-<div class="score" hidden><span class="score-text"></span><span class="track"><span class="fill"></span></span></div>
-</article>
-<article class="card" data-id="07">
-<button type="button" class="art" data-pick="07" aria-label="Choose picture 07: Chalk pastel" aria-pressed="false"><img src="images/07-chalk-pastel.png" alt="Mila in chalk pastel style" width="1254" height="1254" loading="lazy"><span class="pick-label">Tap to choose</span></button>
-<div class="caption"><h2><span class="number">07</span> Chalk pastel</h2><button class="closer" type="button" data-open="07" aria-label="Look closer at picture 07">Look closer</button></div>
-<div class="score" hidden><span class="score-text"></span><span class="track"><span class="fill"></span></span></div>
-</article>
-<article class="card" data-id="08">
-<button type="button" class="art" data-pick="08" aria-label="Choose picture 08: Felt applique" aria-pressed="false"><img src="images/08-felt-applique.png" alt="Mila in felt applique style" width="1254" height="1254" loading="lazy"><span class="pick-label">Tap to choose</span></button>
-<div class="caption"><h2><span class="number">08</span> Felt applique</h2><button class="closer" type="button" data-open="08" aria-label="Look closer at picture 08">Look closer</button></div>
-<div class="score" hidden><span class="score-text"></span><span class="track"><span class="fill"></span></span></div>
-</article>
-<article class="card" data-id="09">
-<button type="button" class="art" data-pick="09" aria-label="Choose picture 09: Midcentury geometry" aria-pressed="false"><img src="images/09-midcentury-geometric.png" alt="Mila in midcentury geometry style" width="1254" height="1254" loading="lazy"><span class="pick-label">Tap to choose</span></button>
-<div class="caption"><h2><span class="number">09</span> Midcentury geometry</h2><button class="closer" type="button" data-open="09" aria-label="Look closer at picture 09">Look closer</button></div>
-<div class="score" hidden><span class="score-text"></span><span class="track"><span class="fill"></span></span></div>
-</article>
-<article class="card" data-id="10">
-<button type="button" class="art" data-pick="10" aria-label="Choose picture 10: Two-ink risograph" aria-pressed="false"><img src="images/10-two-ink-print.png" alt="Mila in two-ink risograph style" width="1254" height="1254" loading="lazy"><span class="pick-label">Tap to choose</span></button>
-<div class="caption"><h2><span class="number">10</span> Two-ink risograph</h2><button class="closer" type="button" data-open="10" aria-label="Look closer at picture 10">Look closer</button></div>
-<div class="score" hidden><span class="score-text"></span><span class="track"><span class="fill"></span></span></div>
-</article>
-<article class="card" data-id="11">
-<button type="button" class="art" data-pick="11" aria-label="Choose picture 11: Soft block print" aria-pressed="false"><img src="images/11-soft-block-print.png" alt="Mila in soft block print style" width="1254" height="1254" loading="lazy"><span class="pick-label">Tap to choose</span></button>
-<div class="caption"><h2><span class="number">11</span> Soft block print</h2><button class="closer" type="button" data-open="11" aria-label="Look closer at picture 11">Look closer</button></div>
-<div class="score" hidden><span class="score-text"></span><span class="track"><span class="fill"></span></span></div>
-</article>
-<article class="card" data-id="12">
-<button type="button" class="art" data-pick="12" aria-label="Choose picture 12: Loose ink and wash" aria-pressed="false"><img src="images/12-loose-ink-wash.png" alt="Mila in loose ink and wash style" width="1254" height="1254" loading="lazy"><span class="pick-label">Tap to choose</span></button>
-<div class="caption"><h2><span class="number">12</span> Loose ink and wash</h2><button class="closer" type="button" data-open="12" aria-label="Look closer at picture 12">Look closer</button></div>
-<div class="score" hidden><span class="score-text"></span><span class="track"><span class="fill"></span></span></div>
-</article>
-<article class="card" data-id="13">
-<button type="button" class="art" data-pick="13" aria-label="Choose picture 13: Naive folk art" aria-pressed="false"><img src="images/13-folk-art.png" alt="Mila in naive folk art style" width="1254" height="1254" loading="lazy"><span class="pick-label">Tap to choose</span></button>
-<div class="caption"><h2><span class="number">13</span> Naive folk art</h2><button class="closer" type="button" data-open="13" aria-label="Look closer at picture 13">Look closer</button></div>
-<div class="score" hidden><span class="score-text"></span><span class="track"><span class="fill"></span></span></div>
-</article>
+<div class="score" hidden><span class="score-text"></span><span class="track"><span class="fill"></span></span></div></article>
 <article class="card" data-id="14">
-<button type="button" class="art" data-pick="14" aria-label="Choose picture 14: Chunky marker" aria-pressed="false"><img src="images/14-chunky-marker.png" alt="Mila in chunky marker style" width="1254" height="1254" loading="lazy"><span class="pick-label">Tap to choose</span></button>
+<button type="button" class="art" data-pick="14" aria-label="Choose picture 14: Chunky marker" aria-pressed="false"><img src="images/final/14-chunky-marker-final-v2.png" alt="Mila in chunky marker style" width="1254" height="1254" loading="lazy"><span class="pick-label">Choose this one</span></button>
 <div class="caption"><h2><span class="number">14</span> Chunky marker</h2><button class="closer" type="button" data-open="14" aria-label="Look closer at picture 14">Look closer</button></div>
-<div class="score" hidden><span class="score-text"></span><span class="track"><span class="fill"></span></span></div>
-</article>
-<article class="card" data-id="15">
-<button type="button" class="art" data-pick="15" aria-label="Choose picture 15: Minimal dot eyes" aria-pressed="false"><img src="images/15-minimal-dot-eyes.png" alt="Mila in minimal dot eyes style" width="1254" height="1254" loading="lazy"><span class="pick-label">Tap to choose</span></button>
-<div class="caption"><h2><span class="number">15</span> Minimal dot eyes</h2><button class="closer" type="button" data-open="15" aria-label="Look closer at picture 15">Look closer</button></div>
-<div class="score" hidden><span class="score-text"></span><span class="track"><span class="fill"></span></span></div>
-</article>
+<div class="score" hidden><span class="score-text"></span><span class="track"><span class="fill"></span></span></div></article>
 <article class="card" data-id="16">
-<button type="button" class="art" data-pick="16" aria-label="Choose picture 16: Simple gouache" aria-pressed="false"><img src="images/16-simple-gouache.png" alt="Mila in simple gouache style" width="1254" height="1254" loading="lazy"><span class="pick-label">Tap to choose</span></button>
+<button type="button" class="art" data-pick="16" aria-label="Choose picture 16: Simple gouache" aria-pressed="false"><img src="images/final/16-simple-gouache-final-v2.png" alt="Mila in simple gouache style" width="1254" height="1254" loading="lazy"><span class="pick-label">Choose this one</span></button>
 <div class="caption"><h2><span class="number">16</span> Simple gouache</h2><button class="closer" type="button" data-open="16" aria-label="Look closer at picture 16">Look closer</button></div>
-<div class="score" hidden><span class="score-text"></span><span class="track"><span class="fill"></span></span></div>
-</article>
+<div class="score" hidden><span class="score-text"></span><span class="track"><span class="fill"></span></span></div></article>
 </section>
-<p id="end-hint" class="end-hint">That’s all 16 pictures. Choose your 1st, 2nd and 3rd favorites, then tap Review &amp; send.</p>
-<button id="show-results" class="text-button" type="button">See family votes</button>
+<p id="end-hint" class="end-hint">Just one favorite this time. Tap a different picture if you change your mind.</p>
+<button id="show-results" class="text-button" type="button">See final-round votes</button>
 </section>
-<section id="review-step" class="narrow" hidden aria-label="Review and send your vote">
+<section id="review-step" class="narrow" hidden aria-label="Review and send your final vote">
 <button id="back-to-pictures" class="text-button" type="button">← Back to pictures</button>
-<h2>Your top 3, in order</h2><div id="review-picks" class="review-picks"></div>
-<form id="ballot" class="ballot" novalidate>
-<label for="voter-name">Your first name</label>
-<input id="voter-name" name="name" autocomplete="given-name" autocapitalize="words" enterkeyhint="send" maxlength="40" required placeholder="First name" aria-describedby="save-status">
-<p id="save-status" class="status" role="status" aria-live="polite"></p>
-<button id="submit-vote" class="primary send" type="submit">Send my vote</button>
-<p class="privacy">No account needed. Dan can see your name and choices; everyone else sees vote totals.</p>
-</form>
+<h2>Your final choice</h2><div id="review-picks" class="review-picks final-pick"></div>
+<form id="ballot" class="ballot" novalidate><label for="voter-name">Your first name</label><input id="voter-name" name="name" autocomplete="given-name" autocapitalize="words" enterkeyhint="send" maxlength="40" required placeholder="First name" aria-describedby="save-status"><p id="save-status" class="status" role="status" aria-live="polite"></p><button id="submit-vote" class="primary send" type="submit">Send my final vote</button><p class="privacy">No account needed. Dan can see your name and choice; everyone else sees totals. This is a new vote, separate from round one.</p></form>
 </section>
-<section id="thanks-step" class="narrow" hidden aria-label="Vote saved">
-<div class="saved-check" aria-hidden="true">✓</div>
-<p id="thanks-name" class="thanks-name"></p><div id="saved-picks" class="review-picks"></div>
-<p class="all-done">You can close this page now.</p>
-<button id="edit-vote" class="secondary" type="button">Change my choices</button>
-<details class="more-options"><summary>More options</summary><button id="saved-results" class="text-button" type="button">See family votes</button><button id="withdraw" class="text-button" type="button">Remove my vote</button><p id="withdraw-status" class="status" role="status"></p></details>
-</section>
+<section id="thanks-step" class="narrow" hidden aria-label="Final vote saved"><div class="saved-check" aria-hidden="true">✓</div><p id="thanks-name" class="thanks-name"></p><div id="saved-picks" class="review-picks final-pick"></div><p class="all-done">You can close this page now.</p><button id="edit-vote" class="secondary" type="button">Change my choice</button><details class="more-options"><summary>More options</summary><button id="saved-results" class="text-button" type="button">See final-round votes</button><button id="withdraw" class="text-button" type="button">Remove my final vote</button><p id="withdraw-status" class="status" role="status"></p></details></section>
 </main>
-<aside id="continue-bar" class="continue-bar" aria-label="Your choices">
-<div class="rank-slots" aria-label="Your first, second and third choices">
-<div id="rank-choice-0" class="rank-slot"><strong>1st</strong><div><img id="rank-image-0" alt="" width="40" height="40" hidden><span id="rank-slot-0">Choose now</span></div></div>
-<div id="rank-choice-1" class="rank-slot"><strong>2nd</strong><div><img id="rank-image-1" alt="" width="40" height="40" hidden><span id="rank-slot-1">Not chosen</span></div></div>
-<div id="rank-choice-2" class="rank-slot"><strong>3rd</strong><div><img id="rank-image-2" alt="" width="40" height="40" hidden><span id="rank-slot-2">Not chosen</span></div></div>
-</div>
-<div class="continue-inner"><div><strong id="selection">0 of 3 chosen</strong><p id="pick-status" role="status" aria-live="polite">Now tap your 1st choice — your favorite picture.</p></div><button id="continue" class="primary" type="button" disabled>Choose all 3</button></div>
-</aside>
-<footer><span>Made with love for Mila.</span><button id="owner-access" class="owner-access" type="button" aria-label="Owner access. Activate twice."><span aria-hidden="true">•</span></button></footer>
-<dialog id="viewer" aria-labelledby="viewer-title"><button type="button" class="close secondary" aria-label="Close picture">Done</button><img id="viewer-image" alt=""><strong id="viewer-title"></strong><div class="viewer-tools"><button type="button" id="previous" class="secondary" aria-label="Previous picture">←</button><button type="button" id="next" class="secondary" aria-label="Next picture">→</button><button type="button" id="viewer-pick" class="primary" aria-pressed="false">Choose this picture</button></div><p id="viewer-message" role="status" aria-live="polite"></p></dialog>
-<noscript><p class="noscript">Please enable JavaScript to choose pictures and send your vote.</p></noscript>
+<aside id="continue-bar" class="continue-bar" aria-label="Your final choice"><div class="continue-inner"><div><strong id="selection">Choose one favorite</strong><p id="pick-status" role="status" aria-live="polite">Tap the picture you like best.</p></div><button id="continue" class="primary" type="button" disabled>Continue →</button></div></aside>
+<footer><span>Made with love for Mila.</span><a class="archive-link" href="round-one/">Round-one results</a><button id="owner-access" class="owner-access" type="button" aria-label="Owner access. Activate twice."><span aria-hidden="true">•</span></button></footer>
+<dialog id="viewer" aria-labelledby="viewer-title"><button type="button" class="close secondary" aria-label="Close picture">Done</button><img id="viewer-image" alt=""><strong id="viewer-title"></strong><div class="viewer-tools"><button type="button" id="previous" class="secondary" aria-label="Previous picture">←</button><button type="button" id="next" class="secondary" aria-label="Next picture">→</button><button type="button" id="viewer-pick" class="primary" aria-pressed="false">Choose this one</button></div></dialog>
+<noscript><p class="noscript">Please enable JavaScript to choose a picture and send your vote.</p></noscript>
 </body></html>

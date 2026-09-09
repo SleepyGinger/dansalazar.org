@@ -1,5 +1,5 @@
 "use strict";
-const STYLES=[{"id":"01","title":"Rounded flat shapes","file":"images/final/01-rounded-flat-final-v1.png"},{"id":"04","title":"Torn painted paper","file":"images/final/04-torn-paper-final-v2.png"},{"id":"05","title":"Wax crayon","file":"images/final/05-wax-crayon-final-v1.png"},{"id":"06","title":"Sparse colored pencil","file":"images/final/06-colored-pencil-final-v1.png"},{"id":"14","title":"Chunky marker","file":"images/final/14-chunky-marker-final-v2.png"},{"id":"16","title":"Simple gouache","file":"images/final/16-simple-gouache-final-v2.png"}];
+const STYLES=[{"id":"01","title":"Rounded flat shapes","file":"images/final/01-rounded-flat-final-v3.png"},{"id":"04","title":"Torn painted paper","file":"images/final/04-torn-paper-final-v3.png"},{"id":"05","title":"Wax crayon","file":"images/final/05-wax-crayon-final-v3.png"},{"id":"06","title":"Sparse colored pencil","file":"images/final/06-colored-pencil-final-v3.png"},{"id":"14","title":"Chunky marker","file":"images/final/14-chunky-marker-final-v3.png"},{"id":"16","title":"Simple gouache","file":"images/final/16-simple-gouache-final-v4.png"}];
 const API="https://us-central1-you-feed-nalu.cloudfunctions.net/milaVotes/final";
 const KEY="mila-final-ballot-key-v1",DRAFT="mila-final-ballot-draft-v1";
 const $=selector=>document.querySelector(selector);
@@ -158,4 +158,3 @@ if(typeof ResizeObserver!=="undefined")new ResizeObserver(()=>{if(state.step==="
 $(".grid").hidden=false;$("#gallery-loading").hidden=true;render();refresh(true);
 setInterval(()=>{if(!document.hidden&&!state.busy)refresh();},45000);
 document.addEventListener("visibilitychange",()=>{if(!document.hidden&&!state.busy)refresh();});
-

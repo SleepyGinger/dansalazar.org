@@ -1,0 +1,1382 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Coffee Map</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☕</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root {
+  --bg: #f7f8f6;
+  --panel: #ffffff;
+  --ink: #1c2226;
+  --muted: #5b676c;
+  --faint: #8a9599;
+  --line: #e1e5e2;
+  --chip: #eef1ee;
+  --accent: #8f2430;
+  --accent-ink: #ffffff;
+  --focus: #245f8f;
+
+  --water: #d4dadc;
+  --land: #f2f2ef;
+
+  /* One pin color for every spot, picked to stand out from Google's roads, parks and food icons. */
+  --pin: #e6007a;
+  --k-added: #00a99d;
+
+  --pin-ring: #ffffff;
+  --shadow: 0 1px 2px rgb(20 30 35 / 0.18), 0 6px 20px rgb(20 30 35 / 0.12);
+
+  --f-display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --f-body: "IBM Plex Sans", "Helvetica Neue", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #111416; --panel: #161a1c; --ink: #e6ebe9; --muted: #9ba7a9; --faint: #6f7b7e;
+    --line: #283033; --chip: #1f2528; --accent: #e3727a; --accent-ink: #1a0d0f; --focus: #7fb3e0;
+    --water: #262a2d; --land: #1f2224;
+    --shadow: 0 1px 2px rgb(0 0 0 / 0.5), 0 6px 20px rgb(0 0 0 / 0.4);
+  }
+}
+
+/* Elements with the hidden attribute stay hidden even when a class sets display. */
+[hidden] { display: none !important; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 15px/1.5 var(--f-body);
+  -webkit-font-smoothing: antialiased;
+}
+button, input, select, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+.app {
+  height: 100%;
+  display: grid;
+  grid-template-columns: minmax(320px, 400px) 1fr;
+  transition: grid-template-columns 0.2s ease, grid-template-rows 0.2s ease;
+}
+/* Panel hidden: the map takes the whole window. */
+.app.panel-hidden { grid-template-columns: 0 1fr; }
+.app.panel-hidden .panel { visibility: hidden; border: 0; }
+@media (prefers-reduced-motion: reduce) { .app { transition: none; } }
+.panel {
+  background: var(--panel);
+  border-right: 1px solid var(--line);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.map-wrap { position: relative; min-height: 0; }
+#map { position: absolute; inset: 0; background: var(--water); }
+
+@media (max-width: 760px) {
+  .app { grid-template-columns: 1fr; grid-template-rows: minmax(0, 56%) minmax(0, 1fr); }
+  .map-wrap { grid-row: 1; }
+  .panel { grid-row: 2; border-right: 0; border-top: 1px solid var(--line); }
+  .app.panel-hidden { grid-template-columns: 1fr; grid-template-rows: 1fr 0; }
+}
+
+/* Panel header */
+.head { padding: 22px 20px 14px; display: grid; gap: 8px; }
+h1 {
+  margin: 0;
+  font: 800 30px/1.02 var(--f-display);
+  font-variation-settings: "opsz" 96;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+.title-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.btn.small { height: 30px; padding: 0 10px; font-size: 13px; }
+.btn.show-panel {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 10;
+  background: var(--panel);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+.counts { font: 400 12px/1.4 var(--f-mono); color: var(--faint); font-variant-numeric: tabular-nums; }
+
+@media (max-width: 760px) {
+  .head { padding: 14px 16px 10px; gap: 4px; }
+  h1 { font-size: 24px; }
+}
+
+/* Controls */
+.controls {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--panel);
+  padding: 10px 20px 12px;
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  gap: 10px;
+}
+@media (max-width: 760px) { .controls { padding: 8px 16px 10px; } }
+.row { display: flex; gap: 8px; align-items: center; }
+.search {
+  flex: 1;
+  min-width: 0;
+  height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg);
+  padding: 0 12px;
+}
+.search::placeholder { color: var(--faint); }
+.btn {
+  height: 38px;
+  padding: 0 14px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.btn.quiet { background: transparent; color: var(--ink); border-color: var(--line); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: transparent;
+  font-size: 13px;
+  cursor: pointer;
+  color: var(--muted);
+}
+.chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--panel); }
+.chip .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--c); }
+.chip[aria-pressed="true"] .dot { box-shadow: 0 0 0 1.5px var(--panel); }
+@media (max-width: 760px) {
+  /* One swipeable row per chip group, so the list stays in view. */
+  .chips {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin-inline: -16px;
+    padding-inline: 16px;
+  }
+  .chips::-webkit-scrollbar { display: none; }
+  .chip { flex: none; }
+}
+
+/* Spot list */
+.list { list-style: none; margin: 0; padding: 4px 0 12px; }
+.item {
+  display: grid;
+  grid-template-columns: 18px 1fr auto;
+  gap: 4px 12px;
+  align-items: baseline;
+  padding: 11px 20px;
+  cursor: pointer;
+  border-left: 3px solid transparent;
+}
+@media (max-width: 760px) { .item { padding: 10px 16px; } }
+.item:hover { background: var(--bg); }
+.item[aria-current="true"] { background: var(--chip); border-left-color: var(--c); }
+.item .mug { font-size: 15px; line-height: 1; align-self: center; }
+.item .name { font-weight: 600; line-height: 1.25; }
+.item .branch { font-weight: 400; color: var(--muted); }
+.item .meta { grid-column: 2 / 4; font-size: 13px; color: var(--muted); }
+.badge {
+  display: inline-block;
+  font: 500 10.5px/1 var(--f-mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 3px 6px;
+  border-radius: 4px;
+  background: var(--chip);
+  color: var(--muted);
+  vertical-align: 1px;
+  margin-left: 4px;
+}
+.badge.warn { color: #9a6700; }
+.badge.added { color: #00796f; }
+@media (prefers-color-scheme: dark) {
+  .badge.warn { color: #f2c14e; }
+  .badge.added { color: #3fd1c2; }
+}
+.item .remove {
+  border: 0;
+  background: none;
+  padding: 2px 0 2px 4px;
+  color: var(--faint);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.item .remove:hover, .item .remove[data-armed="1"] { color: var(--accent); }
+/* On a mouse, show Delete only on the row you point at (or while it asks to confirm). */
+@media (hover: hover) {
+  .item .remove { opacity: 0; }
+  .item:hover .remove, .item:focus-within .remove, .item .remove[data-armed="1"] { opacity: 1; }
+}
+.empty { padding: 24px 20px; color: var(--muted); }
+
+.foot {
+  margin-top: auto;
+  padding: 14px 20px 20px;
+  border-top: 1px solid var(--line);
+  font-size: 12px;
+  color: var(--faint);
+}
+.foot a { color: inherit; }
+
+/* Add form */
+.form { padding: 18px 20px 24px; display: grid; gap: 14px; }
+@media (max-width: 760px) { .form { padding: 14px 16px 20px; } }
+.form h2 { margin: 0; font: 700 20px/1.15 var(--f-display); }
+.field { display: grid; gap: 5px; }
+.field label { font-size: 13px; font-weight: 600; }
+.field .hint { font-size: 12.5px; color: var(--muted); }
+.field input, .field select, .field textarea {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg);
+  padding: 8px 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.field textarea { resize: vertical; min-height: 72px; }
+.where {
+  font: 400 12.5px/1.4 var(--f-mono);
+  color: var(--muted);
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: var(--chip);
+}
+.where.set { color: var(--k-added); }
+.form .error { color: var(--accent); font-size: 13px; margin: 0; }
+.form .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.toast {
+  position: absolute;
+  left: 50%;
+  bottom: 28px;
+  transform: translateX(-50%);
+  z-index: 1000;
+  background: var(--ink);
+  color: var(--panel);
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  box-shadow: var(--shadow);
+  max-width: calc(100% - 32px);
+}
+.place-hint {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  background: var(--k-added);
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: var(--shadow);
+  white-space: nowrap;
+}
+.placing #map { cursor: crosshair; }
+
+/* Pins (Google Maps advanced markers with our own content) */
+.pin { position: relative; width: 34px; height: 34px; translate: 0 50%; cursor: pointer; }
+/* Just the coffee mug. A white halo and shadow keep the pale emoji visible on the map. */
+.pin i {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-style: normal;
+  font-size: 28px;
+  line-height: 1;
+  filter: drop-shadow(0 0 1px #fff) drop-shadow(0 0 1px #fff) drop-shadow(0 2px 3px rgb(0 0 0 / 0.55));
+  transition: transform 0.12s ease;
+}
+.pin:hover i { transform: scale(1.15); }
+.pin.sel i { transform: scale(1.3); }
+/* The pin you are placing for a new spot stays a plain teal dot. */
+.pin.pending { width: 18px; height: 18px; }
+.pin.pending i { font-size: 0; border-radius: 50%; background: var(--k-added); filter: none; box-shadow: 0 0 0 3px #fff, 0 0 0 4px rgb(0 0 0 / 0.45), 0 2px 6px rgb(0 0 0 / 0.45); }
+.pin b {
+  position: absolute;
+  left: calc(100% + 6px);
+  top: 50%;
+  transform: translateY(-50%);
+  white-space: nowrap;
+  font: 600 12px/1 var(--f-body);
+  color: var(--ink);
+  text-shadow: 0 0 3px var(--panel), 0 0 3px var(--panel), 0 0 2px var(--panel);
+  pointer-events: none;
+  display: none;
+}
+.labels-on .pin b { display: block; }
+
+.banner {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  right: 60px;
+  z-index: 10;
+  background: var(--accent);
+  color: var(--accent-ink);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  box-shadow: var(--shadow);
+}
+
+/* Shown until a Google Maps key is saved */
+.setup {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  overflow-y: auto;
+  background: var(--bg);
+  padding: 32px 24px;
+  display: grid;
+  align-content: start;
+  justify-items: start;
+}
+.setup > div { max-width: 58ch; display: grid; gap: 12px; }
+.setup h2 { margin: 0; font: 800 26px/1.1 var(--f-display); letter-spacing: -0.01em; }
+.setup p { margin: 0; color: var(--muted); }
+.setup ol { margin: 0; padding-left: 22px; display: grid; gap: 8px; }
+.setup a { color: var(--focus); }
+.setup code { font: 500 13px/1.4 var(--f-mono); background: var(--chip); padding: 1px 5px; border-radius: 4px; }
+.setup .error { color: var(--accent); font-weight: 600; }
+
+/* The small card a pin opens */
+.gm-style .gm-style-iw-c { background: var(--panel); color: var(--ink); border-radius: 10px; box-shadow: var(--shadow); padding: 0 !important; }
+.gm-style .gm-style-iw-d { overflow: hidden !important; padding: 10px 14px 11px !important; }
+.gm-style .gm-style-iw-tc::after { background: var(--panel); }
+.card { font: 14px/1.35 var(--f-body); max-width: 230px; }
+.card .tag { font: 500 10.5px/1 var(--f-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--pin); margin-bottom: 5px; }
+.card .go { display: block; font: 700 16px/1.2 var(--f-display); color: var(--ink); text-decoration: none; }
+.card .go span { color: var(--focus); }
+.card .go:hover { text-decoration: underline; text-underline-offset: 3px; }
+.card .sub { margin-top: 2px; font-size: 12.5px; color: var(--muted); }
+
+/* Google matches for the name you type */
+.matches { display: grid; gap: 4px; }
+.matches .note { font-size: 12.5px; color: var(--muted); padding: 2px 0; }
+.matches .note a { color: var(--focus); }
+.match {
+  display: grid;
+  gap: 1px;
+  text-align: left;
+  padding: 7px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+  cursor: pointer;
+}
+.match:hover { border-color: var(--faint); }
+.match[aria-selected="true"] { border-color: var(--k-added); background: color-mix(in srgb, var(--k-added) 10%, var(--panel)); }
+.match { grid-template-columns: 1fr auto; column-gap: 10px; }
+.match b, .match span { grid-column: 1; }
+.match em { grid-column: 2; grid-row: 1 / 3; align-self: center; font-style: normal; font-weight: 600; font-size: 12.5px; color: var(--k-added); white-space: nowrap; }
+.match[aria-disabled="true"] em { color: var(--muted); }
+.match b { font-weight: 600; font-size: 14px; }
+.match span { font-size: 12.5px; color: var(--muted); }
+
+@media (prefers-reduced-motion: reduce) {
+  .pin i { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="app" id="app">
+  <aside class="panel" id="panel">
+    <header class="head">
+      <div class="title-row">
+        <h1>Coffee Map</h1>
+        <button class="btn quiet small" id="hidePanel" type="button" aria-controls="panel" aria-expanded="true" title="Hide the list and show the map full screen">Hide list</button>
+      </div>
+      <div class="counts" id="counts"></div>
+    </header>
+
+    <div id="browse">
+      <div class="controls">
+        <div class="row">
+          <input class="search" id="q" type="search" placeholder="Add a coffee shop" autocomplete="off" aria-label="Add a coffee shop by name" disabled>
+          <button class="btn" id="addBtn" type="button" hidden disabled>Add a spot</button>
+        </div>
+        <div class="matches" id="q-matches" aria-live="polite" hidden></div>
+        <div class="chips" id="kinds" role="group" aria-label="Filter by type"></div>
+      </div>
+      <ul class="list" id="list"></ul>
+    </div>
+
+    <form class="form" id="form" hidden novalidate>
+      <h2>Add a spot</h2>
+      <div class="field">
+        <label for="f-name">Name</label>
+        <div class="hint">Type the café's name. The map finds it on Google Maps and drops the pin.</div>
+        <input id="f-name" maxlength="80" required autocomplete="off" placeholder="e.g. Andytown Coffee">
+        <div class="matches" id="f-matches" role="listbox" aria-label="Places found on Google Maps" hidden></div>
+      </div>
+      <div class="field">
+        <label for="f-where">Pin</label>
+        <div class="hint">Wrong place, or not on Google? Click the map, then drag the pin. You can also paste a Google Maps link.</div>
+        <input id="f-where" autocomplete="off" placeholder="Paste a link or 37.7599, -122.4148">
+        <div class="where" id="f-where-out">No pin yet</div>
+      </div>
+      <div class="field">
+        <label for="f-kind">Type</label>
+        <select id="f-kind">
+          <option value="cafe">Café</option>
+          <option value="roaster">Roaster with a café</option>
+          <option value="beans">Beans to buy</option>
+          <option value="popup">Pop-up</option>
+          <option value="experience">Tasting menu</option>
+        </select>
+      </div>
+      <input id="f-addr" type="hidden">
+      <p class="error" id="f-error" hidden></p>
+      <div class="actions">
+        <button class="btn" id="f-save" type="submit">Save spot</button>
+        <button class="btn quiet" id="f-cancel" type="button">Cancel</button>
+      </div>
+    </form>
+
+    <footer class="foot">
+      Map by Google. Hours change often — check before you go.
+      <span id="auth"></span>
+    </footer>
+  </aside>
+
+  <div class="map-wrap" id="mapWrap">
+    <button class="btn show-panel" id="showPanel" type="button" aria-controls="panel" hidden>☕ Show list</button>
+    <div id="map" aria-label="Map of coffee spots"></div>
+    <section class="setup" id="setup" hidden>
+      <div>
+        <h2>Connect Google Maps</h2>
+        <p>The map needs a Google Maps API key. You set it up once. Google asks for a billing
+          account, but personal use like this stays inside Google's free monthly allowance.</p>
+        <ol>
+          <li>In Google Cloud, create a project (or pick one) and
+            <a href="https://console.cloud.google.com/google/maps-apis/credentials" target="_blank" rel="noopener">create an API key</a>.</li>
+          <li>Turn on <a href="https://console.cloud.google.com/apis/library/maps-backend.googleapis.com" target="_blank" rel="noopener">Maps JavaScript API</a>
+            and <a href="https://console.cloud.google.com/apis/library/places.googleapis.com" target="_blank" rel="noopener">Places API (New)</a>.</li>
+          <li>Restrict the key to websites, and add <code>http://127.0.0.1:8787/*</code>.</li>
+          <li>In Terminal, run <code>coffee-map key</code> and paste the key. It is saved on this Mac only.</li>
+          <li>Reload this page.</li>
+        </ol>
+        <p class="error" id="setup-error" hidden></p>
+      </div>
+    </section>
+  </div>
+</div>
+
+<script>window.COFFEE_LIVE = {"firebase":{"apiKey":"AIzaSyDe6NoEXexvF3KNKKZwLqPPDDOI6upNKiE","authDomain":"paternity-planner.firebaseapp.com","projectId":"paternity-planner","appId":"1:730313869486:web:0b80b221f20410033f853f"},"mapsKey":"AIzaSyCPaoPUSDOD3zQQ2NMsZ22ZZnZEYkDbswY"};</script>
+<script>
+const KINDS = {
+  cafe:       { label: "Café" },
+  roaster:    { label: "Roaster" },
+  beans:      { label: "Beans to buy" },
+  popup:      { label: "Pop-up" },
+  experience: { label: "Tasting menu" },
+};
+const FILTERS = [
+  { id: "all",     label: "All" },
+  { id: "cafe",    label: "Cafés",    kinds: ["cafe"] },
+  { id: "roaster", label: "Roasters", kinds: ["roaster"] },
+  { id: "beans",   label: "Beans",    kinds: ["beans"] },
+  { id: "popup",   label: "Pop-ups & tastings", kinds: ["popup", "experience"] },
+  { id: "added",   label: "Added",    added: true },
+];
+const STATUS = { check: "Check hours", "no-cafe": "No café" };
+const SF_CENTER = { lat: 37.775, lng: -122.435 };
+
+// ---------- helpers ----------
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const latOf = (p) => typeof p.lat === "function" ? p.lat() : p.lat;
+const lngOf = (p) => typeof p.lng === "function" ? p.lng() : p.lng;
+
+function areaFor(lat, lng) {
+  if (lat > 37.70 && lat < 37.84 && lng > -122.54 && lng < -122.35) return "San Francisco";
+  if (lng > -122.35 && lat > 37.65 && lat < 38.1) return "East Bay";
+  if (lat <= 37.70 && lat > 37.40 && lng < -122.05) return "Peninsula";
+  if (lat <= 37.47 && lat > 37.1) return "South Bay";
+  return "Elsewhere";
+}
+
+function parseLocation(text) {
+  const s = text.trim();
+  const m = s.match(/!3d(-?\d+\.\d+)!4d(-?\d+\.\d+)/)
+    || s.match(/[?&](?:q|query|ll|sll|daddr|destination)=(-?\d+\.\d+)(?:,|%2C)\s*(-?\d+\.\d+)/i)
+    || s.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/)
+    || s.match(/^\(?\s*(-?\d{1,2}\.\d+)\s*,\s*(-?\d{1,3}\.\d+)\s*\)?$/);
+  if (!m) return null;
+  const lat = +m[1], lng = +m[2];
+  if (!Number.isFinite(lat) || !Number.isFinite(lng) || Math.abs(lat) > 90 || Math.abs(lng) > 180) return null;
+  return { lat, lng };
+}
+
+function mapsLinks(s) {
+  const q = s.address ? `${s.name}, ${s.address}` : `${s.lat},${s.lng}`;
+  const google = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q)
+    + (s.placeId ? "&query_place_id=" + encodeURIComponent(s.placeId) : "");
+  const apple = "https://maps.apple.com/?q=" + encodeURIComponent(s.name) + "&ll=" + s.lat + "," + s.lng
+    + (s.address ? "&address=" + encodeURIComponent(s.address) : "");
+  return { google, apple };
+}
+
+// The live site (dansalazar.org) sets window.COFFEE_LIVE; the local app leaves it unset.
+const LIVE = window.COFFEE_LIVE || null;
+let isAdmin = false;
+const canEdit = () => serverOk && (!LIVE || isAdmin);
+
+// ---------- live site: Firebase instead of the local server ----------
+const FIREBASE_SDK = "https://www.gstatic.com/firebasejs/12.10.0/";
+let fb = null;
+async function firebase() {
+  if (fb) return fb;
+  const [appMod, authMod, fs] = await Promise.all([
+    import(FIREBASE_SDK + "firebase-app.js"),
+    import(FIREBASE_SDK + "firebase-auth.js"),
+    import(FIREBASE_SDK + "firebase-firestore.js"),
+  ]);
+  const app = appMod.initializeApp(LIVE.firebase);
+  fb = { auth: authMod.getAuth(app), authMod, db: fs.getFirestore(app), fs };
+  return fb;
+}
+
+function cleanNewSpot(body) {
+  const name = String(body.name || "").trim().slice(0, 80);
+  const lat = Number(body.lat), lng = Number(body.lng);
+  if (!name) throw new Error("Give the spot a name.");
+  if (!Number.isFinite(lat) || !Number.isFinite(lng) || Math.abs(lat) > 90 || Math.abs(lng) > 180) throw new Error("Place the pin on the map.");
+  const hex = [...crypto.getRandomValues(new Uint8Array(5))].map((b) => b.toString(16).padStart(2, "0")).join("");
+  const spot = {
+    id: "added-" + hex,
+    name,
+    kind: KINDS[body.kind] ? body.kind : "cafe",
+    address: String(body.address || "").trim().slice(0, 140),
+    note: String(body.note || "").trim().slice(0, 400),
+    lat: Math.round(lat * 1e6) / 1e6,
+    lng: Math.round(lng * 1e6) / 1e6,
+    createdAt: Date.now(),
+  };
+  if (/^[A-Za-z0-9_-]{10,300}$/.test(body.placeId || "")) spot.placeId = body.placeId;
+  return spot;
+}
+
+async function liveApi(method, url, body) {
+  if (method === "GET" && url === "/api/config") return { googleMapsKey: LIVE.mapsKey };
+  const { db, fs } = await firebase();
+  if (method === "GET" && url === "/api/spots") {
+    const thread = await fetch(new URL("spots.json", location.href), { cache: "no-cache" }).then((r) => r.json());
+    try {
+      const [added, removed] = await Promise.all([
+        fs.getDocs(fs.collection(db, "coffee_spots")),
+        fs.getDocs(fs.collection(db, "coffee_removed")),
+      ]);
+      const gone = new Set(removed.docs.map((d) => d.id));
+      return { thread: thread.filter((t) => !gone.has(t.id)), added: added.docs.map((d) => ({ ...d.data(), id: d.id })) };
+    } catch (err) {
+      // Database unreachable: still show the built-in spots so the public map is never empty.
+      console.warn("Coffee Map: could not read saved spots from Firestore.", err);
+      return { thread, added: [] };
+    }
+  }
+  if (!isAdmin) throw new Error("Sign in to change the map.");
+  if (method === "POST" && url === "/api/spots") {
+    const spot = cleanNewSpot(body);
+    const { id, ...fields } = spot;
+    await fs.setDoc(fs.doc(db, "coffee_spots", id), fields);
+    return spot;
+  }
+  const m = method === "DELETE" && url.match(/^\/api\/spots\/([a-z0-9-]{1,80})$/);
+  if (m) {
+    const id = decodeURIComponent(m[1]);
+    if (id.startsWith("added-")) await fs.deleteDoc(fs.doc(db, "coffee_spots", id));
+    else await fs.setDoc(fs.doc(db, "coffee_removed", id), { removedAt: Date.now() });
+    return { ok: true };
+  }
+  throw new Error("That change is not supported.");
+}
+
+// Sign-in link in the footer; editing controls appear for the owner.
+async function startAuth() {
+  const { auth, authMod, db, fs } = await firebase();
+  const box = $("auth");
+  const draw = (user) => {
+    box.innerHTML = user
+      ? ` · <a href="#" id="sign-out">Sign out</a>`
+      : ` · <a href="#" id="sign-in">Sign in</a>`;
+  };
+  box.addEventListener("click", async (e) => {
+    if (e.target.id === "sign-in") {
+      e.preventDefault();
+      try { await authMod.signInWithPopup(auth, new authMod.GoogleAuthProvider()); }
+      catch (err) { if (err.code !== "auth/popup-closed-by-user") toast("Sign-in didn't work. Allow the popup and try again."); }
+    }
+    if (e.target.id === "sign-out") { e.preventDefault(); await authMod.signOut(auth); }
+  });
+  authMod.onAuthStateChanged(auth, async (user) => {
+    draw(user);
+    isAdmin = false;
+    if (user) {
+      try { isAdmin = (await fs.getDoc(fs.doc(db, "coffee_admins", user.uid))).exists(); } catch { isAdmin = false; }
+      if (!isAdmin) toast("This account can't edit the map.");
+    }
+    applyEditMode();
+  });
+}
+
+// Show or hide the add box and Delete buttons.
+function applyEditMode() {
+  const editable = canEdit();
+  $("q").disabled = !editable;
+  $("q").closest(".row").hidden = !editable;
+  if (!editable) clearQuick({ keepText: false });
+  render();
+}
+
+async function api(method, url, body) {
+  if (LIVE) return liveApi(method, url, body);
+  const res = await fetch(url, {
+    method,
+    headers: body ? { "Content-Type": "application/json" } : {},
+    body: body ? JSON.stringify(body) : undefined,
+    cache: "no-store",
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.error || `The server said ${res.status}.`);
+  return data;
+}
+
+function toast(text) {
+  const t = document.createElement("div");
+  t.className = "toast";
+  t.setAttribute("role", "status");
+  t.textContent = text;
+  $("mapWrap").appendChild(t);
+  setTimeout(() => t.remove(), 2600);
+}
+
+function banner(text) {
+  let el = document.querySelector(".banner");
+  if (!text) { el?.remove(); return; }
+  if (!el) {
+    el = document.createElement("div");
+    el.className = "banner";
+    el.setAttribute("role", "alert");
+    $("mapWrap").appendChild(el);
+  }
+  el.textContent = text;
+}
+
+// ---------- state ----------
+let threadSpots = [];
+let addedSpots = [];
+let filter = "all";
+let selectedId = null;
+let serverOk = false;
+let adding = false;
+let pending = null;          // {lat, lng} while adding
+let pendingPlaceId = "";     // Google place id when the spot came from a Google search or click
+
+let map = null;              // google.maps.Map once loaded
+let info = null;             // the small name card
+let Marker = null;           // AdvancedMarkerElement class
+let Place = null;            // places.Place class
+let pendingMarker = null;
+const markers = new Map();   // spot id -> { marker, el }
+
+const allSpots = () => [...addedSpots, ...threadSpots];
+const kindColor = () => "--pin";
+const spotTitle = (s) => s.branch ? `${s.name} · ${s.branch}` : s.name;
+
+// ---------- Google Maps ----------
+function loadGoogleMaps(key) {
+  return new Promise((resolve, reject) => {
+    window.__coffeeMapReady = resolve;
+    // Google calls this when it rejects the key (wrong key, API off, or site not allowed).
+    window.gm_authFailure = () => showSetup(`Google rejected the key. Check that Maps JavaScript API is on and that the key allows ${location.origin}/*.`);
+    const s = document.createElement("script");
+    s.src = "https://maps.googleapis.com/maps/api/js?" + new URLSearchParams({
+      key, v: "weekly", loading: "async", callback: "__coffeeMapReady",
+    });
+    s.async = true;
+    s.onerror = () => reject(new Error("Google Maps could not load. Check your internet connection."));
+    document.head.append(s);
+  });
+}
+
+function showSetup(error) {
+  $("setup").hidden = false;
+  const e = $("setup-error");
+  e.hidden = !error;
+  e.textContent = error || "";
+  if (LIVE) {
+    // Visitors do not need the local setup steps, only a plain message.
+    $("setup").querySelectorAll("p:not(.error), ol").forEach((el) => { el.hidden = true; });
+    $("setup").querySelector("h2").textContent = "The map could not load";
+  }
+}
+
+async function startMap(key) {
+  await loadGoogleMaps(key);
+  const { Map: GMap, InfoWindow } = await google.maps.importLibrary("maps");
+  ({ AdvancedMarkerElement: Marker } = await google.maps.importLibrary("marker"));
+  try {
+    ({ Place } = await google.maps.importLibrary("places"));
+  } catch { Place = null; }
+
+  map = new GMap($("map"), {
+    center: SF_CENTER,
+    zoom: 12,
+    mapId: "DEMO_MAP_ID",
+    colorScheme: google.maps.ColorScheme ? google.maps.ColorScheme.FOLLOW_SYSTEM : "FOLLOW_SYSTEM",
+    mapTypeControl: false,
+    fullscreenControl: false,
+    streetViewControl: true,
+    clickableIcons: true,
+    gestureHandling: "greedy",
+  });
+  map.addListener("zoom_changed", () => $("map").classList.toggle("labels-on", map.getZoom() >= 16));
+  info = new InfoWindow({ headerDisabled: true, maxWidth: 260 });
+  map.addListener("click", onMapClick);
+}
+
+function fitTo(points) {
+  if (!map || !points.length) return;
+  const b = new google.maps.LatLngBounds();
+  points.forEach((p) => b.extend(p));
+  map.fitBounds(b, 48);
+  if (points.length === 1) map.setZoom(15);
+}
+
+function pinContent(s, el = document.createElement("div")) {
+  el.className = "pin" + (s.id === selectedId ? " sel" : "");
+  el.style.setProperty("--c", `var(${kindColor(s)})`);
+  el.innerHTML = `<i>☕</i><b>${esc(s.name)}</b>`;
+  return el;
+}
+
+// "https://sf.eater.com/maps/best-coffee" -> "sf.eater.com"
+function siteName(url) {
+  try { return url ? new URL(url).hostname.replace(/^www\./, "") : ""; } catch { return ""; }
+}
+
+function cardHtml(s) {
+  const tags = [(KINDS[s.kind] || KINDS.cafe).label];
+  if (STATUS[s.status]) tags.push(STATUS[s.status]);
+  return `<div class="card">
+    <div class="tag">${esc(tags.join(" · "))}</div>
+    <a class="go" href="${esc(mapsLinks(s).google)}" target="_blank" rel="noopener">${esc(s.name)}<span aria-hidden="true"> ↗</span></a>
+    ${s.branch || s.via ? `<div class="sub">${esc([s.branch, s.via && `via ${s.via}`].filter(Boolean).join(" · "))}</div>` : ""}
+  </div>`;
+}
+
+function openCard(s) {
+  const h = markers.get(s.id);
+  if (!map || !info || !h) return;
+  info.setContent(cardHtml(s));
+  info.open({ map, anchor: h.marker, shouldFocus: false });
+}
+
+function syncMarkers(visible) {
+  if (!map) return;
+  const keep = new Set(visible.map((s) => s.id));
+  for (const [id, h] of markers) {
+    if (!keep.has(id)) { h.marker.map = null; markers.delete(id); }
+  }
+  for (const s of visible) {
+    let h = markers.get(s.id);
+    if (!h) {
+      const el = pinContent(s);
+      const marker = new Marker({ map, position: { lat: s.lat, lng: s.lng }, content: el, title: spotTitle(s), gmpClickable: true });
+      marker.addEventListener("gmp-click", () => select(s.id, { fly: false }));
+      h = { marker, el };
+      markers.set(s.id, h);
+    } else {
+      pinContent(s, h.el);
+      h.marker.position = { lat: s.lat, lng: s.lng };
+    }
+    h.marker.zIndex = s.id === selectedId ? 1000 : 1;
+  }
+}
+
+// ---------- list + filters ----------
+function matches(s) {
+  const f = FILTERS.find((x) => x.id === filter);
+  if (f.added && s.source !== "added") return false;
+  if (f.kinds && (s.source === "added" || !f.kinds.includes(s.kind))) return false;
+  return true;
+}
+
+function renderChips() {
+  $("kinds").innerHTML = FILTERS.map((f) =>
+    `<button type="button" class="chip" data-filter="${f.id}" aria-pressed="${f.id === filter}">${f.color ? `<span class="dot" style="--c: var(${f.color})"></span>` : ""}${esc(f.label)}</button>`
+  ).join("");
+}
+
+function render() {
+  const spots = allSpots();
+  const visible = spots.filter(matches);
+  const ordered = [
+    ...visible.filter((s) => s.source === "added"),
+    ...visible.filter((s) => s.source !== "added").sort((a, b) => (b.mentions || 0) - (a.mentions || 0) || a.name.localeCompare(b.name)),
+  ];
+
+  $("counts").textContent = `${spots.length} spots`
+    + (visible.length !== spots.length ? ` · showing ${visible.length}` : "");
+
+  $("list").innerHTML = ordered.length ? ordered.map((s) => {
+    const kind = (KINDS[s.kind] || KINDS.cafe).label;
+    const del = canEdit() ? `<button class="remove" type="button" data-remove="${esc(s.id)}" aria-label="Delete ${esc(s.name)}">Delete</button>` : "";
+    const badge = STATUS[s.status] ? `<span class="badge warn">${esc(STATUS[s.status])}</span>` : "";
+    return `<li class="item" data-id="${esc(s.id)}" style="--c: var(${kindColor(s)})" aria-current="${s.id === selectedId}" tabindex="0">
+      <span class="mug" aria-hidden="true">☕</span>
+      <span class="name">${esc(s.name)}${s.branch ? ` <span class="branch">${esc(s.branch)}</span>` : ""}${badge}</span>
+      ${del}
+      <span class="meta">${esc(kind)}</span>
+    </li>`;
+  }).join("") : `<li class="empty">No spots of this type yet.</li>`;
+
+  syncMarkers(visible);
+}
+
+function select(id, { fly = true } = {}) {
+  const s = allSpots().find((x) => x.id === id);
+  if (!s) return;
+  const prev = selectedId;
+  selectedId = id;
+  for (const pid of [prev, id]) {
+    const h = pid && markers.get(pid);
+    const ps = pid && allSpots().find((x) => x.id === pid);
+    if (h && ps) {
+      pinContent(ps, h.el);
+      h.marker.zIndex = pid === id ? 1000 : 1;
+    }
+  }
+  document.querySelectorAll(".item").forEach((el) => el.setAttribute("aria-current", String(el.dataset.id === id)));
+  if (!map) return;
+  if (fly) {
+    if (map.getZoom() < 15) map.setZoom(15);
+    map.panTo({ lat: s.lat, lng: s.lng });
+  }
+  openCard(s);
+}
+
+$("list").addEventListener("click", (e) => {
+  if (e.target.closest("[data-remove]")) return; // handled below
+  const row = e.target.closest(".item");
+  if (row) select(row.dataset.id);
+});
+$("list").addEventListener("keydown", (e) => {
+  const row = e.target.closest(".item");
+  if (row && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); select(row.dataset.id); }
+});
+$("kinds").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-filter]");
+  if (!b) return;
+  filter = b.dataset.filter;
+  renderChips();
+  render();
+});
+
+// Delete button on every list row. Two clicks, so a stray click does nothing.
+document.addEventListener("click", async (e) => {
+  const b = e.target.closest("[data-remove]");
+  if (!b || !canEdit()) return;
+  if (b.dataset.armed !== "1") { b.dataset.armed = "1"; b.textContent = "Click to confirm"; return; }
+  b.disabled = true;
+  try {
+    await api("DELETE", "/api/spots/" + encodeURIComponent(b.dataset.remove));
+    if (selectedId === b.dataset.remove) selectedId = null;
+    await loadSpots();
+    info?.close();
+    toast("Spot deleted");
+  } catch (err) {
+    b.disabled = false;
+    b.textContent = "Couldn't remove. Try again";
+  }
+});
+
+// ---------- add a spot ----------
+function setPending(lat, lng, { pan = false } = {}) {
+  pending = { lat: +lat.toFixed(6), lng: +lng.toFixed(6) };
+  if (map) {
+    if (!pendingMarker) {
+      const el = document.createElement("div");
+      el.className = "pin pending";
+      el.innerHTML = "<i></i>";
+      pendingMarker = new Marker({ map, position: pending, content: el, gmpDraggable: true, zIndex: 2000, title: "New spot" });
+      pendingMarker.addListener("dragend", () => {
+        const p = pendingMarker.position;
+        pendingPlaceId = "";
+        setPending(latOf(p), lngOf(p));
+      });
+    } else {
+      pendingMarker.position = pending;
+    }
+    if (pan) {
+      if (map.getZoom() < 16) map.setZoom(16);
+      map.panTo(pending);
+    }
+  }
+  const out = $("f-where-out");
+  out.textContent = `Pin at ${pending.lat.toFixed(5)}, ${pending.lng.toFixed(5)} · ${areaFor(pending.lat, pending.lng)}`;
+  out.classList.add("set");
+}
+
+// Fill the form from a Google place (from a click on a place icon on the map).
+async function fillFromPlace(place) {
+  try {
+    await place.fetchFields({ fields: ["displayName", "formattedAddress", "location"] });
+  } catch {
+    $("f-where-out").textContent = "Couldn't load that place from Google. Click the map to place the pin instead.";
+    return;
+  }
+  if (place.displayName) $("f-name").value = String(place.displayName).slice(0, 80);
+  if (place.formattedAddress) $("f-addr").value = place.formattedAddress.replace(/, USA$/, "").slice(0, 140);
+  pendingPlaceId = place.id || "";
+  if (place.location) setPending(latOf(place.location), lngOf(place.location), { pan: true });
+}
+
+// ---------- find the café from its name ----------
+// Google place search near San Francisco. Throws when Google refuses (for example, Places API off).
+async function searchGoogle(text, maxResults = 5) {
+  const { places } = await Place.searchByText({
+    textQuery: text,
+    fields: ["displayName", "formattedAddress", "location", "primaryType"],
+    locationBias: { center: SF_CENTER, radius: 50000 },
+    maxResultCount: maxResults,
+  });
+  return (places || []).filter((pl) => pl.location).map((pl) => ({
+    id: pl.id || "",
+    name: String(pl.displayName || text),
+    address: String(pl.formattedAddress || "").replace(/, USA$/, ""),
+    lat: latOf(pl.location),
+    lng: lngOf(pl.location),
+    kind: /roast/i.test(pl.primaryType || "") ? "roaster" : "cafe",
+  }));
+}
+
+const PLACES_OFF_NOTE = 'Google place search is turned off. <a href="https://console.cloud.google.com/apis/library/places.googleapis.com" target="_blank" rel="noopener">Turn on Places API (New)</a>, then reload.';
+const placesOff = (err) => /PERMISSION_DENIED|not been used|disabled/i.test(String(err && err.message));
+let findTimer = null;
+let findSeq = 0;
+let found = [];
+
+function showMatchNote(html) {
+  const box = $("f-matches");
+  box.innerHTML = `<div class="note">${html}</div>`;
+  box.hidden = false;
+}
+
+function renderMatches(chosenIndex) {
+  const box = $("f-matches");
+  if (!found.length) { showMatchNote("No match on Google Maps. Click the map to place the pin."); return; }
+  box.innerHTML = found.map((m, i) => `<button type="button" class="match" role="option" data-match="${i}" aria-selected="${i === chosenIndex}">
+      <b>${esc(m.name)}</b><span>${esc(m.address)}</span>
+    </button>`).join("");
+  box.hidden = false;
+}
+
+function chooseMatch(i, { rename = false } = {}) {
+  const m = found[i];
+  if (!m) return;
+  if (rename) $("f-name").value = m.name.slice(0, 80);
+  $("f-addr").value = m.address.slice(0, 140);
+  pendingPlaceId = m.id;
+  setPending(m.lat, m.lng, { pan: true });
+  renderMatches(i);
+}
+
+async function findByName(text) {
+  const seq = ++findSeq;
+  if (!Place || !map) return;
+  showMatchNote("Looking on Google Maps…");
+  try {
+    const results = await searchGoogle(text);
+    if (seq !== findSeq || !adding) return; // a newer search replaced this one
+    found = results;
+    if (found.length) chooseMatch(0); else renderMatches(-1);
+  } catch (err) {
+    if (seq !== findSeq) return;
+    found = [];
+    if (placesOff(err)) {
+      showMatchNote(PLACES_OFF_NOTE + " Until then, click the map to place the pin.");
+    } else {
+      showMatchNote("Couldn't search Google Maps just now. Click the map to place the pin.");
+    }
+  }
+}
+
+$("f-name").addEventListener("input", (e) => {
+  clearTimeout(findTimer);
+  const text = e.target.value.trim();
+  if (text.length < 3) { findSeq++; found = []; $("f-matches").hidden = true; return; }
+  findTimer = setTimeout(() => findByName(text), 450);
+});
+$("f-matches").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-match]");
+  if (b) chooseMatch(Number(b.dataset.match), { rename: true });
+});
+
+// ---------- the top box: add a coffee shop by name ----------
+let quickTimer = null;
+let quickSeq = 0;
+let quickFound = [];
+let quickPreview = null;   // teal pin showing the match under the pointer
+const BY_HAND = '<a href="#" data-byhand>add it by hand</a>';
+
+function simpleName(name) {
+  return String(name).toLowerCase().normalize("NFKD").replace(/[^a-z0-9]+/g, " ").trim();
+}
+function metersBetween(a, b) {
+  const dLat = (b.lat - a.lat) * 111320;
+  const dLng = (b.lng - a.lng) * 111320 * Math.cos(a.lat * Math.PI / 180);
+  return Math.hypot(dLat, dLng);
+}
+// A spot already on the map that is this Google match: same place id, or a similar name within 200 m.
+function alreadyOnMap(m) {
+  const n = simpleName(m.name);
+  return allSpots().find((s) => (m.id && s.placeId === m.id)
+    || ((simpleName(s.name).includes(n) || n.includes(simpleName(s.name))) && metersBetween(s, m) < 200));
+}
+
+function previewAt(m, { pan = false } = {}) {
+  if (!map || !m) return;
+  if (!quickPreview) {
+    const el = document.createElement("div");
+    el.className = "pin pending";
+    el.innerHTML = "<i></i>";
+    quickPreview = new Marker({ map, position: m, content: el, zIndex: 2000, title: m.name });
+  } else {
+    quickPreview.position = { lat: m.lat, lng: m.lng };
+  }
+  if (pan) {
+    if (map.getZoom() < 15) map.setZoom(15);
+    map.panTo({ lat: m.lat, lng: m.lng });
+  }
+}
+
+function clearQuick({ keepText = true } = {}) {
+  clearTimeout(quickTimer);
+  quickSeq++;
+  quickFound = [];
+  $("q-matches").hidden = true;
+  $("q-matches").innerHTML = "";
+  if (quickPreview) { quickPreview.map = null; quickPreview = null; }
+  if (!keepText) $("q").value = "";
+}
+
+function quickNote(html) {
+  const box = $("q-matches");
+  box.innerHTML = `<div class="note">${html}</div>`;
+  box.hidden = false;
+}
+
+// onMapAlready: spots Google matched that are already on the map, used when nothing new is left.
+function renderQuick(onMapAlready = []) {
+  if (!quickFound.length) {
+    if (onMapAlready.length) {
+      const s = onMapAlready[0];
+      quickNote(`<a href="#" data-dupe="${esc(s.id)}">${esc(s.name)}</a> is already on your map. Not that one? ${BY_HAND}.`);
+    } else {
+      quickNote(`No match on Google Maps. You can ${BY_HAND}.`);
+    }
+    return;
+  }
+  $("q-matches").innerHTML = quickFound.map((m, i) => `<button type="button" class="match" data-quick="${i}">
+      <b>${esc(m.name)}</b><span>${esc(m.address)}</span><em>+ Add</em>
+    </button>`).join("") + `<div class="note">Not the right one? ${BY_HAND}.</div>`;
+  $("q-matches").hidden = false;
+}
+
+async function quickSearch(text) {
+  const seq = ++quickSeq;
+  if (!Place || !map) { quickNote(`Google Maps is still loading. Try again in a moment, or ${BY_HAND}.`); return; }
+  quickNote("Looking on Google Maps…");
+  try {
+    // Ask for five, hide places already on the map, show two (Dan wants just two suggestions).
+    const results = await searchGoogle(text, 5);
+    if (seq !== quickSeq) return; // a newer search replaced this one
+    const onMapAlready = [];
+    quickFound = results.filter((m) => {
+      const dupe = alreadyOnMap(m);
+      if (dupe) onMapAlready.push(dupe);
+      return !dupe;
+    }).slice(0, 2);
+    renderQuick(onMapAlready);
+    if (quickFound.length) previewAt(quickFound[0], { pan: true });
+  } catch (err) {
+    if (seq !== quickSeq) return;
+    quickFound = [];
+    quickNote(placesOff(err) ? `${PLACES_OFF_NOTE} Until then, ${BY_HAND}.` : `Couldn't search Google Maps just now. You can ${BY_HAND}.`);
+  }
+}
+
+async function quickAdd(i, button) {
+  const m = quickFound[i];
+  if (!m || !canEdit()) return;
+  const label = button.querySelector("em");
+  button.disabled = true;
+  label.textContent = "Adding…";
+  try {
+    const saved = await api("POST", "/api/spots", {
+      name: m.name, kind: m.kind, address: m.address, lat: m.lat, lng: m.lng, placeId: m.id,
+    });
+    clearQuick({ keepText: false });
+    await loadSpots();
+    toast(`Added ${saved.name}`);
+    select(saved.id);
+  } catch (err) {
+    button.disabled = false;
+    label.textContent = "Couldn't add. Try again";
+  }
+}
+
+$("q").addEventListener("input", (e) => {
+  clearTimeout(quickTimer);
+  const text = e.target.value.trim();
+  if (text.length < 3) { clearQuick(); return; }
+  quickTimer = setTimeout(() => quickSearch(text), 450);
+});
+$("q").addEventListener("keydown", (e) => {
+  if (e.key === "Escape") clearQuick({ keepText: false });
+  if (e.key === "Enter") {
+    e.preventDefault();
+    const first = $("q-matches").querySelector(".match:not([aria-disabled])");
+    if (first) first.click();
+  }
+});
+$("q-matches").addEventListener("click", (e) => {
+  const hand = e.target.closest("[data-byhand]");
+  if (hand) {
+    e.preventDefault();
+    const text = $("q").value.trim();
+    clearQuick({ keepText: false });
+    openForm();
+    $("f-name").value = text;
+    if (text.length >= 3) $("f-name").dispatchEvent(new Event("input"));
+    return;
+  }
+  const dupe = e.target.closest("[data-dupe]");
+  if (dupe) { e.preventDefault(); clearQuick({ keepText: false }); select(dupe.dataset.dupe); return; }
+  const b = e.target.closest("[data-quick]");
+  if (b) quickAdd(Number(b.dataset.quick), b);
+});
+$("q-matches").addEventListener("mouseover", (e) => {
+  const b = e.target.closest("[data-quick]");
+  if (b) previewAt(quickFound[Number(b.dataset.quick)]);
+});
+
+function onMapClick(e) {
+  if (!adding) { info?.close(); return; }
+  if (e.placeId && Place) {
+    e.stop(); // keep Google's own card closed; use the place for the form instead
+    fillFromPlace(new Place({ id: e.placeId }));
+  } else if (e.latLng) {
+    pendingPlaceId = "";
+    setPending(e.latLng.lat(), e.latLng.lng());
+  }
+  const hint = document.querySelector(".place-hint");
+  if (hint) hint.textContent = "Drag the pin to adjust";
+}
+
+function openForm() {
+  if (!canEdit()) return;
+  if ($("app").classList.contains("panel-hidden")) setPanelHidden(false);
+  adding = true;
+  info?.close();
+  $("browse").hidden = true;
+  $("form").hidden = false;
+  $("f-error").hidden = true;
+  $("app").classList.add("placing");
+  if (map) {
+    const hint = document.createElement("div");
+    hint.className = "place-hint";
+    hint.textContent = "Type a name, or click the map";
+    $("mapWrap").appendChild(hint);
+  }
+  $("panel").scrollTop = 0;
+  $("f-name").focus({ preventScroll: true });
+}
+function closeForm() {
+  adding = false;
+  pending = null;
+  pendingPlaceId = "";
+  if (pendingMarker) { pendingMarker.map = null; pendingMarker = null; }
+  document.querySelector(".place-hint")?.remove();
+  $("app").classList.remove("placing");
+  $("form").reset();
+  clearTimeout(findTimer);
+  findSeq++;
+  found = [];
+  $("f-matches").hidden = true;
+  $("f-matches").innerHTML = "";
+  $("f-where-out").textContent = "No pin yet";
+  $("f-where-out").classList.remove("set");
+  $("form").hidden = true;
+  $("browse").hidden = false;
+}
+
+$("f-where").addEventListener("input", (e) => {
+  const v = e.target.value;
+  if (!v.trim()) return;
+  const loc = parseLocation(v);
+  const out = $("f-where-out");
+  if (loc) {
+    pendingPlaceId = "";
+    setPending(loc.lat, loc.lng, { pan: true });
+  } else if (/goo\.gl|maps\.app/.test(v)) {
+    out.classList.remove("set");
+    out.textContent = "Short share links hide the location. Search for the place above instead.";
+  } else if (!pending) {
+    out.textContent = "No coordinates found. Search above or click the map.";
+  }
+});
+$("addBtn").addEventListener("click", openForm);
+$("f-cancel").addEventListener("click", closeForm);
+$("form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const err = $("f-error");
+  const name = $("f-name").value.trim();
+  if (!name) { err.textContent = "Give the spot a name."; err.hidden = false; $("f-name").focus(); return; }
+  if (!pending) { err.textContent = "Place the pin: search for the place, or click the map."; err.hidden = false; return; }
+  err.hidden = true;
+  const save = $("f-save");
+  save.disabled = true;
+  save.textContent = "Saving…";
+  try {
+    const saved = await api("POST", "/api/spots", {
+      name: name.slice(0, 80),
+      kind: $("f-kind").value,
+      address: $("f-addr").value.trim().slice(0, 140),
+      lat: pending.lat,
+      lng: pending.lng,
+      placeId: pendingPlaceId,
+    });
+    closeForm();
+    await loadSpots();
+    toast(`Added ${saved.name}`);
+    select(saved.id);
+  } catch (x) {
+    err.textContent = x.message || "Couldn't save the spot. Is the coffee-map server still running?";
+    err.hidden = false;
+  } finally {
+    save.disabled = false;
+    save.textContent = "Save spot";
+  }
+});
+
+// ---------- spots from the local server ----------
+function cleanAdded(d) {
+  const lat = Number(d.lat), lng = Number(d.lng);
+  if (typeof d.name !== "string" || !d.name.trim() || !Number.isFinite(lat) || !Number.isFinite(lng)) return null;
+  return {
+    id: String(d.id),
+    source: "added",
+    name: d.name,
+    kind: KINDS[d.kind] ? d.kind : "cafe",
+    address: d.address || "",
+    note: d.note || "",
+    placeId: d.placeId || "",
+    branch: typeof d.branch === "string" ? d.branch : "",
+    via: siteName(d.source),
+    lat, lng,
+    area: areaFor(lat, lng),
+    createdAt: Number(d.createdAt) || 0,
+  };
+}
+
+async function loadSpots() {
+  const data = await api("GET", "/api/spots");
+  threadSpots = data.thread.map((s) => ({ ...s, source: "thread" }));
+  addedSpots = data.added.map(cleanAdded).filter(Boolean).sort((a, b) => b.createdAt - a.createdAt);
+  serverOk = true;
+  $("addBtn").disabled = false;
+  $("addBtn").title = "";
+  $("q").disabled = !canEdit();
+  $("q").closest(".row").hidden = !canEdit();
+  banner("");
+  render();
+}
+
+function serverDown() {
+  serverOk = false;
+  $("addBtn").disabled = true;
+  $("addBtn").title = "Start the map with the coffee-map command";
+  $("q").disabled = true;
+  banner(LIVE ? "Couldn't load the coffee spots. Check your connection and reload." : "Can't reach the map server. Run coffee-map in Terminal, then reload this page.");
+}
+
+// ---------- hide or show the side panel ----------
+const PANEL_KEY = "coffeeMap.panelHidden";
+function setPanelHidden(hidden, { remember = true } = {}) {
+  $("app").classList.toggle("panel-hidden", hidden);
+  $("showPanel").hidden = !hidden;
+  $("hidePanel").setAttribute("aria-expanded", String(!hidden));
+  if (remember) { try { localStorage.setItem(PANEL_KEY, hidden ? "1" : "0"); } catch {} }
+  (hidden ? $("showPanel") : $("hidePanel")).focus({ preventScroll: true });
+}
+$("hidePanel").addEventListener("click", () => setPanelHidden(true));
+$("showPanel").addEventListener("click", () => setPanelHidden(false));
+try {
+  if (localStorage.getItem(PANEL_KEY) === "1") {
+    $("app").classList.add("panel-hidden");
+    $("showPanel").hidden = false;
+    $("hidePanel").setAttribute("aria-expanded", "false");
+  }
+} catch {}
+
+// ---------- start ----------
+renderChips();
+(async () => {
+  let config;
+  try {
+    config = await api("GET", "/api/config");
+    await loadSpots();
+  } catch {
+    serverDown();
+    return;
+  }
+  if (!config.googleMapsKey) { showSetup(); return; }
+  try {
+    await startMap(config.googleMapsKey);
+  } catch (err) {
+    showSetup(err.message);
+    return;
+  }
+  render();
+  fitTo(threadSpots.filter((s) => s.area === "San Francisco").map((s) => ({ lat: s.lat, lng: s.lng })));
+})();
+if (LIVE) startAuth().catch(() => {});
+// Pick up spots added in another tab when you come back to this one.
+window.addEventListener("focus", () => { if (!adding) loadSpots().catch(serverDown); });
+</script>
+</body>
+</html>

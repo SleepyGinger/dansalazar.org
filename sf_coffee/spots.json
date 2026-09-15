@@ -1,0 +1,396 @@
+[
+ {
+  "id": "coffee-movement-nob-hill",
+  "name": "The Coffee Movement",
+  "branch": "Nob Hill",
+  "address": "1030 Washington St, San Francisco, CA 94108",
+  "area": "San Francisco",
+  "kind": "cafe",
+  "mentions": 8,
+  "lat": 37.79475,
+  "lng": -122.4103
+ },
+ {
+  "id": "coffee-movement-richmond",
+  "name": "The Coffee Movement",
+  "branch": "Inner Richmond",
+  "address": "1737 Balboa St, San Francisco, CA 94121",
+  "area": "San Francisco",
+  "kind": "cafe",
+  "mentions": 2,
+  "lat": 37.77647,
+  "lng": -122.47776
+ },
+ {
+  "id": "coffee-movement-side-a",
+  "name": "The Coffee Movement",
+  "branch": "at Side A",
+  "address": "2814 19th St, San Francisco, CA 94110",
+  "area": "San Francisco",
+  "kind": "cafe",
+  "mentions": 1,
+  "lat": 37.76055,
+  "lng": -122.41025
+ },
+ {
+  "id": "saint-frank-russian-hill",
+  "name": "Saint Frank Coffee",
+  "branch": "Russian Hill",
+  "address": "2340 Polk St, San Francisco, CA 94109",
+  "area": "San Francisco",
+  "kind": "roaster",
+  "mentions": 5,
+  "lat": 37.79849,
+  "lng": -122.42205
+ },
+ {
+  "id": "saint-frank-inner-sunset",
+  "name": "Saint Frank Coffee",
+  "branch": "Inner Sunset",
+  "address": "744 Irving St, San Francisco, CA 94122",
+  "area": "San Francisco",
+  "kind": "roaster",
+  "mentions": 1,
+  "lat": 37.76431,
+  "lng": -122.46603
+ },
+ {
+  "id": "atlas-coffee-bar",
+  "name": "Atlas Coffee Bar",
+  "address": "605 Florida St, San Francisco, CA 94110",
+  "area": "San Francisco",
+  "kind": "cafe",
+  "mentions": 3,
+  "lat": 37.76136,
+  "lng": -122.4109
+ },
+ {
+  "id": "hedge-coffee",
+  "name": "Hedge Coffee",
+  "address": "434 Shotwell St, San Francisco, CA 94110",
+  "area": "San Francisco",
+  "kind": "roaster",
+  "mentions": 6,
+  "lat": 37.76143,
+  "lng": -122.41613
+ },
+ {
+  "id": "hi-nrg",
+  "name": "HI NRG",
+  "address": "5801 Geary Blvd, San Francisco, CA 94121",
+  "area": "San Francisco",
+  "kind": "cafe",
+  "status": "check",
+  "mentions": 6,
+  "lat": 37.78004,
+  "lng": -122.48168
+ },
+ {
+  "id": "wild-fox",
+  "name": "The Wild Fox",
+  "address": "123 Battery St, San Francisco, CA 94111",
+  "area": "San Francisco",
+  "kind": "cafe",
+  "mentions": 3,
+  "lat": 37.79271,
+  "lng": -122.40002
+ },
+ {
+  "id": "golden-goat",
+  "name": "Golden Goat Coffee",
+  "address": "599 3rd St, San Francisco, CA 94107",
+  "area": "San Francisco",
+  "kind": "cafe",
+  "mentions": 2,
+  "lat": 37.78045,
+  "lng": -122.39427
+ },
+ {
+  "id": "kope-house",
+  "name": "Kopê House",
+  "address": "546 Laguna St, San Francisco, CA 94102",
+  "area": "San Francisco",
+  "kind": "cafe",
+  "mentions": 4,
+  "lat": 37.77618,
+  "lng": -122.4261
+ },
+ {
+  "id": "better-half",
+  "name": "Better Half Coffee",
+  "address": "1448 Pacific Ave, San Francisco, CA 94109",
+  "area": "San Francisco",
+  "kind": "cafe",
+  "mentions": 2,
+  "lat": 37.79552,
+  "lng": -122.41906
+ },
+ {
+  "id": "q-specialty",
+  "name": "Q Specialty Coffee",
+  "address": "3490 California St, San Francisco, CA 94118",
+  "area": "San Francisco",
+  "kind": "roaster",
+  "mentions": 1,
+  "lat": 37.78677,
+  "lng": -122.45166
+ },
+ {
+  "id": "komakase",
+  "name": "Komakase",
+  "address": "243 Front St, San Francisco, CA 94111",
+  "area": "San Francisco",
+  "kind": "experience",
+  "mentions": 3,
+  "lat": 37.79404,
+  "lng": -122.39902
+ },
+ {
+  "id": "linea",
+  "name": "Linea Caffe",
+  "branch": "Roastery",
+  "address": "1125 Mariposa St, San Francisco, CA 94107",
+  "area": "San Francisco",
+  "kind": "roaster",
+  "mentions": 2,
+  "lat": 37.76366,
+  "lng": -122.39514
+ },
+ {
+  "id": "neighbors-corner",
+  "name": "Neighbor's Corner",
+  "address": "499 Douglass St, San Francisco, CA 94114",
+  "area": "San Francisco",
+  "kind": "cafe",
+  "mentions": 1,
+  "lat": 37.75556,
+  "lng": -122.43877
+ },
+ {
+  "id": "shoji",
+  "name": "Shoji",
+  "address": "140 New Montgomery St, San Francisco, CA 94105",
+  "area": "San Francisco",
+  "kind": "cafe",
+  "mentions": 1,
+  "lat": 37.78669,
+  "lng": -122.39989
+ },
+ {
+  "id": "ritual",
+  "name": "Ritual Coffee Roasters",
+  "branch": "Valencia",
+  "address": "1026 Valencia St, San Francisco, CA 94110",
+  "area": "San Francisco",
+  "kind": "roaster",
+  "mentions": 2,
+  "lat": 37.75643,
+  "lng": -122.42138
+ },
+ {
+  "id": "spro",
+  "name": "SPRO",
+  "address": "500 Church St, San Francisco, CA 94114",
+  "area": "San Francisco",
+  "kind": "cafe",
+  "mentions": 1,
+  "lat": 37.76278,
+  "lng": -122.42867
+ },
+ {
+  "id": "graffeo",
+  "name": "Graffeo Coffee",
+  "address": "735 Columbus Ave, San Francisco, CA 94133",
+  "area": "San Francisco",
+  "kind": "beans",
+  "mentions": 1,
+  "lat": 37.80141,
+  "lng": -122.41206
+ },
+ {
+  "id": "four-barrel",
+  "name": "Four Barrel Coffee",
+  "address": "375 Valencia St, San Francisco, CA 94103",
+  "area": "San Francisco",
+  "kind": "roaster",
+  "mentions": 2,
+  "lat": 37.76702,
+  "lng": -122.42193
+ },
+ {
+  "id": "scullery",
+  "name": "Scullery",
+  "address": "687 Geary St, San Francisco, CA 94102",
+  "area": "San Francisco",
+  "kind": "cafe",
+  "mentions": 1,
+  "lat": 37.78642,
+  "lng": -122.41455
+ },
+ {
+  "id": "soon-and-soon",
+  "name": "Soon and Soon",
+  "address": "731 Grant Ave, San Francisco, CA 94108",
+  "area": "San Francisco",
+  "kind": "cafe",
+  "mentions": 1,
+  "lat": 37.79378,
+  "lng": -122.40634
+ },
+ {
+  "id": "paper-son",
+  "name": "Paper Son Coffee",
+  "branch": "Downtown",
+  "address": "303 2nd St, San Francisco, CA 94107",
+  "area": "San Francisco",
+  "kind": "cafe",
+  "mentions": 3,
+  "lat": 37.78479,
+  "lng": -122.39548
+ },
+ {
+  "id": "sightglass",
+  "name": "Sightglass Coffee",
+  "branch": "SoMa",
+  "address": "270 7th St, San Francisco, CA 94103",
+  "area": "San Francisco",
+  "kind": "roaster",
+  "mentions": 2,
+  "lat": 37.77698,
+  "lng": -122.40855
+ },
+ {
+  "id": "reveille",
+  "name": "Café Réveille",
+  "branch": "Lower Haight",
+  "address": "201 Steiner St, San Francisco, CA 94117",
+  "area": "San Francisco",
+  "kind": "roaster",
+  "mentions": 1,
+  "lat": 37.77106,
+  "lng": -122.43207
+ },
+ {
+  "id": "signal",
+  "name": "Signal Coffee",
+  "address": "2701 Leavenworth St, San Francisco, CA 94133",
+  "area": "San Francisco",
+  "kind": "cafe",
+  "mentions": 1,
+  "lat": 37.80613,
+  "lng": -122.41892
+ },
+ {
+  "id": "home-coffee",
+  "name": "Home Coffee Roasters",
+  "branch": "Outer Richmond",
+  "address": "2018 Clement St, San Francisco, CA 94121",
+  "area": "San Francisco",
+  "kind": "roaster",
+  "mentions": 1,
+  "lat": 37.78236,
+  "lng": -122.48098
+ },
+ {
+  "id": "chen-coffee",
+  "name": "Chen & Coffee",
+  "address": "Clement St & 17th Ave, San Francisco, CA 94121",
+  "area": "San Francisco",
+  "kind": "popup",
+  "status": "check",
+  "mentions": 1,
+  "lat": 37.7824,
+  "lng": -122.47575
+ },
+ {
+  "id": "coro",
+  "name": "CoRo Coffee Room",
+  "address": "2324 5th St, Berkeley, CA 94710",
+  "area": "East Bay",
+  "kind": "beans",
+  "mentions": 3,
+  "lat": 37.86279,
+  "lng": -122.29736
+ },
+ {
+  "id": "masterpiece",
+  "name": "Masterpiece Coffee",
+  "address": "1714 San Pablo Ave, Berkeley, CA 94702",
+  "area": "East Bay",
+  "kind": "cafe",
+  "mentions": 1,
+  "lat": 37.87243,
+  "lng": -122.29305
+ },
+ {
+  "id": "olivia",
+  "name": "Olivia Coffee & Flower",
+  "address": "371 30th St, Oakland, CA 94609",
+  "area": "East Bay",
+  "kind": "cafe",
+  "mentions": 1,
+  "lat": 37.81877,
+  "lng": -122.26412
+ },
+ {
+  "id": "hydrangea",
+  "name": "Hydrangea Coffee",
+  "address": "2323 4th St, Berkeley, CA 94710",
+  "area": "East Bay",
+  "kind": "beans",
+  "status": "no-cafe",
+  "mentions": 1,
+  "lat": 37.86234,
+  "lng": -122.29766
+ },
+ {
+  "id": "soul-grind",
+  "name": "Soul Grind Coffee",
+  "address": "5400 Cabrillo Hwy, Pacifica, CA 94044",
+  "area": "Peninsula",
+  "kind": "roaster",
+  "mentions": 1,
+  "lat": 37.59516,
+  "lng": -122.5061
+ },
+ {
+  "id": "goodthing",
+  "name": "Goodthing Coffee",
+  "address": "341 Primrose Rd, Burlingame, CA 94010",
+  "area": "Peninsula",
+  "kind": "cafe",
+  "mentions": 1,
+  "lat": 37.57826,
+  "lng": -122.34894
+ },
+ {
+  "id": "kaizen",
+  "name": "Kaizen & Coffee",
+  "address": "2337 S El Camino Real, San Mateo, CA 94403",
+  "area": "Peninsula",
+  "kind": "cafe",
+  "mentions": 3,
+  "lat": 37.54507,
+  "lng": -122.30602
+ },
+ {
+  "id": "moonwake",
+  "name": "Moonwake Coffee Roasters",
+  "address": "1412 Saratoga Ave, San Jose, CA 95129",
+  "area": "South Bay",
+  "kind": "roaster",
+  "mentions": 1,
+  "lat": 37.29799,
+  "lng": -121.9847
+ },
+ {
+  "id": "strait",
+  "name": "Strait Coffee Roasters",
+  "address": "1375 Blossom Hill Rd, San Jose, CA 95118",
+  "area": "South Bay",
+  "kind": "popup",
+  "mentions": 2,
+  "lat": 37.24495,
+  "lng": -121.89022
+ }
+]
